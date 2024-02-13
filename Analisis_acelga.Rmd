@@ -1,0 +1,25 @@
+---
+title: "Analisis Tesis Acelga"
+author: "Franco Villalba"
+date: '2024-02-12'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show 
+---
+# Analisis INDIVIDUALES FECHA A FECHA
+## Analisis Variables del 06 de Diciembre del 2022
+### Importar la base de datos:
+```{r}
+MS06DIC<-read.csv("MS06DIC.csv", header=TRUE, sep=",", dec=",")
+
+MS06DIC
+```
+
