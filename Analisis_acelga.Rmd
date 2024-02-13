@@ -14,12 +14,64 @@ output:
     df_print: paged
     code_folding: show 
 ---
+
+# Descripcion
+
+Análisis de datos de un ensayo realizado a campo con el cultivo de acelga, en un diseño en DBC con dos factores: cultivar -Var- (dos niveles: Penca Ancha y Penca Blanca) y Dosis de Abono -D- (con cuatro niveles, 0, 50, 100 y 150 de la dosis de N recomendada). Se midió Materia seca de raiz, hojas, tallos y area foliar cada 15 días. En las últimas mediciones se midio peso fresco de la parte aérea. El ensayo se repitió en dos épocas, primavera verano y otoño invierno.
+
 # Analisis INDIVIDUALES FECHA A FECHA
+
 ## Analisis Variables del 06 de Diciembre del 2022
+
 ### Importar la base de datos:
-```{r}
+
+```{r message=FALSE, warning=FALSE}
 MS06DIC<-read.csv("MS06DIC.csv", header=TRUE, sep=",", dec=",")
 
 MS06DIC
+```
+
+### Analisis variable: Peso de raiz
+
+#### Análisis exploratorio gráfico
+
+Utilizaremos Box plot
+```{r message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+
+MS06DIC["Tratamientos"]<-paste(MS06DIC$NombreV, MS06DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+ggplot(data=MS06DIC, aes(Tratamientos, Peso_Raiz))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS06DIC, aes(factor(GrM2), Peso_Raiz))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS06DIC, aes(NombreV, Peso_Raiz))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+
+```
+
+#### Analisis de outliers
+
+A partir de los gráficos podemos detectar algunos outliers, para detectarlos podemos utilizar la función plot ingresando una formula con el modelo.
+
+```{r message=FALSE, warning=FALSE}
+plot(aov(Peso_Raiz~Bloque+NombreV*GrM2, MS06DIC))
+
+```
+De este modo se puede observar que los outliers corresponden al 15, 13 y 14, todos correspondientes al bloque 2 (dosis 2, 3 y 4 de la variedad 2)
+
+Realizaremos un análisis sin reemplazar outliers
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06DIC$GrM2,
+          MS06DIC$NombreV,
+          MS06DIC$Bloque,
+          MS06DIC$Peso_Raiz,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+
 ```
 
