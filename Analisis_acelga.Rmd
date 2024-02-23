@@ -5,7 +5,7 @@ date: '2024-02-12'
 output: 
   html_document:
     toc: true
-    toc_depth: 3
+    toc_depth: 4
     toc_float: true
     collapsed: true
     smooth_scroll: true
@@ -27,11 +27,58 @@ Análisis de datos de un ensayo realizado a campo con el cultivo de acelga, en u
 
 ```{r message=FALSE, warning=FALSE}
 MS06DIC<-read.csv("MS06DIC.csv", header=TRUE, sep=",", dec=",")
+MS06DIC["Tratamientos"]<-paste(MS06DIC$NombreV, MS06DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 MS06DIC
 ```
 
 ### Analisis variable: Peso de raiz
+
+#### Estadistica descriptiva de la variable
+
+Primero crearemos una funcion que nos permite crear un dataframe con cada tratamiento, agregando el nro de observaciones, la media, el desvio standar y el CV
+```{r}
+resumir2fat<-function(fat1, 
+                      fat2, 
+                      resp,
+                      trat,
+                      df
+){
+  nf1<-unique(fat1)
+  nf2<-unique(fat2)
+  alltrat<-unique(trat)
+  
+  medias<-c()
+  Desvio_Standar<-c()
+  numero<-c()
+  
+  for (f1 in nf1){
+    medias<-c(medias, mean(resp[fat1==f1]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat1==f1]))
+    numero<-c(numero, sum(with(df, fat1==f1)))
+  }
+ 
+  for (f2 in nf2){
+    medias<-c(medias, mean(resp[fat2==f2]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat2==f2]))
+    numero<-c(numero, sum(with(df, fat2==f2)))
+  }
+  for (t in alltrat){
+    medias<-c(medias, mean(resp[trat==t]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[trat==t]))
+    numero<-c(numero, sum(with(df, trat==t)))
+  }
+  agrupamientos<-c(nf1, nf2, alltrat)
+  CV<-(Desvio_Standar/medias)*100
+  return(data.frame(agrupamientos, numero, medias, Desvio_Standar, CV))
+}
+
+```
+Luego llamaremos a la funcion, guardaremos el resultado en una variable: 
+```{r}
+descPR06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$Peso_Raiz, MS06DIC$Tratamientos, MS06DIC)
+descPR06DIC
+```
 
 #### Análisis exploratorio gráfico
 
@@ -39,7 +86,6 @@ Utilizaremos Box plot
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
 
-MS06DIC["Tratamientos"]<-paste(MS06DIC$NombreV, MS06DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 ggplot(data=MS06DIC, aes(Tratamientos, Peso_Raiz))+geom_boxplot() ###Un boxplot con todos los tratamientos
 
@@ -60,7 +106,9 @@ plot(aov(Peso_Raiz~Bloque+NombreV*GrM2, MS06DIC))
 ```
 De este modo se puede observar que los outliers corresponden al 15, 13 y 14, todos correspondientes al bloque 2 (dosis 2, 3 y 4 de la variedad 2)
 
-Realizaremos un análisis sin reemplazar outliers
+#### Analisis de la varianza en DCB Bifactorial
+
+Realizaremos un análisis sin reemplazar outliers, para esto utilizamos el paquete ExpDes.pt 
 ```{r}
 library(ExpDes.pt)
 
@@ -75,3 +123,51 @@ fat2.dbc( MS06DIC$GrM2,
 
 ```
 
+#### Observaciones Preliminares
+Si bien los test no identificaron diferencias significativas las medias de la dosis de abono 4 fue menor en todos los casos, puedo que la planta por tener mayor contenido de nutrientes haya derivado menores cantidades de fotoasimilados a la raiz. 
+
+
+### Analisis de Variable: Peso de MS de parte aérea
+
+#### Estadisitica descriptiva de la variable
+
+```{r}
+DescPAMS06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$Pesos_hojas, MS06DIC$Tratamientos, MS06DIC)
+DescPAMS06DIC
+```
+
+#### Gráficos BoxPlot
+
+```{r}
+ggplot(data=MS06DIC, aes(Tratamientos, Pesos_hojas))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS06DIC, aes(factor(GrM2), Pesos_hojas))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS06DIC, aes(NombreV, Pesos_hojas))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+```
+
+#### Deteccion Outliers
+```{r}
+    plot(aov(Pesos_hojas~Bloque+NombreV*GrM2, MS06DIC))
+```
+En base al grafico Normal Q-Q plot, se detectan las observaciones 9, 14 y 5 como posibles outliers. Esto corresponden al bloque 2, dosis 1, variedad 1, bloque 2 dosis 2 variedad 2 (estos con valores por encima de la media) y al bloque 1, dosis 1, variedad 2. 
+
+#### Analisis de la Varianza en DBC
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06DIC$GrM2,
+          MS06DIC$NombreV,
+          MS06DIC$Bloque,
+          MS06DIC$Pesos_hojas,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+#### Observaciones
+Para la variable pesos de hojas el valor mas elevado se da en el  tratamiento dosis de abono 4, sin embargo los test no arrojan diferencias significativas. 
+
+### Area foliar
