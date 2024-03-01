@@ -1,0 +1,109 @@
+---
+title: "Acelga 20 DICIEMBRE"
+author: "Franco Villalba"
+date: '2024-03-01'
+output:
+ html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show 
+---
+# Analisis Variables del 20 de Diciembre
+## Importacion de datos
+```{r}
+MS20DIC<-read.csv("MS20DIC.csv", header=TRUE, sep=",", dec=",")
+
+MS20DIC["Tratamientos"]<-paste(MS20DIC$NombreV, MS20DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+MS20DIC
+
+colnames(MS20DIC)
+```
+## Estadistica descriptiva
+
+Creamos una funcion para realizar la estadistica descriptiva
+
+```{r}
+resumir2fat<-function(fat1, 
+                      fat2, 
+                      resp,
+                      trat,
+                      df
+){
+  nf1<-unique(fat1)
+  nf2<-unique(fat2)
+  alltrat<-unique(trat)
+  
+  medias<-c()
+  Desvio_Standar<-c()
+  numero<-c()
+  
+  for (f1 in nf1){
+    medias<-c(medias, mean(resp[fat1==f1]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat1==f1]))
+    numero<-c(numero, sum(with(df, fat1==f1)))
+  }
+ 
+  for (f2 in nf2){
+    medias<-c(medias, mean(resp[fat2==f2]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat2==f2]))
+    numero<-c(numero, sum(with(df, fat2==f2)))
+  }
+  for (t in alltrat){
+    medias<-c(medias, mean(resp[trat==t]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[trat==t]))
+    numero<-c(numero, sum(with(df, trat==t)))
+  }
+  agrupamientos<-c(nf1, nf2, alltrat)
+  CV<-(Desvio_Standar/medias)*100
+  return(data.frame(agrupamientos, numero, medias, Desvio_Standar, CV))
+}
+```
+
+## Variable Peso Raiz
+Estadistica descriptiva de la variable
+```{r}
+descPR20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NombreV, MS20DIC$Raices, MS20DIC$Tratamientos, MS20DIC)
+descPR20DIC
+```
+
+Graficos BoxPlot
+```{r  message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+
+
+ggplot(data=MS20DIC, aes(Tratamientos, Raices))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS20DIC, aes(factor(GrM2), Raices))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS20DIC, aes(NombreV, Raices))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+```
+
+Analisis outlier
+```{r}
+ plot(aov(Raices~Bloque+NombreV*GrM2, MS20DIC))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+ANOVA
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS20DIC$GrM2,
+          MS20DIC$NombreV,
+          MS20DIC$Bloque,
+          MS20DIC$Raices,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+

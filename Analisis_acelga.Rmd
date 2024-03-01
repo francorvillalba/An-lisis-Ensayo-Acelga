@@ -1,5 +1,5 @@
 ---
-title: "Analisis Tesis Acelga"
+title: "Analisis Acelga Fecha 1"
 author: "Franco Villalba"
 date: '2024-02-12'
 output: 
@@ -19,9 +19,9 @@ output:
 
 Análisis de datos de un ensayo realizado a campo con el cultivo de acelga, en un diseño en DBC con dos factores: cultivar -Var- (dos niveles: Penca Ancha y Penca Blanca) y Dosis de Abono -D- (con cuatro niveles, 0, 50, 100 y 150 de la dosis de N recomendada). Se midió Materia seca de raiz, hojas, tallos y area foliar cada 15 días. En las últimas mediciones se midio peso fresco de la parte aérea. El ensayo se repitió en dos épocas, primavera verano y otoño invierno.
 
-# Analisis INDIVIDUALES FECHA A FECHA
 
-## Analisis Variables del 06 de Diciembre del 2022
+
+# Analisis Variables del 06 de Diciembre del 2022
 
 ### Importar la base de datos:
 
@@ -32,7 +32,7 @@ MS06DIC["Tratamientos"]<-paste(MS06DIC$NombreV, MS06DIC$Dosis, sep="_") #esto ag
 MS06DIC
 ```
 
-### Analisis variable: Peso de raiz
+## Analisis variable: Peso de raiz
 
 #### Estadistica descriptiva de la variable
 
@@ -170,4 +170,132 @@ fat2.dbc( MS06DIC$GrM2,
 #### Observaciones
 Para la variable pesos de hojas el valor mas elevado se da en el  tratamiento dosis de abono 4, sin embargo los test no arrojan diferencias significativas. 
 
-### Area foliar
+### Peso Total
+
+Primero creamos la variable Peso total: 
+```{r}
+MS06DIC$ptotal<-MS06DIC$Peso_Raiz + MS06DIC$Pesos_hojas
+```
+
+Luego realizamos el analisis estadistico descriptivo
+
+```{r}
+descPt06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$ptotal, MS06DIC$Tratamientos, MS06DIC)
+descPt06DIC
+```
+
+Analisis gráfico de la variable
+
+```{r}
+ggplot(data=MS06DIC, aes(Tratamientos, ptotal))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS06DIC, aes(factor(GrM2), ptotal))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS06DIC, aes(NombreV, ptotal))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+```
+
+Analisis de outlier
+
+```{r}
+ plot(aov(ptotal~Bloque+NombreV*GrM2, MS06DIC))
+```
+
+De acuerdo el grafico de residuos normales son outliers el 13, el 9 y el 14. 
+
+Analisis ANOVA en bloques 
+
+```{r}
+ fat2.dbc( MS06DIC$GrM2,
+          MS06DIC$NombreV,
+          MS06DIC$Bloque,
+          MS06DIC$ptotal,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Area Foliar
+
+realizamos el analisis estadistico descriptivo
+
+```{r}
+descAF06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$A, MS06DIC$Tratamientos, MS06DIC)
+descAF06DIC
+```
+
+Analisis gráfico de la variable
+
+```{r}
+ggplot(data=MS06DIC, aes(Tratamientos, A))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS06DIC, aes(factor(GrM2), A))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS06DIC, aes(NombreV, A))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+```
+
+Analisis de outlier
+
+```{r}
+ plot(aov(A~Bloque+NombreV*GrM2, MS06DIC))
+```
+
+De acuerdo el grafico de residuos normales son outliers el 13, el 9 y el 14. 
+
+Analisis ANOVA en bloques 
+
+```{r}
+ fat2.dbc( MS06DIC$GrM2,
+          MS06DIC$NombreV,
+          MS06DIC$Bloque,
+          MS06DIC$A,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Relacion raiz Parte Aerea
+
+Creamos la variable
+```{r}
+MS06DIC$Rpa<-MS06DIC$Peso_Raiz/MS06DIC$Pesos_hojas
+```
+realizamos el analisis estadistico descriptivo
+
+```{r}
+descRA06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$Rpa, MS06DIC$Tratamientos, MS06DIC)
+descRA06DIC
+```
+
+Analisis gráfico de la variable
+
+```{r}
+ggplot(data=MS06DIC, aes(Tratamientos, Rpa))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+ggplot(data=MS06DIC, aes(factor(GrM2), Rpa))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+ggplot(data=MS06DIC, aes(NombreV, Rpa))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+```
+
+Analisis de outlier
+
+```{r}
+ plot(aov(Rpa~Bloque+NombreV*GrM2, MS06DIC))
+```
+
+De acuerdo el grafico de residuos normales son outliers el 13, el 9 y el 14. 
+
+Analisis ANOVA en bloques 
+
+```{r}
+ fat2.dbc( MS06DIC$GrM2,
+          MS06DIC$NombreV,
+          MS06DIC$Bloque,
+          MS06DIC$Rpa,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
