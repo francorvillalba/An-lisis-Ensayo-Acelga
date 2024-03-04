@@ -19,7 +19,19 @@ output:
 ```{r}
 MS20DIC<-read.csv("MS20DIC.csv", header=TRUE, sep=",", dec=",")
 
-MS20DIC["Tratamientos"]<-paste(MS20DIC$NombreV, MS20DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+nv<-c()
+
+for (i in MS20DIC$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS20DIC["NV"]<-nv
+
+MS20DIC["Tratamientos"]<-paste(MS20DIC$NV, MS20DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 MS20DIC
 
@@ -78,19 +90,26 @@ descPR20DIC
 
 ```{r  message=FALSE, warning=FALSE}
 library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+library(patchwork)
 
 
-ggplot(data=MS20DIC, aes(Tratamientos, Raices))+geom_boxplot() ###Un boxplot con todos los tratamientos
+bp1<-ggplot(data=MS20DIC, aes(Tratamientos, Raices))+geom_boxplot() ###Un boxplot con todos los tratamientos
 
-ggplot(data=MS20DIC, aes(factor(GrM2), Raices))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+bp2<-ggplot(data=MS20DIC, aes(factor(GrM2), Raices))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
 
-ggplot(data=MS20DIC, aes(NombreV, Raices))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+bp3<-ggplot(data=MS20DIC, aes(NombreV, Raices))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
 ```
 
 ### Analisis outlier Peso Raiz
 
 ```{r}
+ par(mfrow=c(2,2))
  plot(aov(Raices~Bloque+NombreV*GrM2, MS20DIC))
+ par(mfrow=c(1,1))
 ```
 
 Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
@@ -144,17 +163,23 @@ descPA20DIC
 
 ```{r  message=FALSE, warning=FALSE}
 
-ggplot(data=MS20DIC, aes(Tratamientos, PesoPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
+bp1<-ggplot(data=MS20DIC, aes(Tratamientos, PesoPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
 
-ggplot(data=MS20DIC, aes(factor(GrM2), PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+bp2<-ggplot(data=MS20DIC, aes(factor(GrM2), PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
 
-ggplot(data=MS20DIC, aes(NombreV, PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+bp3<-ggplot(data=MS20DIC, aes(NombreV, PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
 ```
 
 ### Analisis outlier Peso Parte Aerea
 
 ```{r}
+ par(mfrow=c(2,2))
  plot(aov(PesoPA~Bloque+NombreV*GrM2, MS20DIC))
+ par(mfrow=c(1,1))
 ```
 
 Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
@@ -181,13 +206,13 @@ g1<-ggplot(MS20DIC[MS20DIC$NombreV=='Penca Ancha',], aes(GrM2, PesoPA))+
   xlab("Gramos de Abono por M2")+
   ylab("Peso Seco Total")+
   labs(color="Variedad")+
-  ggtitle("Peso Seco Raices 20 de Diciembre Variedad Penca Ancha")
+  ggtitle("Peso Seco Parte Aerea 20 de Diciembre Variedad Penca Ancha")
 
 g2<-ggplot(MS20DIC[MS20DIC$NombreV=='Penca Verde',], aes(GrM2, PesoPA))+
   geom_point()+ geom_smooth(method='lm')+
   xlab("Gramos de Abono por M2")+
   ylab("Peso Seco Total")+
-  ggtitle("Peso Seco Raices 20 de Diciembre Variedad Penca Verde")
+  ggtitle("Peso Seco Parte Aerea 20 de Diciembre Variedad Penca Verde")
 
 g1 + g2
 ```
@@ -208,17 +233,23 @@ descPT20DIC
 library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
 
 
-ggplot(data=MS20DIC, aes(Tratamientos, PesoT))+geom_boxplot() ###Un boxplot con todos los tratamientos
+bp1<-ggplot(data=MS20DIC, aes(Tratamientos, PesoT))+geom_boxplot() ###Un boxplot con todos los tratamientos
 
-ggplot(data=MS20DIC, aes(factor(GrM2), PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+bp2<-ggplot(data=MS20DIC, aes(factor(GrM2), PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
 
-ggplot(data=MS20DIC, aes(NombreV, PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+bp3<-ggplot(data=MS20DIC, aes(NombreV, PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
 ```
 
 ### Analisis outlier Peso Total
 
 ```{r}
+ par(mfrow=c(2,2))
  plot(aov(PesoT~Bloque+NombreV*GrM2, MS20DIC))
+ par(mfrow=c(1,1))
 ```
 
 Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
@@ -277,16 +308,23 @@ descRPA20DIC
 ### Graficos BoxPlot R:PA
 ```{r  message=FALSE, warning=FALSE}
 
-ggplot(data=MS20DIC, aes(Tratamientos, RPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
+bp1<-ggplot(data=MS20DIC, aes(Tratamientos, RPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
 
-ggplot(data=MS20DIC, aes(factor(GrM2), RPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+bp2<-ggplot(data=MS20DIC, aes(factor(GrM2), RPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
 
-ggplot(data=MS20DIC, aes(NombreV, RPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+bp3<-ggplot(data=MS20DIC, aes(NombreV, RPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
 ```
 
 ### Analisis outlier variable R:PA
 ```{r}
+ par(mfrow=c(2,2))
  plot(aov(RPA~Bloque+NombreV*GrM2, MS20DIC))
+ par(mfrow=c(1,1))
 ```
 
 Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
@@ -313,14 +351,14 @@ library(patchwork)
 g1<-ggplot(MS20DIC[MS20DIC$NombreV=='Penca Ancha',], aes(GrM2, RPA))+
   geom_point()+ geom_smooth(method='lm')+
   xlab("Gramos de Abono por M2")+
-  ylab("Peso Seco Total")+
+  ylab("Relacion Raiz/PA")+
   labs(color="Variedad")+
   ggtitle("Relacion Raiz Parte Aerea 20 de Diciembre Variedad Penca Ancha")
 
 g2<-ggplot(MS20DIC[MS20DIC$NombreV=='Penca Verde',], aes(GrM2, RPA))+
   geom_point()+ geom_smooth(method='lm')+
   xlab("Gramos de Abono por M2")+
-  ylab("Peso Seco Total")+
+  ylab("Releacion Raiz /Parte Aerea")+
   ggtitle("Relacion Raiz Parte Aerea 20 de Diciembre Variedad Penca Verde")
 
 g1 + g2
@@ -385,7 +423,7 @@ r6<-ggplot(MS20DIC[MS20DIC$Tratamientos==t[6],], aes(HM, AS))+geom_point() + geo
 r7<-ggplot(MS20DIC[MS20DIC$Tratamientos==t[7],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[7])
 r8<-ggplot(MS20DIC[MS20DIC$Tratamientos==t[8],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[8])
 
-r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8
+r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + plot_layout(ncol=4)
 
 ```
 
@@ -436,14 +474,19 @@ bp2<-ggplot(data=MS20DIC, aes(factor(GrM2), AREAF))+ geom_boxplot() ###Un boxplo
 
 bp3<-ggplot(data=MS20DIC, aes(NombreV, AREAF)) + geom_boxplot()  ###Un boxplot considerando solo el factor cultivar
 
-bp1 + bp2 + bp3
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
 ```
 
 
 ### Outlier del Area Foliar
 
 ```{r}
+par(mfrow=c(2,2))
 plot(aov(AREAF~Bloque+NombreV*GrM2, MS20DIC))
+par(mfrow=c(1,1))
 ```
 
 
@@ -478,6 +521,8 @@ g2<-ggplot(MS20DIC[MS20DIC$NombreV=='Penca Verde',], aes(GrM2, AREAF))+
   xlab("Gramos de Abono por M2")+
   ylab("Area Foliar cm 2")+
   ggtitle("AREA FOLIAR 20 de Diciembre Variedad Penca Verde")
+
+g1 + g2
 ```
 
 
