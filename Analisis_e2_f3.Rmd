@@ -1,0 +1,526 @@
+---
+title: "Acelga 06 de Julio"
+author: "Franco Villalba"
+date: '2024-03-01'
+output:
+ html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show 
+---
+# Analisis Variables del 27 de Junio
+## Importacion de datos
+```{r}
+MS06Jul<-read.csv("MS06Jul.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS06Jul$Var){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS06Jul["NV"]<-nv
+
+MS06Jul["Tratamientos"]<-paste(MS06Jul$NV, MS06Jul$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+MS06Jul
+
+colnames(MS06Jul)
+```
+## Estadistica descriptiva
+
+Creamos una funcion para realizar la estadistica descriptiva
+
+```{r}
+resumir2fat<-function(fat1, 
+                      fat2, 
+                      resp,
+                      trat,
+                      df
+){
+  nf1<-unique(fat1)
+  nf2<-unique(fat2)
+  alltrat<-unique(trat)
+  
+  medias<-c()
+  Desvio_Standar<-c()
+  numero<-c()
+  
+  for (f1 in nf1){
+    medias<-c(medias, mean(resp[fat1==f1]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat1==f1]))
+    numero<-c(numero, sum(with(df, fat1==f1)))
+  }
+ 
+  for (f2 in nf2){
+    medias<-c(medias, mean(resp[fat2==f2]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat2==f2]))
+    numero<-c(numero, sum(with(df, fat2==f2)))
+  }
+  for (t in alltrat){
+    medias<-c(medias, mean(resp[trat==t]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[trat==t]))
+    numero<-c(numero, sum(with(df, trat==t)))
+  }
+  agrupamientos<-c(nf1, nf2, alltrat)
+  CV<-(Desvio_Standar/medias)*100
+  return(data.frame(agrupamientos, numero, medias, Desvio_Standar, CV))
+}
+```
+
+## Variable Peso Raiz
+### Estadistica descriptiva de la variable Peso Raiz
+
+```{r}
+descPR06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NombreV, MS06Jul$R, MS06Jul$Tratamientos, MS06Jul)
+descPR06Jul
+```
+
+### Graficos BoxPlot Peso Raiz
+
+```{r  message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+library(patchwork)
+
+
+bp1<-ggplot(data=MS06Jul, aes(Tratamientos, R))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS06Jul, aes(factor(GrM2), R))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS06Jul, aes(NombreV, R))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Raiz
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(R~Bloque+NombreV*GrM2, MS06Jul))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Raiz
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06Jul$GrM2,
+          MS06Jul$NombreV,
+          MS06Jul$Bloque,
+          MS06Jul$R,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Graficos Plot
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Ancha',], aes(GrM2, R))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Raiz")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Verde',], aes(GrM2, R))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Raiz")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Peso Parte Aerea
+
+### Estadistica descriptiva de la variable Peso Parte Aerea
+
+```{r}
+descPA06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NombreV, MS06Jul$PesoPA, MS06Jul$Tratamientos, MS06Jul)
+descPA06Jul
+```
+
+### Graficos BoxPlot Variable Peso Parte Aerea
+
+```{r  message=FALSE, warning=FALSE}
+
+bp1<-ggplot(data=MS06Jul, aes(Tratamientos, PesoPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS06Jul, aes(factor(GrM2), PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS06Jul, aes(NombreV, PesoPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Parte Aerea
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(PesoPA~Bloque+NombreV*GrM2, MS06Jul))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Parte Aerea
+
+```{r}
+fat2.dbc( MS06Jul$GrM2,
+          MS06Jul$NombreV,
+          MS06Jul$Bloque,
+          MS06Jul$PesoPA,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Graficos plot Peso Parte Aerea
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Ancha',], aes(GrM2, PesoPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Parte Aerea")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Verde',], aes(GrM2, PesoPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Parte Aerea")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Peso Total
+
+### Estadistica descriptiva de la variable Peso Total
+
+```{r}
+descPT06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NombreV, MS06Jul$PesoT, MS06Jul$Tratamientos, MS06Jul)
+descPT06Jul
+```
+
+### Graficos BoxPlot Peso Total
+
+```{r  message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+
+
+bp1<-ggplot(data=MS06Jul, aes(Tratamientos, PesoT))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS06Jul, aes(factor(GrM2), PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS06Jul, aes(NombreV, PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Total
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(PesoT~Bloque+NombreV*GrM2, MS06Jul))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Total
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06Jul$GrM2,
+          MS06Jul$NombreV,
+          MS06Jul$Bloque,
+          MS06Jul$PesoT,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot Peso Total
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Ancha',], aes(GrM2, PesoT))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Total")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Verde',], aes(GrM2, PesoT))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Total")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Relación  Raiz:Parte Aerea
+
+### Crear la variable:
+
+```{r}
+MS06Jul$RPA<-MS06Jul$R/MS06Jul$PesoPA
+```
+
+
+### Estadistica descriptiva de la variable R:PA
+```{r}
+descRPA06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NombreV, MS06Jul$RPA, MS06Jul$Tratamientos, MS06Jul)
+descRPA06Jul
+```
+
+### Graficos BoxPlot R:PA
+```{r  message=FALSE, warning=FALSE}
+
+bp1<-ggplot(data=MS06Jul, aes(Tratamientos, RPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS06Jul, aes(factor(GrM2), RPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS06Jul, aes(NombreV, RPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
+```
+
+### Analisis outlier variable R:PA
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(RPA~Bloque+NombreV*GrM2, MS06Jul))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Variables R:PA
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06Jul$GrM2,
+          MS06Jul$NombreV,
+          MS06Jul$Bloque,
+          MS06Jul$RPA,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot 
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Ancha',], aes(GrM2, RPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Relacion Raiz/PA")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Verde',], aes(GrM2, RPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Relacion Raiz /PA")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Area Foliar
+
+### Script para obtener una regresión por cada tratamiento de area foliar
+
+```{r}
+tratamientos<-unique(MS06Jul$Tratamientos) #Creamos un vector con los tratamientos
+```
+
+
+```{r}
+#creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
+ord <-c() 
+prord<-c()
+pend<-c()
+prpend<-c()
+rsq<-c()
+radj<-c()
+
+#El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado
+
+for (i in tratamientos){
+  HMT<-MS06Jul$HM[MS06Jul$Tratamientos== i] #PESO HOJAS MEDIDAS DEL TRATAMIENTO I
+  AFT<-MS06Jul$AS[MS06Jul$Tratamientos== i] #AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I
+  
+  regresion<-summary(lm(AFT~HMT)) #SE EJECUTA LA REGRESION
+  
+  ord<-c(ord, regresion$coefficients[1,1]) #guarda el intercept del tratamiento i en un vector
+  prord<-c(prord, regresion$coefficients[1,4]) #guarda el coeficiente de pearson de la ordenada para el tratamiento i
+  pend<-c(pend, regresion$coefficients[2,1]) #guarda la pendiente del tratamiento i en un vector
+  prpend<-c(prpend, regresion$coefficients[2,4]) #guarda el coeficiente de pearson de la pendienyte en el tratamiento i
+  rsq<-c(rsq, regresion$r.squared) #guarda el r^2 del modelo al tratamiento i
+  radj<-c(radj, regresion$adj.r.squared) #guarda el r^2 ajustado del modelo para el tratamiento i
+}
+
+# creamos un data frame con los vectores
+
+modelosAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
+
+#Vemos el data frame
+
+modelosAF
+```
+
+### Graficos Regresiones
+```{r}
+library(patchwork)
+
+t<-unique(MS06Jul$Tratamientos)
+
+r1<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[1],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[1])
+r2<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[2],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[2])
+r3<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[3],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[3])
+r4<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[4],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[4])
+r5<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[5],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[5])
+r6<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[6],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[6])
+r7<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[7],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[7])
+r8<-ggplot(MS06Jul[MS06Jul$Tratamientos==t[8],], aes(HM, AS))+geom_point() + geom_smooth(method='lm') + ggtitle(t[8])
+
+r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + plot_layout(ncol=4)
+
+```
+
+
+
+### CALCULO DEL AREA FOLIAR
+
+
+```{r}
+#Creamos una columna con el peso de las hojas:
+MS06Jul$PH<-MS06Jul$HM+MS06Jul$HSM
+
+#Se recorre fila por fila calculando PH*PENDIENA + ORDENADA para obtener un vector con el area foliar
+
+areasF<-c()
+paiterar<-c(1:32)
+
+for (i in paiterar){
+  ordenada<-modelosAF$ord[modelosAF$tratamientos== MS06Jul$Tratamientos[i]]
+  pendiente<-modelosAF$pend[modelosAF$tratamientos== MS06Jul$Tratamientos[i]]
+  pesohojas<-MS06Jul$PH[i]
+  af<-ordenada + pendiente*pesohojas
+  areasF<-c(areasF, af) 
+}
+
+#Se agrega el vector al data frame
+
+MS06Jul$AREAF<-areasF
+
+MS06Jul
+```
+
+### Analisis descriptivo del Area Foliar
+
+```{r}
+descAF06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NombreV, MS06Jul$AREAF, MS06Jul$Tratamientos, MS06Jul)
+descAF06Jul
+```
+
+
+### Graficos del Area Foliar
+
+```{r}
+bp1<-ggplot(data=MS06Jul, aes(Tratamientos, AREAF))+ geom_boxplot()
+ ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS06Jul, aes(factor(GrM2), AREAF))+ geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS06Jul, aes(NombreV, AREAF)) + geom_boxplot()  ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
+```
+
+
+### Outlier del Area Foliar
+
+```{r}
+par(mfrow=c(2,2))
+plot(aov(AREAF~Bloque+NombreV*GrM2, MS06Jul))
+par(mfrow=c(1,1))
+```
+
+
+### Analisis ANOVA en DBC del Area Foliar
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS06Jul$GrM2,
+          MS06Jul$NombreV,
+          MS06Jul$Bloque,
+          MS06Jul$AREAF,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot del Area Foliar
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Ancha',], aes(GrM2, AREAF))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Area Foliar (cm2)")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS06Jul[MS06Jul$NombreV=='Penca Verde',], aes(GrM2, AREAF))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Area Foliar cm 2")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+

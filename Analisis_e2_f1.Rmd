@@ -1,0 +1,503 @@
+---
+title: "Acelga 30 de Mayo"
+author: "Franco Villalba"
+date: '2024-03-01'
+output:
+ html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show 
+---
+# Analisis Variables del 30 de Mayo
+## Importacion de datos
+```{r}
+MS30May<-read.csv("MS30May.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS30May$Var){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS30May["NV"]<-nv
+
+MS30May["Tratamientos"]<-paste(MS30May$NV, MS30May$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+MS30May
+
+colnames(MS30May)
+```
+## Estadistica descriptiva
+
+Creamos una funcion para realizar la estadistica descriptiva
+
+```{r}
+resumir2fat<-function(fat1, 
+                      fat2, 
+                      resp,
+                      trat,
+                      df
+){
+  nf1<-unique(fat1)
+  nf2<-unique(fat2)
+  alltrat<-unique(trat)
+  
+  medias<-c()
+  Desvio_Standar<-c()
+  numero<-c()
+  
+  for (f1 in nf1){
+    medias<-c(medias, mean(resp[fat1==f1]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat1==f1]))
+    numero<-c(numero, sum(with(df, fat1==f1)))
+  }
+ 
+  for (f2 in nf2){
+    medias<-c(medias, mean(resp[fat2==f2]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat2==f2]))
+    numero<-c(numero, sum(with(df, fat2==f2)))
+  }
+  for (t in alltrat){
+    medias<-c(medias, mean(resp[trat==t]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[trat==t]))
+    numero<-c(numero, sum(with(df, trat==t)))
+  }
+  agrupamientos<-c(nf1, nf2, alltrat)
+  CV<-(Desvio_Standar/medias)*100
+  return(data.frame(agrupamientos, numero, medias, Desvio_Standar, CV))
+}
+```
+
+## Variable Peso Raiz
+### Estadistica descriptiva de la variable Peso Raiz
+
+```{r}
+descPR30May<-resumir2fat(MS30May$Dosis, MS30May$NombreV, MS30May$R, MS30May$Tratamientos, MS30May)
+descPR30May
+```
+
+### Graficos BoxPlot Peso Raiz
+
+```{r  message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+library(patchwork)
+
+
+bp1<-ggplot(data=MS30May, aes(Tratamientos, R))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS30May, aes(factor(GrM2), R))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS30May, aes(NombreV, R))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Raiz
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(R~Bloque+NombreV*GrM2, MS30May))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Raiz
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS30May$GrM2,
+          MS30May$NombreV,
+          MS30May$Bloque,
+          MS30May$R,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Graficos Plot
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS30May[MS30May$NombreV=='Penca Ancha',], aes(GrM2, R))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Raiz")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS30May[MS30May$NombreV=='Penca Verde',], aes(GrM2, R))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Raiz")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Peso Parte Aerea
+
+### Estadistica descriptiva de la variable Peso Parte Aerea
+
+```{r}
+descPA30May<-resumir2fat(MS30May$Dosis, MS30May$NombreV, MS30May$H, MS30May$Tratamientos, MS30May)
+descPA30May
+```
+
+### Graficos BoxPlot Variable Peso Parte Aerea
+
+```{r  message=FALSE, warning=FALSE}
+
+bp1<-ggplot(data=MS30May, aes(Tratamientos, H))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS30May, aes(factor(GrM2), H))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS30May, aes(NombreV, H))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Parte Aerea
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(H~Bloque+NombreV*GrM2, MS30May))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Parte Aerea
+
+```{r}
+fat2.dbc( MS30May$GrM2,
+          MS30May$NombreV,
+          MS30May$Bloque,
+          MS30May$H,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Graficos plot Peso Parte Aerea
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS30May[MS30May$NombreV=='Penca Ancha',], aes(GrM2, H))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Parte Aerea")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS30May[MS30May$NombreV=='Penca Verde',], aes(GrM2, H))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Parte Aerea")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Peso Total
+
+### Estadistica descriptiva de la variable Peso Total
+
+```{r}
+descPT30May<-resumir2fat(MS30May$Dosis, MS30May$NombreV, MS30May$PesoT, MS30May$Tratamientos, MS30May)
+descPT30May
+```
+
+### Graficos BoxPlot Peso Total
+
+```{r  message=FALSE, warning=FALSE}
+library(ggplot2) #Iniciamos la libreria, si lo hacemos por primera vez, antes debemos instalas con install.packages("ggplot2")
+
+
+bp1<-ggplot(data=MS30May, aes(Tratamientos, PesoT))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS30May, aes(factor(GrM2), PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS30May, aes(NombreV, PesoT))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+```
+
+### Analisis outlier Peso Total
+
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(PesoT~Bloque+NombreV*GrM2, MS30May))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Peso Total
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS30May$GrM2,
+          MS30May$NombreV,
+          MS30May$Bloque,
+          MS30May$PesoT,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot Peso Total
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS30May[MS30May$NombreV=='Penca Ancha',], aes(GrM2, PesoT))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Total")+
+  labs(color="Variedad")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS30May[MS30May$NombreV=='Penca Verde',], aes(GrM2, PesoT))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Peso Seco Total")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Relación  Raiz:Parte Aerea
+
+### Crear la variable:
+
+```{r}
+MS30May$RPA<-MS30May$R/MS30May$H
+```
+
+
+### Estadistica descriptiva de la variable R:PA
+```{r}
+descRPA30May<-resumir2fat(MS30May$Dosis, MS30May$NombreV, MS30May$RPA, MS30May$Tratamientos, MS30May)
+descRPA30May
+```
+
+### Graficos BoxPlot R:PA
+```{r  message=FALSE, warning=FALSE}
+
+bp1<-ggplot(data=MS30May, aes(Tratamientos, RPA))+geom_boxplot() ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS30May, aes(factor(GrM2), RPA))+geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS30May, aes(NombreV, RPA))+geom_boxplot() ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
+```
+
+### Analisis outlier variable R:PA
+```{r}
+ par(mfrow=c(2,2))
+ plot(aov(RPA~Bloque+NombreV*GrM2, MS30May))
+ par(mfrow=c(1,1))
+```
+
+Outliers 20: Bloque 3, unidad 4, tratamiento dosis 2, variedad 2
+
+### ANOVA Variables R:PA
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS30May$GrM2,
+          MS30May$NombreV,
+          MS30May$Bloque,
+          MS30May$RPA,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot 
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS30May[MS30May$NombreV=='Penca Ancha',], aes(GrM2, RPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Relacion Raiz/PA")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS30May[MS30May$NombreV=='Penca Verde',], aes(GrM2, RPA))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Relacion Raiz /PA")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
+## Variable Area Foliar
+
+### Script para obtener una regresión por cada tratamiento de area foliar
+
+```{r}
+tratamientos<-unique(MS30May$Tratamientos) #Creamos un vector con los tratamientos
+```
+
+
+```{r}
+#creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
+ord <-c() 
+prord<-c()
+pend<-c()
+prpend<-c()
+rsq<-c()
+radj<-c()
+
+#El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado
+
+for (i in tratamientos){
+  HMT<-MS30May$H[MS30May$Tratamientos== i] #PESO HOJAS MEDIDAS DEL TRATAMIENTO I
+  AFT<-MS30May$A[MS30May$Tratamientos== i] #AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I
+  
+  regresion<-summary(lm(AFT~HMT)) #SE EJECUTA LA REGRESION
+  
+  ord<-c(ord, regresion$coefficients[1,1]) #guarda el intercept del tratamiento i en un vector
+  prord<-c(prord, regresion$coefficients[1,4]) #guarda el coeficiente de pearson de la ordenada para el tratamiento i
+  pend<-c(pend, regresion$coefficients[2,1]) #guarda la pendiente del tratamiento i en un vector
+  prpend<-c(prpend, regresion$coefficients[2,4]) #guarda el coeficiente de pearson de la pendienyte en el tratamiento i
+  rsq<-c(rsq, regresion$r.squared) #guarda el r^2 del modelo al tratamiento i
+  radj<-c(radj, regresion$adj.r.squared) #guarda el r^2 ajustado del modelo para el tratamiento i
+}
+
+# creamos un data frame con los vectores
+
+modelosAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
+
+#Vemos el data frame
+
+modelosAF
+```
+
+### Graficos Regresiones
+```{r}
+library(patchwork)
+
+t<-unique(MS30May$Tratamientos)
+
+r1<-ggplot(MS30May[MS30May$Tratamientos==t[1],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[1])
+r2<-ggplot(MS30May[MS30May$Tratamientos==t[2],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[2])
+r3<-ggplot(MS30May[MS30May$Tratamientos==t[3],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[3])
+r4<-ggplot(MS30May[MS30May$Tratamientos==t[4],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[4])
+r5<-ggplot(MS30May[MS30May$Tratamientos==t[5],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[5])
+r6<-ggplot(MS30May[MS30May$Tratamientos==t[6],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[6])
+r7<-ggplot(MS30May[MS30May$Tratamientos==t[7],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[7])
+r8<-ggplot(MS30May[MS30May$Tratamientos==t[8],], aes(H, A))+geom_point() + geom_smooth(method='lm') + ggtitle(t[8])
+
+r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + plot_layout(ncol=4)
+
+```
+
+
+
+### CALCULO DEL AREA FOLIAR
+
+
+
+### Analisis descriptivo del Area Foliar
+
+```{r}
+descAF30May<-resumir2fat(MS30May$Dosis, MS30May$NombreV, MS30May$A, MS30May$Tratamientos, MS30May)
+descAF30May
+```
+
+
+### Graficos del Area Foliar
+
+```{r}
+bp1<-ggplot(data=MS30May, aes(Tratamientos, A))+ geom_boxplot()
+ ###Un boxplot con todos los tratamientos
+
+bp2<-ggplot(data=MS30May, aes(factor(GrM2), A))+ geom_boxplot() ###Un boxplot considerando solo el factor Abono
+
+bp3<-ggplot(data=MS30May, aes(NombreV, A)) + geom_boxplot()  ###Un boxplot considerando solo el factor cultivar
+
+diseno<-"12
+         13"
+bp1 + bp2 + bp3 + plot_layout(design=diseno)
+
+```
+
+
+### Outlier del Area Foliar
+
+```{r}
+par(mfrow=c(2,2))
+plot(aov(A~Bloque+NombreV*GrM2, MS30May))
+par(mfrow=c(1,1))
+```
+
+
+### Analisis ANOVA en DBC del Area Foliar
+
+```{r}
+library(ExpDes.pt)
+
+fat2.dbc( MS30May$GrM2,
+          MS30May$NombreV,
+          MS30May$Bloque,
+          MS30May$A,
+          quali= c(FALSE, TRUE),
+          mcomp="tukey",
+          fac.names=c("Gramos Abono por m2", "Variedad")
+)
+```
+
+### Grafico Plot del Area Foliar
+
+```{r}
+library(patchwork)
+g1<-ggplot(MS30May[MS30May$NombreV=='Penca Ancha',], aes(GrM2, A))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Area Foliar (cm2)")+
+  ggtitle("Variedad Penca Ancha")
+
+g2<-ggplot(MS30May[MS30May$NombreV=='Penca Verde',], aes(GrM2, A))+
+  geom_point()+ geom_smooth(method='lm')+
+  xlab("Gramos de Abono por M2")+
+  ylab("Area Foliar cm 2")+
+  ggtitle("Variedad Penca Verde")
+
+g1 + g2
+```
+
+
