@@ -1,0 +1,202 @@
+---
+title: "Tasas de Crecimiento"
+author: "Franco Villalba"
+date: '2024-03-08'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show 
+---
+# ENSAYO 1
+
+## CREAR UN DATA FRAME CON LOS DATOS RESUMIDOS POR FECHA
+
+### Función para la estadistica descriptiva de cada fecha
+
+```{r}
+resumir2fat<-function(fat1, 
+                      fat2, 
+                      resp,
+                      trat,
+                      df
+){
+  nf1<-unique(fat1)
+  nf2<-unique(fat2)
+  alltrat<-unique(trat)
+  
+  medias<-c()
+  Desvio_Standar<-c()
+  numero<-c()
+  ag<-c()
+  
+  for (f1 in nf1){
+    ag<-c(ag, 'dosis')
+    medias<-c(medias, mean(resp[fat1==f1]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat1==f1]))
+    numero<-c(numero, sum(with(df, fat1==f1)))
+  }
+ 
+  for (f2 in nf2){
+    ag<-c(ag, 'variedad')
+    medias<-c(medias, mean(resp[fat2==f2]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[fat2==f2]))
+    numero<-c(numero, sum(with(df, fat2==f2)))
+  }
+  for (t in alltrat){
+    ag<-c(ag, 'tratamientos')
+    medias<-c(medias, mean(resp[trat==t]))
+    Desvio_Standar<-c(Desvio_Standar, sd(resp[trat==t]))
+    numero<-c(numero, sum(with(df, trat==t)))
+  }
+  agrupamientos<-c(nf1, nf2, alltrat)
+  CV<-(Desvio_Standar/medias)*100
+  return(data.frame(ag, agrupamientos, numero, medias, Desvio_Standar, CV))
+}
+```
+
+### Importar los datos de las 4 fechas
+
+```{r}
+### Fecha 1
+MS06DIC<-read.csv("MS06DIC.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS06DIC$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS06DIC["NV"]<-nv
+
+MS06DIC["Tratamientos"]<-paste(MS06DIC$NV, MS06DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+### Fecha 2
+MS20DIC<-read.csv("MS20DIC.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS20DIC$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS20DIC["NV"]<-nv
+
+MS20DIC["Tratamientos"]<-paste(MS20DIC$NV, MS20DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+### Fecha 3
+MS03ENE<-read.csv("MS03ENE.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS03ENE$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS03ENE["NV"]<-nv
+
+MS03ENE["Tratamientos"]<-paste(MS03ENE$NV, MS03ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+# Fecha 4
+MS17ENE<-read.csv("MS17ENE.csv", header=TRUE, sep=",", dec=",")
+
+nv<-c()
+
+for (i in MS17ENE$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MS17ENE["NV"]<-nv
+
+MS17ENE["Tratamientos"]<-paste(MS17ENE$NV, MS17ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+```
+
+### Obtener la Estadistica descriptiva de la MS Total de cada fecha
+
+```{r}
+descPT06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$PesoT, MS06DIC$Tratamientos, MS06DIC)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2022-12-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descPT06DIC$FECHA<-fecha
+
+descPT20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NombreV, MS20DIC$PesoT, MS20DIC$Tratamientos, MS20DIC)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2022-12-20")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descPT20DIC$FECHA<-fecha
+
+descPT03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NombreV, MS03ENE$PesoT, MS03ENE$Tratamientos, MS03ENE)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-1-3")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descPT03ENE$FECHA<-fecha
+
+descPT17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NombreV, MS17ENE$PesoT, MS17ENE$Tratamientos, MS17ENE)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-1-17")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descPT17ENE$FECHA<-fecha
+```
+
+### Unimos todo en un data frame 
+
+```{r}
+descPTe1<-rbind(descPT06DIC, descPT20DIC, descPT03ENE, descPT17ENE)
+
+descPTe1
+```
+
+### Grafico Evolución del Peso Total
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+g1<-ggplot(data= descPTe1[descPTe1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+g2<-ggplot(data= descPTe1[descPTe1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+g3<-ggplot(data= descPTe1[descPTe1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
