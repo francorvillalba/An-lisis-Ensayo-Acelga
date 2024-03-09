@@ -132,11 +132,53 @@ MS17ENE["NV"]<-nv
 
 MS17ENE["Tratamientos"]<-paste(MS17ENE$NV, MS17ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 ```
+### Crear un data frame para los datos de los plantines
+
+```{r}
+MSPLE1<-read.csv("plantines1.csv", header=TRUE, sep=",", dec=",")
+
+MSPLE1$PesoT<-(MSPLE1$PesoTotal/MSPLE1$plantines)*3
+
+nv<-c()
+
+for (i in MSPLE1$Variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+MSPLE1["NV"]<-nv
+
+MSPLE1<-rbind(MSPLE1, MSPLE1, MSPLE1, MSPLE1)
+
+MSPLE1$Dosis<-c(1,1,1,1,1,1,1,1,
+                2,2,2,2,2,2,2,2,
+                3,3,3,3,3,3,3,3,
+                4,4,4,4,4,4,4,4)
+MSPLE1["Tratamientos"]<-paste(MSPLE1$NV, MSPLE1$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+```
 
 ### Obtener la Estadistica descriptiva de la MS Total de cada fecha
 
 ```{r}
-descPT06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NombreV, MS06DIC$PesoT, MS06DIC$Tratamientos, MS06DIC)
+#fecha 0 -plantines- (obntiene el descriptivo y luego añade una columna con la fecha)
+descPT24NOV<-resumir2fat(MSPLE1$Dosis, MSPLE1$NV, MSPLE1$PesoT, MSPLE1$Tratamientos, MSPLE1)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2022-11-24")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descPT24NOV$FECHA<-fecha
+
+
+
+#fecha 1 (ontiene el descriptivo y luego añade una columna con la fecha)
+descPT06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NV, MS06DIC$PesoT, MS06DIC$Tratamientos, MS06DIC)
 
 fecha<-c()
 for (i in c(1:14)){
@@ -146,7 +188,8 @@ fecha<-as.Date(fecha, format="%Y-%m-%d")
 
 descPT06DIC$FECHA<-fecha
 
-descPT20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NombreV, MS20DIC$PesoT, MS20DIC$Tratamientos, MS20DIC)
+#fecha 2 (ontiene el descriptivo y luego añade una columna con la fecha)
+descPT20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NV, MS20DIC$PesoT, MS20DIC$Tratamientos, MS20DIC)
 
 fecha<-c()
 for (i in c(1:14)){
@@ -156,7 +199,9 @@ fecha<-as.Date(fecha, format="%Y-%m-%d")
 
 descPT20DIC$FECHA<-fecha
 
-descPT03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NombreV, MS03ENE$PesoT, MS03ENE$Tratamientos, MS03ENE)
+#fecha 3 (ontiene el descriptivo y luego añade una columna con la fecha)
+
+descPT03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NV, MS03ENE$PesoT, MS03ENE$Tratamientos, MS03ENE)
 
 fecha<-c()
 for (i in c(1:14)){
@@ -166,7 +211,9 @@ fecha<-as.Date(fecha, format="%Y-%m-%d")
 
 descPT03ENE$FECHA<-fecha
 
-descPT17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NombreV, MS17ENE$PesoT, MS17ENE$Tratamientos, MS17ENE)
+#fecha 4 (ontiene el descriptivo y luego añade una columna con la fecha)
+
+descPT17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NV, MS17ENE$PesoT, MS17ENE$Tratamientos, MS17ENE)
 
 fecha<-c()
 for (i in c(1:14)){
@@ -180,7 +227,7 @@ descPT17ENE$FECHA<-fecha
 ### Unimos todo en un data frame 
 
 ```{r}
-descPTe1<-rbind(descPT06DIC, descPT20DIC, descPT03ENE, descPT17ENE)
+descPTe1<-rbind(descPT24NOV, descPT06DIC, descPT20DIC, descPT03ENE, descPT17ENE)
 
 descPTe1
 ```
@@ -200,3 +247,136 @@ g2
 g3
 ```
 
+## Tasas de crecimiento ABSOLUTA
+
+```{r}
+
+TCA1<-(descPT06DIC$medias-descPT24NOV$medias)/as.integer(difftime(descPT06DIC$FECHA, descPT24NOV$FECHA, units='days'))
+
+TCA2<-(descPT20DIC$medias-descPT06DIC$medias)/as.integer(difftime(descPT20DIC$FECHA, descPT06DIC$FECHA, units='days'))
+
+TCA3<-(descPT03ENE$medias-descPT20DIC$medias)/as.integer(difftime(descPT03ENE$FECHA, descPT20DIC$FECHA, units='days'))
+
+TCA4<-(descPT17ENE$medias-descPT03ENE$medias)/as.integer(difftime(descPT17ENE$FECHA, descPT03ENE$FECHA, units='days'))
+
+TCA<-c(TCA1, TCA2, TCA3, TCA4)
+fecha<-c(descPT06DIC$FECHA, 
+         descPT20DIC$FECHA,
+         descPT03ENE$FECHA,
+         descPT17ENE$FECHA)
+ag<-c(descPT06DIC$ag, 
+         descPT20DIC$ag,
+         descPT03ENE$ag,
+         descPT17ENE$ag)
+agrupamientos<-c(descPT06DIC$agrupamientos, 
+         descPT20DIC$agrupamientos,
+         descPT03ENE$agrupamientos,
+         descPT17ENE$agrupamientos)
+dfTCA<-data.frame(fecha, ag, agrupamientos, TCA)
+
+dfTCA
+
+```
+
+### Graficos con la Tasa de Crecimiento Absoluta
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+g1<-ggplot(data= dfTCA[dfTCA$ag=='dosis',], aes(fecha, TCA, color=agrupamientos))+geom_line()
+g2<-ggplot(data= dfTCA[dfTCA$ag=='variedad',], aes(fecha, TCA, color=agrupamientos))+geom_line()
+g3<-ggplot(data= dfTCA[dfTCA$ag=='tratamientos',], aes(fecha, TCA, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+## Tasa de Crecimiento RELATIVA 
+
+```{r}
+TCR1<-(log(descPT06DIC$medias)-log(descPT24NOV$medias))/as.integer(difftime(descPT06DIC$FECHA, descPT24NOV$FECHA, units='days'))
+
+TCR2<-(log(descPT20DIC$medias)-log(descPT06DIC$medias))/as.integer(difftime(descPT20DIC$FECHA, descPT06DIC$FECHA, units='days'))
+
+TCR3<-(log(descPT03ENE$medias)-log(descPT20DIC$medias))/as.integer(difftime(descPT03ENE$FECHA, descPT20DIC$FECHA, units='days'))
+
+TCR4<-(log(descPT17ENE$medias)-log(descPT03ENE$medias))/as.integer(difftime(descPT17ENE$FECHA, descPT03ENE$FECHA, units='days'))
+
+TCR<-c(TCR1, TCR2, TCR3, TCR4)
+
+
+dfTCA$TCR<-c(TCR)
+```
+
+##grafico Tasas de Crecimiento Relativas
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+g1<-ggplot(data= dfTCA[dfTCA$ag=='dosis',], aes(fecha, TCR, color=agrupamientos))+geom_line()
+g2<-ggplot(data= dfTCA[dfTCA$ag=='variedad',], aes(fecha, TCR, color=agrupamientos))+geom_line()
+g3<-ggplot(data= dfTCA[dfTCA$ag=='tratamientos',], aes(fecha, TCR, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+## Calculo de la Tasa de Asimilación Líquida
+
+TAL=(P2−P1)/(t1−t2)*(lnA2−lnA1)/(A2−A1)
+
+### Incorporar el Area Foliar al Data Frame
+
+#### Crear una funcion para obtener el modelo para el area foliar en cada fecha
+
+```{r}
+#creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
+ord <-c() 
+prord<-c()
+pend<-c()
+prpend<-c()
+rsq<-c()
+radj<-c()
+
+#El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado
+
+for (i in tratamientos){
+  HMT<-MS20DIC$HM[MS20DIC$Tratamientos== i] #PESO HOJAS MEDIDAS DEL TRATAMIENTO I
+  AFT<-MS20DIC$AS[MS20DIC$Tratamientos== i] #AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I
+  
+  regresion<-summary(lm(AFT~HMT)) #SE EJECUTA LA REGRESION
+  
+  ord<-c(ord, regresion$coefficients[1,1]) #guarda el intercept del tratamiento i en un vector
+  prord<-c(prord, regresion$coefficients[1,4]) #guarda el coeficiente de pearson de la ordenada para el tratamiento i
+  pend<-c(pend, regresion$coefficients[2,1]) #guarda la pendiente del tratamiento i en un vector
+  prpend<-c(prpend, regresion$coefficients[2,4]) #guarda el coeficiente de pearson de la pendienyte en el tratamiento i
+  rsq<-c(rsq, regresion$r.squared) #guarda el r^2 del modelo al tratamiento i
+  radj<-c(radj, regresion$adj.r.squared) #guarda el r^2 ajustado del modelo para el tratamiento i
+}
+
+# creamos un data frame con los vectores
+
+modelosAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
+
+#Vemos el data frame
+
+modelosAF
+```
+
+
+#### Crear una funcion para calcular el area foliar en cada fecha
+
+### Crear los data frames descriptivos del area foliar
+
+### Unirlos al data frame de materia seca
+
+### Evolucion del Area Foliar con el tiempo
+
+### Calculo de la TAL
+
+
+### Evolución de la TAL
