@@ -1,5 +1,5 @@
 ---
-title: "Tasas de Crecimiento 1"
+title: "Tasas de Crecimiento 2"
 author: "Franco Villalba"
 date: '2024-03-08'
 output: 
@@ -14,7 +14,7 @@ output:
     df_print: paged
     code_folding: show 
 ---
-# ENSAYO 1
+# ENSAYO 2
 
 ## CREAR UN DATA FRAME CON LOS DATOS RESUMIDOS POR FECHA
 
@@ -65,11 +65,11 @@ resumir2fat<-function(fat1,
 
 ```{r}
 ### Fecha 1
-MS06DIC<-read.csv("MS06DIC.csv", header=TRUE, sep=",", dec=",")
+MS30May<-read.csv("MS30May.csv", header=TRUE, sep=",", dec=",")
 
 nv<-c()
 
-for (i in MS06DIC$Variedad){
+for (i in MS30May$Var){
   if (i==1){
     nv<-c(nv, 'PA')
   } else {
@@ -77,16 +77,16 @@ for (i in MS06DIC$Variedad){
   }
 }
 
-MS06DIC["NV"]<-nv
+MS30May["NV"]<-nv
 
-MS06DIC["Tratamientos"]<-paste(MS06DIC$NV, MS06DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+MS30May["Tratamientos"]<-paste(MS30May$NV, MS30May$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 ### Fecha 2
-MS20DIC<-read.csv("MS20DIC.csv", header=TRUE, sep=",", dec=",")
+MS27Jun<-read.csv("MS27Jun.csv", header=TRUE, sep=",", dec=",")
 
 nv<-c()
 
-for (i in MS20DIC$Variedad){
+for (i in MS27Jun$Var){
   if (i==1){
     nv<-c(nv, 'PA')
   } else {
@@ -94,16 +94,16 @@ for (i in MS20DIC$Variedad){
   }
 }
 
-MS20DIC["NV"]<-nv
+MS27Jun["NV"]<-nv
 
-MS20DIC["Tratamientos"]<-paste(MS20DIC$NV, MS20DIC$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+MS27Jun["Tratamientos"]<-paste(MS27Jun$NV, MS27Jun$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 ### Fecha 3
-MS03ENE<-read.csv("MS03ENE.csv", header=TRUE, sep=",", dec=",")
+MS06Jul<-read.csv("MS06Jul.csv", header=TRUE, sep=",", dec=",")
 
 nv<-c()
 
-for (i in MS03ENE$Variedad){
+for (i in MS06Jul$Var){
   if (i==1){
     nv<-c(nv, 'PA')
   } else {
@@ -111,16 +111,16 @@ for (i in MS03ENE$Variedad){
   }
 }
 
-MS03ENE["NV"]<-nv
+MS06Jul["NV"]<-nv
 
-MS03ENE["Tratamientos"]<-paste(MS03ENE$NV, MS03ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+MS06Jul["Tratamientos"]<-paste(MS06Jul$NV, MS06Jul$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 # Fecha 4
-MS17ENE<-read.csv("MS17ENE.csv", header=TRUE, sep=",", dec=",")
+MS26Jul<-read.csv("MS26Jul.csv", header=TRUE, sep=",", dec=",")
 
 nv<-c()
 
-for (i in MS17ENE$Variedad){
+for (i in MS26Jul$Var){
   if (i==1){
     nv<-c(nv, 'PA')
   } else {
@@ -128,24 +128,19 @@ for (i in MS17ENE$Variedad){
   }
 }
 
-MS17ENE["NV"]<-nv
+MS26Jul["NV"]<-nv
 
-MS17ENE["Tratamientos"]<-paste(MS17ENE$NV, MS17ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+MS26Jul["Tratamientos"]<-paste(MS26Jul$NV, MS26Jul$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 ```
 
 ### Crear un data frame para los datos de los plantines
 
 ```{r}
-MSPLE1<-read.csv("plantines1.csv", header=TRUE, sep=",", dec=",")
-
-MSPLE1$PesoT<-(MSPLE1$PesoTotal/MSPLE1$plantines)*3
-
-MSPLE1$A<-c(52.850, 40.133, 28.911, 27.625,
-            44.394, 47.834, 37.094, 19.809)
+MSPLE2<-read.csv("Plantines2.csv", header=TRUE, sep=",", dec=",")
 
 nv<-c()
 
-for (i in MSPLE1$Variedad){
+for (i in MSPLE2$Variedad){
   if (i==1){
     nv<-c(nv, 'PA')
   } else {
@@ -153,15 +148,15 @@ for (i in MSPLE1$Variedad){
   }
 }
 
-MSPLE1["NV"]<-nv
+MSPLE2["NV"]<-nv
 
-MSPLE1<-rbind(MSPLE1, MSPLE1, MSPLE1, MSPLE1)
+MSPLE2<-rbind(MSPLE2, MSPLE2, MSPLE2, MSPLE2)
 
-MSPLE1$Dosis<-c(1,1,1,1,1,1,1,1,
+MSPLE2$Dosis<-c(1,1,1,1,1,1,1,1,
                 2,2,2,2,2,2,2,2,
                 3,3,3,3,3,3,3,3,
                 4,4,4,4,4,4,4,4)
-MSPLE1["Tratamientos"]<-paste(MSPLE1$NV, MSPLE1$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+MSPLE2["Tratamientos"]<-paste(MSPLE2$NV, MSPLE2$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 
 ```
 
@@ -169,71 +164,71 @@ MSPLE1["Tratamientos"]<-paste(MSPLE1$NV, MSPLE1$Dosis, sep="_") #esto agrega una
 
 ```{r}
 #fecha 0 -plantines- (obntiene el descriptivo y luego añade una columna con la fecha)
-descPT24NOV<-resumir2fat(MSPLE1$Dosis, MSPLE1$NV, MSPLE1$PesoT, MSPLE1$Tratamientos, MSPLE1)
+descPT18May<-resumir2fat(MSPLE2$Dosis, MSPLE2$NV, MSPLE2$PT, MSPLE2$Tratamientos, MSPLE2)
 
 fecha<-c()
 for (i in c(1:14)){
-  fecha<-c(fecha, "2022-11-24")
+  fecha<-c(fecha, "2023-5-18")
 }
 fecha<-as.Date(fecha, format="%Y-%m-%d")
 
-descPT24NOV$FECHA<-fecha
+descPT18May$FECHA<-fecha
 
 
 
 #fecha 1 (ontiene el descriptivo y luego añade una columna con la fecha)
-descPT06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NV, MS06DIC$PesoT, MS06DIC$Tratamientos, MS06DIC)
+descPT30May<-resumir2fat(MS30May$Dosis, MS30May$NV, MS30May$PesoT, MS30May$Tratamientos, MS30May)
 
 fecha<-c()
 for (i in c(1:14)){
-  fecha<-c(fecha, "2022-12-6")
+  fecha<-c(fecha, "2023-5-30")
 }
 fecha<-as.Date(fecha, format="%Y-%m-%d")
 
-descPT06DIC$FECHA<-fecha
+descPT30May$FECHA<-fecha
 
 #fecha 2 (ontiene el descriptivo y luego añade una columna con la fecha)
-descPT20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NV, MS20DIC$PesoT, MS20DIC$Tratamientos, MS20DIC)
+descPT27Jun<-resumir2fat(MS27Jun$Dosis, MS27Jun$NV, MS27Jun$PesoT, MS27Jun$Tratamientos, MS27Jun)
 
 fecha<-c()
 for (i in c(1:14)){
-  fecha<-c(fecha, "2022-12-20")
+  fecha<-c(fecha, "2023-6-27")
 }
 fecha<-as.Date(fecha, format="%Y-%m-%d")
 
-descPT20DIC$FECHA<-fecha
+descPT27Jun$FECHA<-fecha
 
 #fecha 3 (ontiene el descriptivo y luego añade una columna con la fecha)
 
-descPT03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NV, MS03ENE$PesoT, MS03ENE$Tratamientos, MS03ENE)
+descPT06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NV, MS06Jul$PesoT, MS06Jul$Tratamientos, MS06Jul)
 
 fecha<-c()
 for (i in c(1:14)){
-  fecha<-c(fecha, "2023-1-3")
+  fecha<-c(fecha, "2023-7-6")
 }
 fecha<-as.Date(fecha, format="%Y-%m-%d")
 
-descPT03ENE$FECHA<-fecha
+descPT06Jul$FECHA<-fecha
 
 #fecha 4 (ontiene el descriptivo y luego añade una columna con la fecha)
 
-descPT17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NV, MS17ENE$PesoT, MS17ENE$Tratamientos, MS17ENE)
+descPT26Jul<-resumir2fat(MS26Jul$Dosis, MS26Jul$NV, MS26Jul$PesoT, MS26Jul$Tratamientos, MS26Jul)
 
 fecha<-c()
 for (i in c(1:14)){
-  fecha<-c(fecha, "2023-1-17")
+  fecha<-c(fecha, "2023-7-26")
 }
 fecha<-as.Date(fecha, format="%Y-%m-%d")
 
-descPT17ENE$FECHA<-fecha
+descPT26Jul$FECHA<-fecha
 ```
 
 ### Unimos todo en un data frame 
 
 ```{r}
-descPTe1<-rbind(descPT24NOV, descPT06DIC, descPT20DIC, descPT03ENE, descPT17ENE)
+descPTe2<-rbind(descPT18May, descPT30May, descPT27Jun, descPT06Jul, descPT26Jul)
 
-descPTe1
+descPTe2
 ```
 
 ### Grafico Evolución del Peso Total
@@ -242,9 +237,9 @@ descPTe1
 library(ggplot2)
 library(patchwork)
 
-g1<-ggplot(data= descPTe1[descPTe1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
-g2<-ggplot(data= descPTe1[descPTe1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
-g3<-ggplot(data= descPTe1[descPTe1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+g1<-ggplot(data= descPTe2[descPTe2$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+g2<-ggplot(data= descPTe2[descPTe2$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+g3<-ggplot(data= descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
 
 g1
 g2
@@ -255,27 +250,27 @@ g3
 
 ```{r}
 
-TCA1<-(descPT06DIC$medias-descPT24NOV$medias)/as.integer(difftime(descPT06DIC$FECHA, descPT24NOV$FECHA, units='days'))
+TCA1<-(descPT30May$medias-descPT18May$medias)/as.integer(difftime(descPT30May$FECHA, descPT18May$FECHA, units='days'))
 
-TCA2<-(descPT20DIC$medias-descPT06DIC$medias)/as.integer(difftime(descPT20DIC$FECHA, descPT06DIC$FECHA, units='days'))
+TCA2<-(descPT27Jun$medias-descPT30May$medias)/as.integer(difftime(descPT27Jun$FECHA, descPT30May$FECHA, units='days'))
 
-TCA3<-(descPT03ENE$medias-descPT20DIC$medias)/as.integer(difftime(descPT03ENE$FECHA, descPT20DIC$FECHA, units='days'))
+TCA3<-(descPT06Jul$medias-descPT27Jun$medias)/as.integer(difftime(descPT06Jul$FECHA, descPT27Jun$FECHA, units='days'))
 
-TCA4<-(descPT17ENE$medias-descPT03ENE$medias)/as.integer(difftime(descPT17ENE$FECHA, descPT03ENE$FECHA, units='days'))
+TCA4<-(descPT26Jul$medias-descPT06Jul$medias)/as.integer(difftime(descPT26Jul$FECHA, descPT06Jul$FECHA, units='days'))
 
 TCA<-c(TCA1, TCA2, TCA3, TCA4)
-fecha<-c(descPT06DIC$FECHA, 
-         descPT20DIC$FECHA,
-         descPT03ENE$FECHA,
-         descPT17ENE$FECHA)
-ag<-c(descPT06DIC$ag, 
-         descPT20DIC$ag,
-         descPT03ENE$ag,
-         descPT17ENE$ag)
-agrupamientos<-c(descPT06DIC$agrupamientos, 
-         descPT20DIC$agrupamientos,
-         descPT03ENE$agrupamientos,
-         descPT17ENE$agrupamientos)
+fecha<-c(descPT30May$FECHA, 
+         descPT27Jun$FECHA,
+         descPT06Jul$FECHA,
+         descPT26Jul$FECHA)
+ag<-c(descPT30May$ag, 
+         descPT27Jun$ag,
+         descPT06Jul$ag,
+         descPT26Jul$ag)
+agrupamientos<-c(descPT30May$agrupamientos, 
+         descPT27Jun$agrupamientos,
+         descPT06Jul$agrupamientos,
+         descPT26Jul$agrupamientos)
 dfTCA<-data.frame(fecha, ag, agrupamientos, TCA)
 
 dfTCA
@@ -300,13 +295,13 @@ g3
 ## Tasa de Crecimiento RELATIVA 
 
 ```{r}
-TCR1<-(log(descPT06DIC$medias)-log(descPT24NOV$medias))/as.integer(difftime(descPT06DIC$FECHA, descPT24NOV$FECHA, units='days'))
+TCR1<-(log(descPT30May$medias)-log(descPT18May$medias))/as.integer(difftime(descPT30May$FECHA, descPT18May$FECHA, units='days'))
 
-TCR2<-(log(descPT20DIC$medias)-log(descPT06DIC$medias))/as.integer(difftime(descPT20DIC$FECHA, descPT06DIC$FECHA, units='days'))
+TCR2<-(log(descPT27Jun$medias)-log(descPT30May$medias))/as.integer(difftime(descPT27Jun$FECHA, descPT30May$FECHA, units='days'))
 
-TCR3<-(log(descPT03ENE$medias)-log(descPT20DIC$medias))/as.integer(difftime(descPT03ENE$FECHA, descPT20DIC$FECHA, units='days'))
+TCR3<-(log(descPT06Jul$medias)-log(descPT27Jun$medias))/as.integer(difftime(descPT06Jul$FECHA, descPT27Jun$FECHA, units='days'))
 
-TCR4<-(log(descPT17ENE$medias)-log(descPT03ENE$medias))/as.integer(difftime(descPT17ENE$FECHA, descPT03ENE$FECHA, units='days'))
+TCR4<-(log(descPT26Jul$medias)-log(descPT06Jul$medias))/as.integer(difftime(descPT26Jul$FECHA, descPT06Jul$FECHA, units='days'))
 
 TCR<-c(TCR1, TCR2, TCR3, TCR4)
 
@@ -377,11 +372,11 @@ return(MAF)
 
 #### Obtener el modelo para cada fecha
 ```{r}
-modeloAfFecha2<-regModelAF(MS20DIC$Tratamientos, MS20DIC$AS, MS20DIC$HM)
+modeloAfFecha2<-regModelAF(MS27Jun$Tratamientos, MS27Jun$AS, MS27Jun$HM)
 
-modeloAfFecha3<-regModelAF(MS03ENE$Tratamientos, MS03ENE$AS, MS03ENE$HM)
+modeloAfFecha3<-regModelAF(MS06Jul$Tratamientos, MS06Jul$AS, MS06Jul$HM)
 
-modeloAfFecha4<-regModelAF(MS17ENE$Tratamientos, MS17ENE$AS, MS17ENE$HM)
+modeloAfFecha4<-regModelAF(MS26Jul$Tratamientos, MS26Jul$AS, MS26Jul$HM)
 
 ```
 
@@ -408,36 +403,36 @@ for (i in c(1:32)){
 #### Agregaer el area foliar a los data frame
 
 ```{r}
-MS20DIC$A<-calcAf(MS20DIC$HM+MS20DIC$HSM, MS20DIC$Tratamientos, modeloAfFecha2)
+MS27Jun$A<-calcAf(MS27Jun$HM+MS27Jun$HSM, MS27Jun$Tratamientos, modeloAfFecha2)
 
-MS03ENE$A<-calcAf(MS03ENE$HM+MS03ENE$HSM, MS03ENE$Tratamientos, modeloAfFecha3)
+MS06Jul$A<-calcAf(MS06Jul$HM+MS06Jul$HSM, MS06Jul$Tratamientos, modeloAfFecha3)
 
-MS17ENE$A<-calcAf(MS17ENE$HM+MS17ENE$HSM, MS17ENE$Tratamientos, modeloAfFecha4)
+MS26Jul$A<-calcAf(MS26Jul$HM+MS26Jul$HSM, MS26Jul$Tratamientos, modeloAfFecha4)
 
 ```
 
 ### Crear los data frames descriptivos del area foliar
 ```{r}
-descA24NOV<-resumir2fat(MSPLE1$Dosis, MSPLE1$NV, MSPLE1$A, MSPLE1$Tratamientos, MSPLE1)
+descA18May<-resumir2fat(MSPLE2$Dosis, MSPLE2$NV, MSPLE2$A, MSPLE2$Tratamientos, MSPLE2)
 
-descA06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NV, MS06DIC$A, MS06DIC$Tratamientos, MS06DIC)
+descA30May<-resumir2fat(MS30May$Dosis, MS30May$NV, MS30May$A, MS30May$Tratamientos, MS30May)
 
-descA20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NV, MS20DIC$A, MS20DIC$Tratamientos, MS20DIC)
+descA27Jun<-resumir2fat(MS27Jun$Dosis, MS27Jun$NV, MS27Jun$A, MS27Jun$Tratamientos, MS27Jun)
 
-descA03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NV, MS03ENE$A, MS03ENE$Tratamientos, MS03ENE)
+descA06Jul<-resumir2fat(MS06Jul$Dosis, MS06Jul$NV, MS06Jul$A, MS06Jul$Tratamientos, MS06Jul)
 
-descA17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NV, MS17ENE$A, MS17ENE$Tratamientos, MS17ENE)
+descA26Jul<-resumir2fat(MS26Jul$Dosis, MS26Jul$NV, MS26Jul$A, MS26Jul$Tratamientos, MS26Jul)
 ```
 
 
 ### Unirlos al data frame de materia seca
 
 ```{r}
-descPTe1$AREAF<-c(descA24NOV$medias,
-            descA06DIC$medias, 
-            descA20DIC$medias, 
-            descA03ENE$medias, 
-            descA17ENE$medias)
+descPTe2$AREAF<-c(descA18May$medias,
+            descA30May$medias, 
+            descA27Jun$medias, 
+            descA06Jul$medias, 
+            descA26Jul$medias)
 ```
 
 
@@ -448,9 +443,9 @@ descPTe1$AREAF<-c(descA24NOV$medias,
 library(ggplot2)
 library(patchwork)
 
-g1<-ggplot(data= descPTe1[descPTe1$ag=='dosis',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
-g2<-ggplot(data= descPTe1[descPTe1$ag=='variedad',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
-g3<-ggplot(data= descPTe1[descPTe1$ag=='tratamientos',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+g1<-ggplot(data= descPTe2[descPTe2$ag=='dosis',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+g2<-ggplot(data= descPTe2[descPTe2$ag=='variedad',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+g3<-ggplot(data= descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
 
 g1
 g2
@@ -462,13 +457,13 @@ g3
 
 TAL=(P2−P1)/(t1−t2)*(lnA2−lnA1)/(A2−A1)
 ```{r}
-TAL1<-TCA1*((log(descA06DIC$medias)-log(descA24NOV$medias))/(descA06DIC$medias-descA24NOV$medias))
+TAL1<-TCA1*((log(descA30May$medias)-log(descA18May$medias))/(descA30May$medias-descA18May$medias))
 
-TAL2<-TCA2*((log(descA20DIC$medias)-log(descA06DIC$medias))/(descA20DIC$medias-descA06DIC$medias))
+TAL2<-TCA2*((log(descA27Jun$medias)-log(descA30May$medias))/(descA27Jun$medias-descA30May$medias))
 
-TAL3<-TCA3*((log(descA03ENE$medias)-log(descA20DIC$medias))/(descA03ENE$medias-descA20DIC$medias))
+TAL3<-TCA3*((log(descA06Jul$medias)-log(descA27Jun$medias))/(descA06Jul$medias-descA27Jun$medias))
 
-TAL4<-TCA4*((log(descA17ENE$medias)-log(descA03ENE$medias))/(descA17ENE$medias-descA03ENE$medias))
+TAL4<-TCA4*((log(descA26Jul$medias)-log(descA06Jul$medias))/(descA26Jul$medias-descA06Jul$medias))
 
 TAL<-c(TAL1, TAL2, TAL3, TAL4)
 
