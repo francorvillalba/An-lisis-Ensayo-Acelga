@@ -132,12 +132,16 @@ MS17ENE["NV"]<-nv
 
 MS17ENE["Tratamientos"]<-paste(MS17ENE$NV, MS17ENE$Dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
 ```
+
 ### Crear un data frame para los datos de los plantines
 
 ```{r}
 MSPLE1<-read.csv("plantines1.csv", header=TRUE, sep=",", dec=",")
 
 MSPLE1$PesoT<-(MSPLE1$PesoTotal/MSPLE1$plantines)*3
+
+MSPLE1$A<-c(52.850, 40.133, 28.911, 27.625,
+            44.394, 47.834, 37.094, 19.809)
 
 nv<-c()
 
@@ -327,26 +331,29 @@ g3
 
 ## Calculo de la Tasa de Asimilación Líquida
 
-TAL=(P2−P1)/(t1−t2)*(lnA2−lnA1)/(A2−A1)
+
 
 ### Incorporar el Area Foliar al Data Frame
 
 #### Crear una funcion para obtener el modelo para el area foliar en cada fecha
 
 ```{r}
-#creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
-ord <-c() 
-prord<-c()
-pend<-c()
-prpend<-c()
-rsq<-c()
-radj<-c()
 
-#El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado
+regModelAF<- function(trat, AS, HM){
+  #creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
+    ord <-c() 
+    prord<-c()
+    pend<-c()
+    prpend<-c()
+    rsq<-c()
+    radj<-c()
+    tratamientos<-unique(trat)
+    
+    #El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado
 
 for (i in tratamientos){
-  HMT<-MS20DIC$HM[MS20DIC$Tratamientos== i] #PESO HOJAS MEDIDAS DEL TRATAMIENTO I
-  AFT<-MS20DIC$AS[MS20DIC$Tratamientos== i] #AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I
+  HMT<-HM[trat== i] #PESO HOJAS MEDIDAS DEL TRATAMIENTO I
+  AFT<-AS[trat== i] #AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I
   
   regresion<-summary(lm(AFT~HMT)) #SE EJECUTA LA REGRESION
   
@@ -357,26 +364,131 @@ for (i in tratamientos){
   rsq<-c(rsq, regresion$r.squared) #guarda el r^2 del modelo al tratamiento i
   radj<-c(radj, regresion$adj.r.squared) #guarda el r^2 ajustado del modelo para el tratamiento i
 }
+    
+ # creamos un data frame con los vectores
 
-# creamos un data frame con los vectores
+MAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
 
-modelosAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
+return(MAF)
+    
+}
 
-#Vemos el data frame
+```
 
-modelosAF
+#### Obtener el modelo para cada fecha
+```{r}
+modeloAfFecha2<-regModelAF(MS20DIC$Tratamientos, MS20DIC$AS, MS20DIC$HM)
+
+modeloAfFecha3<-regModelAF(MS03ENE$Tratamientos, MS03ENE$AS, MS20DIC$HM)
+
+modeloAfFecha4<-regModelAF(MS17ENE$Tratamientos, MS17ENE$AS, MS17ENE$HM)
+
 ```
 
 
 #### Crear una funcion para calcular el area foliar en cada fecha
+```{r}
+
+calcAf<-function(H, trat, MAF){
+#Se recorre fila por fila calculando PH*PENDIENA + ORDENADA para obtener un vector con el area foliar
+
+areasF<-c()
+
+for (i in c(1:32)){
+  ordenada<-MAF$ord[MAF$tratamientos== trat[i]]
+  pendiente<-MAF$pend[MAF$tratamientos== trat[i]]
+  pesohojas<-H[i]
+  af<-ordenada + pendiente*pesohojas
+  areasF<-c(areasF, af) 
+}
+ return(areasF)  
+}
+
+```
+#### Agregaer el area foliar a los data frame
+
+```{r}
+MS20DIC$A<-calcAf(MS20DIC$HM+MS20DIC$HSM, MS20DIC$Tratamientos, modeloAfFecha2)
+
+MS03ENE$A<-calcAf(MS03ENE$HM+MS03ENE$HSM, MS03ENE$Tratamientos, modeloAfFecha3)
+
+MS17ENE$A<-calcAf(MS17ENE$HM+MS17ENE$HSM, MS17ENE$Tratamientos, modeloAfFecha4)
+
+```
 
 ### Crear los data frames descriptivos del area foliar
+```{r}
+descA24NOV<-resumir2fat(MSPLE1$Dosis, MSPLE1$NV, MSPLE1$A, MSPLE1$Tratamientos, MSPLE1)
+
+descA06DIC<-resumir2fat(MS06DIC$Dosis, MS06DIC$NV, MS06DIC$A, MS06DIC$Tratamientos, MS06DIC)
+
+descA20DIC<-resumir2fat(MS20DIC$Dosis, MS20DIC$NV, MS20DIC$A, MS20DIC$Tratamientos, MS20DIC)
+
+descA03ENE<-resumir2fat(MS03ENE$Dosis, MS03ENE$NV, MS03ENE$A, MS03ENE$Tratamientos, MS03ENE)
+
+descA17ENE<-resumir2fat(MS17ENE$Dosis, MS17ENE$NV, MS17ENE$A, MS17ENE$Tratamientos, MS17ENE)
+```
+
 
 ### Unirlos al data frame de materia seca
 
+```{r}
+descPTe1$AREAF<-c(descA24NOV$medias,
+            descA06DIC$medias, 
+            descA20DIC$medias, 
+            descA03ENE$medias, 
+            descA17ENE$medias)
+```
+
+
 ### Evolucion del Area Foliar con el tiempo
+
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+g1<-ggplot(data= descPTe1[descPTe1$ag=='dosis',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+g2<-ggplot(data= descPTe1[descPTe1$ag=='variedad',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+g3<-ggplot(data= descPTe1[descPTe1$ag=='tratamientos',], aes(FECHA, AREAF, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
 
 ### Calculo de la TAL
 
+TAL=(P2−P1)/(t1−t2)*(lnA2−lnA1)/(A2−A1)
+```{r}
+TAL1<-TCA1*((log(descA06DIC$medias)-log(descA24NOV$medias))/(descA06DIC$medias-descA24NOV$medias))
+
+TAL2<-TCA2*((log(descA20DIC$medias)-log(descA06DIC$medias))/(descA20DIC$medias-descA06DIC$medias))
+
+TAL3<-TCA3*((log(descA03ENE$medias)-log(descA20DIC$medias))/(descA03ENE$medias-descA20DIC$medias))
+
+TAL4<-TCA4*((log(descA17ENE$medias)-log(descA03ENE$medias))/(descA17ENE$medias-descA03ENE$medias))
+
+TAL<-c(TAL1, TAL2, TAL3, TAL4)
+
+
+dfTCA$TAL<-TAL
+```
+
 
 ### Evolución de la TAL
+```{r}
+library(ggplot2)
+library(patchwork)
+
+g1<-ggplot(data= dfTCA[dfTCA$ag=='dosis',], aes(fecha, TAL, color=agrupamientos))+geom_line()
+g2<-ggplot(data= dfTCA[dfTCA$ag=='variedad',], aes(fecha, TAL, color=agrupamientos))+geom_line()
+g3<-ggplot(data= dfTCA[dfTCA$ag=='tratamientos',], aes(fecha, TAL, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+
