@@ -1,0 +1,2791 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Tasas de Crecimiento 1},
+  pdfauthor={Franco Villalba},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Tasas de Crecimiento 1}
+\author{Franco Villalba}
+\date{2024-03-08}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\hypertarget{ensayo-1}{%
+\section{ENSAYO 1}\label{ensayo-1}}
+
+\hypertarget{crear-un-data-frame-con-los-datos-resumidos-por-fecha}{%
+\subsection{CREAR UN DATA FRAME CON LOS DATOS RESUMIDOS POR
+FECHA}\label{crear-un-data-frame-con-los-datos-resumidos-por-fecha}}
+
+\hypertarget{funciuxf3n-para-la-estadistica-descriptiva-de-cada-fecha}{%
+\subsubsection{Función para la estadistica descriptiva de cada
+fecha}\label{funciuxf3n-para-la-estadistica-descriptiva-de-cada-fecha}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resumir2fat}\OtherTok{\textless{}{-}}\ControlFlowTok{function}\NormalTok{(fat1, }
+\NormalTok{                      fat2, }
+\NormalTok{                      resp,}
+\NormalTok{                      trat,}
+\NormalTok{                      df}
+\NormalTok{)\{}
+\NormalTok{  nf1}\OtherTok{\textless{}{-}}\FunctionTok{unique}\NormalTok{(fat1)}
+\NormalTok{  nf2}\OtherTok{\textless{}{-}}\FunctionTok{unique}\NormalTok{(fat2)}
+\NormalTok{  alltrat}\OtherTok{\textless{}{-}}\FunctionTok{unique}\NormalTok{(trat)}
+  
+\NormalTok{  medias}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{  Desvio\_Standar}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{  numero}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{  ag}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+  
+  \ControlFlowTok{for}\NormalTok{ (f1 }\ControlFlowTok{in}\NormalTok{ nf1)\{}
+\NormalTok{    ag}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(ag, }\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{)}
+\NormalTok{    medias}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(medias, }\FunctionTok{mean}\NormalTok{(resp[fat1}\SpecialCharTok{==}\NormalTok{f1]))}
+\NormalTok{    Desvio\_Standar}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Desvio\_Standar, }\FunctionTok{sd}\NormalTok{(resp[fat1}\SpecialCharTok{==}\NormalTok{f1]))}
+\NormalTok{    numero}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(numero, }\FunctionTok{sum}\NormalTok{(}\FunctionTok{with}\NormalTok{(df, fat1}\SpecialCharTok{==}\NormalTok{f1)))}
+\NormalTok{  \}}
+ 
+  \ControlFlowTok{for}\NormalTok{ (f2 }\ControlFlowTok{in}\NormalTok{ nf2)\{}
+\NormalTok{    ag}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(ag, }\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{)}
+\NormalTok{    medias}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(medias, }\FunctionTok{mean}\NormalTok{(resp[fat2}\SpecialCharTok{==}\NormalTok{f2]))}
+\NormalTok{    Desvio\_Standar}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Desvio\_Standar, }\FunctionTok{sd}\NormalTok{(resp[fat2}\SpecialCharTok{==}\NormalTok{f2]))}
+\NormalTok{    numero}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(numero, }\FunctionTok{sum}\NormalTok{(}\FunctionTok{with}\NormalTok{(df, fat2}\SpecialCharTok{==}\NormalTok{f2)))}
+\NormalTok{  \}}
+  \ControlFlowTok{for}\NormalTok{ (t }\ControlFlowTok{in}\NormalTok{ alltrat)\{}
+\NormalTok{    ag}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(ag, }\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{)}
+\NormalTok{    medias}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(medias, }\FunctionTok{mean}\NormalTok{(resp[trat}\SpecialCharTok{==}\NormalTok{t]))}
+\NormalTok{    Desvio\_Standar}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Desvio\_Standar, }\FunctionTok{sd}\NormalTok{(resp[trat}\SpecialCharTok{==}\NormalTok{t]))}
+\NormalTok{    numero}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(numero, }\FunctionTok{sum}\NormalTok{(}\FunctionTok{with}\NormalTok{(df, trat}\SpecialCharTok{==}\NormalTok{t)))}
+\NormalTok{  \}}
+\NormalTok{  agrupamientos}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nf1, nf2, alltrat)}
+\NormalTok{  CV}\OtherTok{\textless{}{-}}\NormalTok{(Desvio\_Standar}\SpecialCharTok{/}\NormalTok{medias)}\SpecialCharTok{*}\DecValTok{100}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(ag, agrupamientos, numero, medias, Desvio\_Standar, CV))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{importar-los-datos-de-las-4-fechas}{%
+\subsubsection{Importar los datos de las 4
+fechas}\label{importar-los-datos-de-las-4-fechas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Fecha 1}
+\NormalTok{MS06DIC}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"MS06DIC.csv"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{, }\AttributeTok{dec=}\StringTok{","}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ MS06DIC}\SpecialCharTok{$}\NormalTok{Variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{MS06DIC[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{MS06DIC[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(MS06DIC}\SpecialCharTok{$}\NormalTok{NV, MS06DIC}\SpecialCharTok{$}\NormalTok{Dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+
+\DocumentationTok{\#\#\# Fecha 2}
+\NormalTok{MS20DIC}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"MS20DIC.csv"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{, }\AttributeTok{dec=}\StringTok{","}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ MS20DIC}\SpecialCharTok{$}\NormalTok{Variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{MS20DIC[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{MS20DIC[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(MS20DIC}\SpecialCharTok{$}\NormalTok{NV, MS20DIC}\SpecialCharTok{$}\NormalTok{Dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+
+\DocumentationTok{\#\#\# Fecha 3}
+\NormalTok{MS03ENE}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"MS03ENE.csv"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{, }\AttributeTok{dec=}\StringTok{","}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ MS03ENE}\SpecialCharTok{$}\NormalTok{Variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{MS03ENE[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{MS03ENE[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(MS03ENE}\SpecialCharTok{$}\NormalTok{NV, MS03ENE}\SpecialCharTok{$}\NormalTok{Dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+
+\CommentTok{\# Fecha 4}
+\NormalTok{MS17ENE}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"MS17ENE.csv"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{, }\AttributeTok{dec=}\StringTok{","}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ MS17ENE}\SpecialCharTok{$}\NormalTok{Variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{MS17ENE[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{MS17ENE[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(MS17ENE}\SpecialCharTok{$}\NormalTok{NV, MS17ENE}\SpecialCharTok{$}\NormalTok{Dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{crear-un-data-frame-para-los-datos-de-los-plantines}{%
+\subsubsection{Crear un data frame para los datos de los
+plantines}\label{crear-un-data-frame-para-los-datos-de-los-plantines}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MSPLE1}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"plantines1.csv"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{","}\NormalTok{, }\AttributeTok{dec=}\StringTok{","}\NormalTok{)}
+
+\NormalTok{MSPLE1}\SpecialCharTok{$}\NormalTok{PesoT}\OtherTok{\textless{}{-}}\NormalTok{(MSPLE1}\SpecialCharTok{$}\NormalTok{PesoTotal}\SpecialCharTok{/}\NormalTok{MSPLE1}\SpecialCharTok{$}\NormalTok{plantines)}\SpecialCharTok{*}\DecValTok{3}
+
+\NormalTok{MSPLE1}\SpecialCharTok{$}\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{52.850}\NormalTok{, }\FloatTok{40.133}\NormalTok{, }\FloatTok{28.911}\NormalTok{, }\FloatTok{27.625}\NormalTok{,}
+            \FloatTok{44.394}\NormalTok{, }\FloatTok{47.834}\NormalTok{, }\FloatTok{37.094}\NormalTok{, }\FloatTok{19.809}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ MSPLE1}\SpecialCharTok{$}\NormalTok{Variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{MSPLE1[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{MSPLE1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(MSPLE1, MSPLE1, MSPLE1, MSPLE1)}
+
+\NormalTok{MSPLE1}\SpecialCharTok{$}\NormalTok{Dosis}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}
+                \DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}
+                \DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}
+                \DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{)}
+\NormalTok{MSPLE1[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(MSPLE1}\SpecialCharTok{$}\NormalTok{NV, MSPLE1}\SpecialCharTok{$}\NormalTok{Dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{obtener-la-estadistica-descriptiva-de-la-ms-total-de-cada-fecha}{%
+\subsubsection{Obtener la Estadistica descriptiva de la MS Total de cada
+fecha}\label{obtener-la-estadistica-descriptiva-de-la-ms-total-de-cada-fecha}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#fecha 0 {-}plantines{-} (obntiene el descriptivo y luego añade una columna con la fecha)}
+\NormalTok{descPT24NOV}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MSPLE1}\SpecialCharTok{$}\NormalTok{Dosis, MSPLE1}\SpecialCharTok{$}\NormalTok{NV, MSPLE1}\SpecialCharTok{$}\NormalTok{PesoT, MSPLE1}\SpecialCharTok{$}\NormalTok{Tratamientos, MSPLE1)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}11{-}24"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descPT24NOV}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+
+
+\CommentTok{\#fecha 1 (ontiene el descriptivo y luego añade una columna con la fecha)}
+\NormalTok{descPT06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS06DIC}\SpecialCharTok{$}\NormalTok{Dosis, MS06DIC}\SpecialCharTok{$}\NormalTok{NV, MS06DIC}\SpecialCharTok{$}\NormalTok{PesoT, MS06DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, MS06DIC)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2 (ontiene el descriptivo y luego añade una columna con la fecha)}
+\NormalTok{descPT20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS20DIC}\SpecialCharTok{$}\NormalTok{Dosis, MS20DIC}\SpecialCharTok{$}\NormalTok{NV, MS20DIC}\SpecialCharTok{$}\NormalTok{PesoT, MS20DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, MS20DIC)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3 (ontiene el descriptivo y luego añade una columna con la fecha)}
+
+\NormalTok{descPT03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS03ENE}\SpecialCharTok{$}\NormalTok{Dosis, MS03ENE}\SpecialCharTok{$}\NormalTok{NV, MS03ENE}\SpecialCharTok{$}\NormalTok{PesoT, MS03ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS03ENE)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 4 (ontiene el descriptivo y luego añade una columna con la fecha)}
+
+\NormalTok{descPT17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS17ENE}\SpecialCharTok{$}\NormalTok{Dosis, MS17ENE}\SpecialCharTok{$}\NormalTok{NV, MS17ENE}\SpecialCharTok{$}\NormalTok{PesoT, MS17ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS17ENE)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descPT17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{unimos-todo-en-un-data-frame}{%
+\subsubsection{Unimos todo en un data
+frame}\label{unimos-todo-en-un-data-frame}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{descPTe1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descPT24NOV, descPT06DIC, descPT20DIC, descPT03ENE, descPT17ENE)}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA
+## 1  2022-11-24
+## 2  2022-11-24
+## 3  2022-11-24
+## 4  2022-11-24
+## 5  2022-11-24
+## 6  2022-11-24
+## 7  2022-11-24
+## 8  2022-11-24
+## 9  2022-11-24
+## 10 2022-11-24
+## 11 2022-11-24
+## 12 2022-11-24
+## 13 2022-11-24
+## 14 2022-11-24
+## 15 2022-12-06
+## 16 2022-12-06
+## 17 2022-12-06
+## 18 2022-12-06
+## 19 2022-12-06
+## 20 2022-12-06
+## 21 2022-12-06
+## 22 2022-12-06
+## 23 2022-12-06
+## 24 2022-12-06
+## 25 2022-12-06
+## 26 2022-12-06
+## 27 2022-12-06
+## 28 2022-12-06
+## 29 2022-12-20
+## 30 2022-12-20
+## 31 2022-12-20
+## 32 2022-12-20
+## 33 2022-12-20
+## 34 2022-12-20
+## 35 2022-12-20
+## 36 2022-12-20
+## 37 2022-12-20
+## 38 2022-12-20
+## 39 2022-12-20
+## 40 2022-12-20
+## 41 2022-12-20
+## 42 2022-12-20
+## 43 2023-01-03
+## 44 2023-01-03
+## 45 2023-01-03
+## 46 2023-01-03
+## 47 2023-01-03
+## 48 2023-01-03
+## 49 2023-01-03
+## 50 2023-01-03
+## 51 2023-01-03
+## 52 2023-01-03
+## 53 2023-01-03
+## 54 2023-01-03
+## 55 2023-01-03
+## 56 2023-01-03
+## 57 2023-01-17
+## 58 2023-01-17
+## 59 2023-01-17
+## 60 2023-01-17
+## 61 2023-01-17
+## 62 2023-01-17
+## 63 2023-01-17
+## 64 2023-01-17
+## 65 2023-01-17
+## 66 2023-01-17
+## 67 2023-01-17
+## 68 2023-01-17
+## 69 2023-01-17
+## 70 2023-01-17
+\end{verbatim}
+
+\hypertarget{grafico-evoluciuxf3n-del-peso-total}{%
+\subsubsection{Grafico Evolución del Peso
+Total}\label{grafico-evoluciuxf3n-del-peso-total}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(patchwork)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'patchwork' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\hypertarget{tasas-de-crecimiento-absoluta}{%
+\subsection{Tasas de crecimiento
+ABSOLUTA}\label{tasas-de-crecimiento-absoluta}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TCA1}\OtherTok{\textless{}{-}}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descPT24NOV}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA, descPT24NOV}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCA2}\OtherTok{\textless{}{-}}\NormalTok{(descPT20DIC}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descPT06DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA, descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCA3}\OtherTok{\textless{}{-}}\NormalTok{(descPT03ENE}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descPT20DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA, descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCA4}\OtherTok{\textless{}{-}}\NormalTok{(descPT17ENE}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descPT03ENE}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT17ENE}\SpecialCharTok{$}\NormalTok{FECHA, descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCA}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(TCA1, TCA2, TCA3, TCA4)}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA, }
+\NormalTok{         descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA,}
+\NormalTok{         descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA,}
+\NormalTok{         descPT17ENE}\SpecialCharTok{$}\NormalTok{FECHA)}
+\NormalTok{ag}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{ag, }
+\NormalTok{         descPT20DIC}\SpecialCharTok{$}\NormalTok{ag,}
+\NormalTok{         descPT03ENE}\SpecialCharTok{$}\NormalTok{ag,}
+\NormalTok{         descPT17ENE}\SpecialCharTok{$}\NormalTok{ag)}
+\NormalTok{agrupamientos}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{agrupamientos, }
+\NormalTok{         descPT20DIC}\SpecialCharTok{$}\NormalTok{agrupamientos,}
+\NormalTok{         descPT03ENE}\SpecialCharTok{$}\NormalTok{agrupamientos,}
+\NormalTok{         descPT17ENE}\SpecialCharTok{$}\NormalTok{agrupamientos)}
+\NormalTok{dfTCA}\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(fecha, ag, agrupamientos, TCA)}
+
+\NormalTok{dfTCA}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         fecha           ag agrupamientos        TCA
+## 1  2022-12-06        dosis             1 0.06157396
+## 2  2022-12-06        dosis             2 0.06824062
+## 3  2022-12-06        dosis             3 0.07334479
+## 4  2022-12-06        dosis             4 0.05594896
+## 5  2022-12-06     variedad            PA 0.06096042
+## 6  2022-12-06     variedad            PV 0.06859375
+## 7  2022-12-06 tratamientos          PA_1 0.06153333
+## 8  2022-12-06 tratamientos          PA_2 0.06619792
+## 9  2022-12-06 tratamientos          PA_3 0.04965833
+## 10 2022-12-06 tratamientos          PA_4 0.06661458
+## 11 2022-12-06 tratamientos          PV_1 0.06153333
+## 12 2022-12-06 tratamientos          PV_2 0.07036458
+## 13 2022-12-06 tratamientos          PV_3 0.09695000
+## 14 2022-12-06 tratamientos          PV_4 0.04536458
+## 15 2022-12-20        dosis             4 0.41160714
+## 16 2022-12-20        dosis             3 0.45178571
+## 17 2022-12-20        dosis             1 0.43991071
+## 18 2022-12-20        dosis             2 0.51348214
+## 19 2022-12-20     variedad            PA 0.33851628
+## 20 2022-12-20     variedad            PV 0.58573214
+## 21 2022-12-20 tratamientos          PA_4 0.33392857
+## 22 2022-12-20 tratamientos          PV_4 0.48535714
+## 23 2022-12-20 tratamientos          PA_3 0.41928571
+## 24 2022-12-20 tratamientos          PV_3 0.50160714
+## 25 2022-12-20 tratamientos          PA_1 0.30000000
+## 26 2022-12-20 tratamientos          PV_2 0.69125000
+## 27 2022-12-20 tratamientos          PA_2 0.28821429
+## 28 2022-12-20 tratamientos          PV_1 0.71392857
+## 29 2023-01-03        dosis             4 1.17401786
+## 30 2023-01-03        dosis             3 1.23625000
+## 31 2023-01-03        dosis             1 0.94794643
+## 32 2023-01-03        dosis             2 0.59223214
+## 33 2023-01-03     variedad            PA 0.74138655
+## 34 2023-01-03     variedad            PV 1.26666667
+## 35 2023-01-03 tratamientos          PA_4 0.79178571
+## 36 2023-01-03 tratamientos          PV_4 1.55625000
+## 37 2023-01-03 tratamientos          PA_3 0.98410714
+## 38 2023-01-03 tratamientos          PV_3 1.48839286
+## 39 2023-01-03 tratamientos          PA_1 0.77157143
+## 40 2023-01-03 tratamientos          PV_2 0.77392857
+## 41 2023-01-03 tratamientos          PA_2 0.41053571
+## 42 2023-01-03 tratamientos          PV_1 1.24190476
+## 43 2023-01-17        dosis             4 1.36383929
+## 44 2023-01-17        dosis             3 1.33267857
+## 45 2023-01-17        dosis             1 1.50232143
+## 46 2023-01-17        dosis             2 1.62401786
+## 47 2023-01-17     variedad            PA 1.77357143
+## 48 2023-01-17     variedad            PV 1.09547619
+## 49 2023-01-17 tratamientos          PA_4 1.80857143
+## 50 2023-01-17 tratamientos          PV_4 0.91910714
+## 51 2023-01-17 tratamientos          PA_3 1.81928571
+## 52 2023-01-17 tratamientos          PV_3 0.84607143
+## 53 2023-01-17 tratamientos          PA_1 1.72471429
+## 54 2023-01-17 tratamientos          PV_2 1.49410714
+## 55 2023-01-17 tratamientos          PA_2 1.75392857
+## 56 2023-01-17 tratamientos          PV_1 1.13166667
+\end{verbatim}
+
+\hypertarget{graficos-con-la-tasa-de-crecimiento-absoluta}{%
+\subsubsection{Graficos con la Tasa de Crecimiento
+Absoluta}\label{graficos-con-la-tasa-de-crecimiento-absoluta}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCA, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCA, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCA, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-8-3.pdf}
+
+\hypertarget{tasa-de-crecimiento-relativa}{%
+\subsection{Tasa de Crecimiento
+RELATIVA}\label{tasa-de-crecimiento-relativa}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TCR1}\OtherTok{\textless{}{-}}\NormalTok{(}\FunctionTok{log}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descPT24NOV}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA, descPT24NOV}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCR2}\OtherTok{\textless{}{-}}\NormalTok{(}\FunctionTok{log}\NormalTok{(descPT20DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descPT06DIC}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA, descPT06DIC}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCR3}\OtherTok{\textless{}{-}}\NormalTok{(}\FunctionTok{log}\NormalTok{(descPT03ENE}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descPT20DIC}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA, descPT20DIC}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCR4}\OtherTok{\textless{}{-}}\NormalTok{(}\FunctionTok{log}\NormalTok{(descPT17ENE}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descPT03ENE}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(descPT17ENE}\SpecialCharTok{$}\NormalTok{FECHA, descPT03ENE}\SpecialCharTok{$}\NormalTok{FECHA, }\AttributeTok{units=}\StringTok{\textquotesingle{}days\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{TCR}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(TCR1, TCR2, TCR3, TCR4)}
+
+
+\NormalTok{dfTCA}\SpecialCharTok{$}\NormalTok{TCR}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(TCR)}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#grafico Tasas de Crecimiento Relativas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCR, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCR, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TCR, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-10-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-10-3.pdf}
+
+\hypertarget{calculo-de-la-tasa-de-asimilaciuxf3n-luxedquida}{%
+\subsection{Calculo de la Tasa de Asimilación
+Líquida}\label{calculo-de-la-tasa-de-asimilaciuxf3n-luxedquida}}
+
+\hypertarget{incorporar-el-area-foliar-al-data-frame}{%
+\subsubsection{Incorporar el Area Foliar al Data
+Frame}\label{incorporar-el-area-foliar-al-data-frame}}
+
+\hypertarget{crear-una-funcion-para-obtener-el-modelo-para-el-area-foliar-en-cada-fecha}{%
+\paragraph{Crear una funcion para obtener el modelo para el area foliar
+en cada
+fecha}\label{crear-una-funcion-para-obtener-el-modelo-para-el-area-foliar-en-cada-fecha}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{regModelAF}\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(trat, AS, HM)\{}
+  \CommentTok{\#creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r\^{}2 y r\^{}2 ajustado del modelo}
+\NormalTok{    ord }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{() }
+\NormalTok{    prord}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{    pend}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{    prpend}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{    rsq}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{    radj}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\NormalTok{    tratamientos}\OtherTok{\textless{}{-}}\FunctionTok{unique}\NormalTok{(trat)}
+    
+    \CommentTok{\#El ciclo FOR va ir realizando una regresion por CADA TRATAMIENTO y guardando los datos en cada vector creado}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ tratamientos)\{}
+\NormalTok{  HMT}\OtherTok{\textless{}{-}}\NormalTok{HM[trat}\SpecialCharTok{==}\NormalTok{ i] }\CommentTok{\#PESO HOJAS MEDIDAS DEL TRATAMIENTO I}
+\NormalTok{  AFT}\OtherTok{\textless{}{-}}\NormalTok{AS[trat}\SpecialCharTok{==}\NormalTok{ i] }\CommentTok{\#AREA FOLIAR DE LAS HOJAS MEDIDAS DEL TRATAMIENTO I}
+  
+\NormalTok{  regresion}\OtherTok{\textless{}{-}}\FunctionTok{summary}\NormalTok{(}\FunctionTok{lm}\NormalTok{(AFT}\SpecialCharTok{\textasciitilde{}}\NormalTok{HMT)) }\CommentTok{\#SE EJECUTA LA REGRESION}
+  
+\NormalTok{  ord}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(ord, regresion}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]) }\CommentTok{\#guarda el intercept del tratamiento i en un vector}
+\NormalTok{  prord}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(prord, regresion}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{]) }\CommentTok{\#guarda el coeficiente de pearson de la ordenada para el tratamiento i}
+\NormalTok{  pend}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(pend, regresion}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{]) }\CommentTok{\#guarda la pendiente del tratamiento i en un vector}
+\NormalTok{  prpend}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(prpend, regresion}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]) }\CommentTok{\#guarda el coeficiente de pearson de la pendienyte en el tratamiento i}
+\NormalTok{  rsq}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(rsq, regresion}\SpecialCharTok{$}\NormalTok{r.squared) }\CommentTok{\#guarda el r\^{}2 del modelo al tratamiento i}
+\NormalTok{  radj}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(radj, regresion}\SpecialCharTok{$}\NormalTok{adj.r.squared) }\CommentTok{\#guarda el r\^{}2 ajustado del modelo para el tratamiento i}
+\NormalTok{\}}
+    
+ \CommentTok{\# creamos un data frame con los vectores}
+
+\NormalTok{MAF}\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(tratamientos, ord, prord, pend, prpend, rsq, radj)}
+
+\FunctionTok{return}\NormalTok{(MAF)}
+    
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{obtener-el-modelo-para-cada-fecha}{%
+\paragraph{Obtener el modelo para cada
+fecha}\label{obtener-el-modelo-para-cada-fecha}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modeloAfFecha2}\OtherTok{\textless{}{-}}\FunctionTok{regModelAF}\NormalTok{(MS20DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, MS20DIC}\SpecialCharTok{$}\NormalTok{AS, MS20DIC}\SpecialCharTok{$}\NormalTok{HM)}
+
+\NormalTok{modeloAfFecha3}\OtherTok{\textless{}{-}}\FunctionTok{regModelAF}\NormalTok{(MS03ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS03ENE}\SpecialCharTok{$}\NormalTok{AS, MS03ENE}\SpecialCharTok{$}\NormalTok{HM)}
+
+\NormalTok{modeloAfFecha4}\OtherTok{\textless{}{-}}\FunctionTok{regModelAF}\NormalTok{(MS17ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS17ENE}\SpecialCharTok{$}\NormalTok{AS, MS17ENE}\SpecialCharTok{$}\NormalTok{HM)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{crear-una-funcion-para-calcular-el-area-foliar-en-cada-fecha}{%
+\paragraph{Crear una funcion para calcular el area foliar en cada
+fecha}\label{crear-una-funcion-para-calcular-el-area-foliar-en-cada-fecha}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{calcAf}\OtherTok{\textless{}{-}}\ControlFlowTok{function}\NormalTok{(H, trat, MAF)\{}
+\CommentTok{\#Se recorre fila por fila calculando PH*PENDIENA + ORDENADA para obtener un vector con el area foliar}
+
+\NormalTok{areasF}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{32}\NormalTok{))\{}
+\NormalTok{  ordenada}\OtherTok{\textless{}{-}}\NormalTok{MAF}\SpecialCharTok{$}\NormalTok{ord[MAF}\SpecialCharTok{$}\NormalTok{tratamientos}\SpecialCharTok{==}\NormalTok{ trat[i]]}
+\NormalTok{  pendiente}\OtherTok{\textless{}{-}}\NormalTok{MAF}\SpecialCharTok{$}\NormalTok{pend[MAF}\SpecialCharTok{$}\NormalTok{tratamientos}\SpecialCharTok{==}\NormalTok{ trat[i]]}
+\NormalTok{  pesohojas}\OtherTok{\textless{}{-}}\NormalTok{H[i]}
+\NormalTok{  af}\OtherTok{\textless{}{-}}\NormalTok{ordenada }\SpecialCharTok{+}\NormalTok{ pendiente}\SpecialCharTok{*}\NormalTok{pesohojas}
+\NormalTok{  areasF}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(areasF, af) }
+\NormalTok{\}}
+ \FunctionTok{return}\NormalTok{(areasF)  }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{agregaer-el-area-foliar-a-los-data-frame}{%
+\paragraph{Agregaer el area foliar a los data
+frame}\label{agregaer-el-area-foliar-a-los-data-frame}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MS20DIC}\SpecialCharTok{$}\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{calcAf}\NormalTok{(MS20DIC}\SpecialCharTok{$}\NormalTok{HM}\SpecialCharTok{+}\NormalTok{MS20DIC}\SpecialCharTok{$}\NormalTok{HSM, MS20DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, modeloAfFecha2)}
+
+\NormalTok{MS03ENE}\SpecialCharTok{$}\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{calcAf}\NormalTok{(MS03ENE}\SpecialCharTok{$}\NormalTok{HM}\SpecialCharTok{+}\NormalTok{MS03ENE}\SpecialCharTok{$}\NormalTok{HSM, MS03ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, modeloAfFecha3)}
+
+\NormalTok{MS17ENE}\SpecialCharTok{$}\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{calcAf}\NormalTok{(MS17ENE}\SpecialCharTok{$}\NormalTok{HM}\SpecialCharTok{+}\NormalTok{MS17ENE}\SpecialCharTok{$}\NormalTok{HSM, MS17ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, modeloAfFecha4)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{crear-los-data-frames-descriptivos-del-area-foliar}{%
+\subsubsection{Crear los data frames descriptivos del area
+foliar}\label{crear-los-data-frames-descriptivos-del-area-foliar}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{descA24NOV}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MSPLE1}\SpecialCharTok{$}\NormalTok{Dosis, MSPLE1}\SpecialCharTok{$}\NormalTok{NV, MSPLE1}\SpecialCharTok{$}\NormalTok{A, MSPLE1}\SpecialCharTok{$}\NormalTok{Tratamientos, MSPLE1)}
+
+\NormalTok{descA06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS06DIC}\SpecialCharTok{$}\NormalTok{Dosis, MS06DIC}\SpecialCharTok{$}\NormalTok{NV, MS06DIC}\SpecialCharTok{$}\NormalTok{A, MS06DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, MS06DIC)}
+
+\NormalTok{descA20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS20DIC}\SpecialCharTok{$}\NormalTok{Dosis, MS20DIC}\SpecialCharTok{$}\NormalTok{NV, MS20DIC}\SpecialCharTok{$}\NormalTok{A, MS20DIC}\SpecialCharTok{$}\NormalTok{Tratamientos, MS20DIC)}
+
+\NormalTok{descA03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS03ENE}\SpecialCharTok{$}\NormalTok{Dosis, MS03ENE}\SpecialCharTok{$}\NormalTok{NV, MS03ENE}\SpecialCharTok{$}\NormalTok{A, MS03ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS03ENE)}
+
+\NormalTok{descA17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(MS17ENE}\SpecialCharTok{$}\NormalTok{Dosis, MS17ENE}\SpecialCharTok{$}\NormalTok{NV, MS17ENE}\SpecialCharTok{$}\NormalTok{A, MS17ENE}\SpecialCharTok{$}\NormalTok{Tratamientos, MS17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{unirlos-al-data-frame-de-materia-seca}{%
+\subsubsection{Unirlos al data frame de materia
+seca}\label{unirlos-al-data-frame-de-materia-seca}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{AREAF}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(descA24NOV}\SpecialCharTok{$}\NormalTok{medias,}
+\NormalTok{            descA06DIC}\SpecialCharTok{$}\NormalTok{medias, }
+\NormalTok{            descA20DIC}\SpecialCharTok{$}\NormalTok{medias, }
+\NormalTok{            descA03ENE}\SpecialCharTok{$}\NormalTok{medias, }
+\NormalTok{            descA17ENE}\SpecialCharTok{$}\NormalTok{medias)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evolucion-del-area-foliar-con-el-tiempo}{%
+\subsubsection{Evolucion del Area Foliar con el
+tiempo}\label{evolucion-del-area-foliar-con-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, AREAF, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, AREAF, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, AREAF, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-17-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-17-3.pdf}
+
+\hypertarget{calculo-de-la-tal}{%
+\subsubsection{Calculo de la TAL}\label{calculo-de-la-tal}}
+
+TAL=(P2−P1)/(t1−t2)*(lnA2−lnA1)/(A2−A1)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TAL1}\OtherTok{\textless{}{-}}\NormalTok{TCA1}\SpecialCharTok{*}\NormalTok{((}\FunctionTok{log}\NormalTok{(descA06DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descA24NOV}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\NormalTok{(descA06DIC}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descA24NOV}\SpecialCharTok{$}\NormalTok{medias))}
+
+\NormalTok{TAL2}\OtherTok{\textless{}{-}}\NormalTok{TCA2}\SpecialCharTok{*}\NormalTok{((}\FunctionTok{log}\NormalTok{(descA20DIC}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descA06DIC}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\NormalTok{(descA20DIC}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descA06DIC}\SpecialCharTok{$}\NormalTok{medias))}
+
+\NormalTok{TAL3}\OtherTok{\textless{}{-}}\NormalTok{TCA3}\SpecialCharTok{*}\NormalTok{((}\FunctionTok{log}\NormalTok{(descA03ENE}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descA20DIC}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\NormalTok{(descA03ENE}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descA20DIC}\SpecialCharTok{$}\NormalTok{medias))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in log(descA03ENE$medias): Se han producido NaNs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TAL4}\OtherTok{\textless{}{-}}\NormalTok{TCA4}\SpecialCharTok{*}\NormalTok{((}\FunctionTok{log}\NormalTok{(descA17ENE}\SpecialCharTok{$}\NormalTok{medias)}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(descA03ENE}\SpecialCharTok{$}\NormalTok{medias))}\SpecialCharTok{/}\NormalTok{(descA17ENE}\SpecialCharTok{$}\NormalTok{medias}\SpecialCharTok{{-}}\NormalTok{descA03ENE}\SpecialCharTok{$}\NormalTok{medias))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in log(descA03ENE$medias): Se han producido NaNs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TAL}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(TAL1, TAL2, TAL3, TAL4)}
+
+
+\NormalTok{dfTCA}\SpecialCharTok{$}\NormalTok{TAL}\OtherTok{\textless{}{-}}\NormalTok{TAL}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{evoluciuxf3n-de-la-tal}{%
+\subsubsection{Evolución de la TAL}\label{evoluciuxf3n-de-la-tal}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TAL, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TAL, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ dfTCA[dfTCA}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(fecha, TAL, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-19-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-19-3.pdf}
+
+\hypertarget{acumulo-de-nutrientes}{%
+\subsection{Acumulo de Nutrientes}\label{acumulo-de-nutrientes}}
+
+\hypertarget{importar-los-datos}{%
+\subsubsection{Importar los datos}\label{importar-los-datos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NE1}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}NutrientesE1.csv\textquotesingle{}}\NormalTok{, }\AttributeTok{header=}\NormalTok{T, }\AttributeTok{sep=}\StringTok{\textquotesingle{},\textquotesingle{}}\NormalTok{, }\AttributeTok{dec=}\StringTok{\textquotesingle{},\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ NE1}\SpecialCharTok{$}\NormalTok{variedad)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PA\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    nv}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(nv, }\StringTok{\textquotesingle{}PV\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{NE1[}\StringTok{"NV"}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{nv}
+
+\NormalTok{NE1[}\StringTok{"Tratamientos"}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{paste}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{NV, NE1}\SpecialCharTok{$}\NormalTok{dosis, }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{) }\CommentTok{\#esto agrega una columna con el nombre del tratamiento}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{analisis-del-nitrogeno}{%
+\subsection{Analisis del Nitrogeno}\label{analisis-del-nitrogeno}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Obtener una estadistica descriptiva del nitrogeno para cada fecha}
+
+\NormalTok{NE1}\SpecialCharTok{$}\NormalTok{Medicion}\OtherTok{\textless{}{-}}\FunctionTok{trimws}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{Medicion)}
+
+\CommentTok{\#fecha 1}
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"PRIMERA"}\NormalTok{,]}
+
+\NormalTok{descN06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{N., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descN06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"SEGUNDA"}\NormalTok{,]}
+
+\NormalTok{descN20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{N., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descN20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"TERCERA"}\NormalTok{,]}
+
+\NormalTok{descN03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{N., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descN03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+ 
+\CommentTok{\#fecha 4 }
+\NormalTok{  NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"CUARTA"}\NormalTok{,]}
+
+\NormalTok{descN17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{N., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descN17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#unir en un data frame}
+
+\NormalTok{descNe1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descN06DIC,}
+\NormalTok{               descN20DIC,}
+\NormalTok{               descN03ENE,}
+\NormalTok{               descN17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-concentraciuxf3n-de-n-en-el-tiempo}{%
+\subsubsection{plot concentración de N en el
+tiempo}\label{plot-concentraciuxf3n-de-n-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descNe1[descNe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descNe1[descNe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descNe1[descNe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-22-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-22-3.pdf}
+
+\hypertarget{acumulacion-de-n-en-el-tiempo}{%
+\subsubsection{acumulacion de N en el
+tiempo}\label{acumulacion-de-n-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concN}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{,}
+\NormalTok{         descNe1}\SpecialCharTok{$}\NormalTok{medias)}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Nx100}\OtherTok{\textless{}{-}}\NormalTok{concN}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Nacu}\OtherTok{\textless{}{-}}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Nx100}\SpecialCharTok{*}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{medias}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA      AREAF  Nx100       Nacu
+## 1  2022-11-24   37.33125     NA         NA
+## 2  2022-11-24   37.33125     NA         NA
+## 3  2022-11-24   37.33125     NA         NA
+## 4  2022-11-24   37.33125     NA         NA
+## 5  2022-11-24   37.37975     NA         NA
+## 6  2022-11-24   37.28275     NA         NA
+## 7  2022-11-24   37.37975     NA         NA
+## 8  2022-11-24   37.28275     NA         NA
+## 9  2022-11-24   37.37975     NA         NA
+## 10 2022-11-24   37.28275     NA         NA
+## 11 2022-11-24   37.37975     NA         NA
+## 12 2022-11-24   37.28275     NA         NA
+## 13 2022-11-24   37.37975     NA         NA
+## 14 2022-11-24   37.28275     NA         NA
+## 15 2022-12-06  114.65600 4.3400   3.472000
+## 16 2022-12-06  231.54763 4.3500   3.828000
+## 17 2022-12-06  209.42825 4.1700   3.925013
+## 18 2022-12-06  200.36662 4.4550   3.263288
+## 19 2022-12-06  167.15500 4.3225   3.428283
+## 20 2022-12-06  210.84425 4.3350   3.831056
+## 21 2022-12-06  147.95375 4.1200   3.296000
+## 22 2022-12-06  270.77950 4.5600   3.898800
+## 23 2022-12-06  138.43350 4.2600   2.800950
+## 24 2022-12-06  111.45325 4.4400   3.818400
+## 25 2022-12-06   81.35825 4.2200   3.376000
+## 26 2022-12-06  192.31575 4.1200   3.728600
+## 27 2022-12-06  280.42300 4.6900   5.745250
+## 28 2022-12-06  289.28000 4.2200   2.553100
+## 29 2022-12-20 1160.81802 3.4650  22.739062
+## 30 2022-12-20 1517.26375 3.6500  26.298250
+## 31 2022-12-20  870.46498 3.4800  24.708000
+## 32 2022-12-20 1065.65589 3.3050  26.179731
+## 33 2022-12-20  641.94629 3.5025  19.377066
+## 34 2022-12-20 1733.36894 3.4475  31.317090
+## 35 2022-12-20  869.74347 3.3900  18.560250
+## 36 2022-12-20 1451.89256 3.5400  27.081000
+## 37 2022-12-20  827.16219 3.7200  24.282300
+## 38 2022-12-20 2207.36530 3.5800  28.219350
+## 39 2022-12-20  321.36629 3.5400  17.700000
+## 40 2022-12-20 1501.65358 3.4200  36.192150
+## 41 2022-12-20  629.65819 3.3600  17.673600
+## 42 2022-12-20 1785.62946 3.2500  34.450000
+## 43 2023-01-03 1500.42971 3.2300  74.285962
+## 44 2023-01-03 2209.35037 3.4100  83.587625
+## 45 2023-01-03  907.54311 3.3600  68.447400
+## 46 2023-01-03 2129.70542 3.1850  51.636812
+## 47 2023-01-03 1919.43266 3.3950  54.020441
+## 48 2023-01-03 1423.05824 3.1975  85.748423
+## 49 2023-01-03 1004.48116 3.4100  56.469600
+## 50 2023-01-03 1996.37825 3.0500  89.784375
+## 51 2023-01-03 2959.07905 3.6600  74.316300
+## 52 2023-01-03 1459.62169 3.1600  90.755200
+## 53 2023-01-03 1814.84600 3.5000  55.307000
+## 54 2023-01-03 2333.93975 3.2200  68.964350
+## 55 2023-01-03 1925.47109 3.0100  33.132575
+## 56 2023-01-03 -604.62837 3.3600  94.035200
+## 57 2023-01-17 4451.40281 2.4800 104.389400
+## 58 2023-01-17 5236.11316 2.8300 122.171100
+## 59 2023-01-17 2528.63899 2.5700 106.407638
+## 60 2023-01-17 3976.53409 2.7450 106.914319
+## 61 2023-01-17 3714.52824 2.7850 113.465815
+## 62 2023-01-17 4426.30216 2.5275 106.544235
+## 63 2023-01-17 4494.44985 2.5800 108.050400
+## 64 2023-01-17 4408.35578 2.3800 100.685900
+## 65 2023-01-17 5062.21179 3.0200 138.240500
+## 66 2023-01-17 5410.01454 2.6400 107.091600
+## 67 2023-01-17 1951.49139 2.7100 108.259080
+## 68 2023-01-17 4162.34904 2.4300 102.874050
+## 69 2023-01-17 3790.71913 2.8300 100.641875
+## 70 2023-01-17 3490.55166 2.6600 116.587800
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Nacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Nacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Nacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-23-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 8 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-23-3.pdf}
+
+\hypertarget{analisis-del-fuxf3sforo}{%
+\subsection{Analisis del Fósforo}\label{analisis-del-fuxf3sforo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Obtener una estadistica descriptiva del Fósforo para cada fecha}
+
+\NormalTok{NE1}\SpecialCharTok{$}\NormalTok{Medicion}\OtherTok{\textless{}{-}}\FunctionTok{trimws}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{Medicion)}
+
+\CommentTok{\#fecha 1}
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"PRIMERA"}\NormalTok{,]}
+
+\NormalTok{descP06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{P., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descP06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"SEGUNDA"}\NormalTok{,]}
+
+\NormalTok{descP20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{P., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descP20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"TERCERA"}\NormalTok{,]}
+
+\NormalTok{descP03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{P., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descP03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+ 
+\CommentTok{\#fecha 4 }
+\NormalTok{  NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"CUARTA"}\NormalTok{,]}
+
+\NormalTok{descP17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{P., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descP17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#unir en un data frame}
+
+\NormalTok{descPe1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descP06DIC,}
+\NormalTok{               descP20DIC,}
+\NormalTok{               descP03ENE,}
+\NormalTok{               descP17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-concentraciuxf3n-de-n-en-el-tiempo-1}{%
+\subsubsection{plot concentración de N en el
+tiempo}\label{plot-concentraciuxf3n-de-n-en-el-tiempo-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPe1[descPe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPe1[descPe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPe1[descPe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-25-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-25-3.pdf}
+
+\hypertarget{acumulacion-de-fuxf3sofor-en-el-tiempo}{%
+\subsubsection{acumulacion de Fósofor en el
+tiempo}\label{acumulacion-de-fuxf3sofor-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concP}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{,}
+\NormalTok{         descPe1}\SpecialCharTok{$}\NormalTok{medias)}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Px100}\OtherTok{\textless{}{-}}\NormalTok{concP}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Pacu}\OtherTok{\textless{}{-}}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Px100}\SpecialCharTok{*}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{medias}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA      AREAF  Nx100       Nacu  Px100       Pacu
+## 1  2022-11-24   37.33125     NA         NA     NA         NA
+## 2  2022-11-24   37.33125     NA         NA     NA         NA
+## 3  2022-11-24   37.33125     NA         NA     NA         NA
+## 4  2022-11-24   37.33125     NA         NA     NA         NA
+## 5  2022-11-24   37.37975     NA         NA     NA         NA
+## 6  2022-11-24   37.28275     NA         NA     NA         NA
+## 7  2022-11-24   37.37975     NA         NA     NA         NA
+## 8  2022-11-24   37.28275     NA         NA     NA         NA
+## 9  2022-11-24   37.37975     NA         NA     NA         NA
+## 10 2022-11-24   37.28275     NA         NA     NA         NA
+## 11 2022-11-24   37.37975     NA         NA     NA         NA
+## 12 2022-11-24   37.28275     NA         NA     NA         NA
+## 13 2022-11-24   37.37975     NA         NA     NA         NA
+## 14 2022-11-24   37.28275     NA         NA     NA         NA
+## 15 2022-12-06  114.65600 4.3400   3.472000 0.3650  0.2920000
+## 16 2022-12-06  231.54763 4.3500   3.828000 0.3400  0.2992000
+## 17 2022-12-06  209.42825 4.1700   3.925013 0.3700  0.3482625
+## 18 2022-12-06  200.36662 4.4550   3.263288 0.3750  0.2746875
+## 19 2022-12-06  167.15500 4.3225   3.428283 0.3875  0.3073359
+## 20 2022-12-06  210.84425 4.3350   3.831056 0.3375  0.2982656
+## 21 2022-12-06  147.95375 4.1200   3.296000 0.3900  0.3120000
+## 22 2022-12-06  270.77950 4.5600   3.898800 0.3400  0.2907000
+## 23 2022-12-06  138.43350 4.2600   2.800950 0.3600  0.2367000
+## 24 2022-12-06  111.45325 4.4400   3.818400 0.3200  0.2752000
+## 25 2022-12-06   81.35825 4.2200   3.376000 0.3900  0.3120000
+## 26 2022-12-06  192.31575 4.1200   3.728600 0.3500  0.3167500
+## 27 2022-12-06  280.42300 4.6900   5.745250 0.4100  0.5022500
+## 28 2022-12-06  289.28000 4.2200   2.553100 0.3400  0.2057000
+## 29 2022-12-20 1160.81802 3.4650  22.739062 0.5650  3.7078125
+## 30 2022-12-20 1517.26375 3.6500  26.298250 0.3450  2.4857250
+## 31 2022-12-20  870.46498 3.4800  24.708000 0.4700  3.3370000
+## 32 2022-12-20 1065.65589 3.3050  26.179731 0.4250  3.3665312
+## 33 2022-12-20  641.94629 3.5025  19.377066 0.4900  2.7108529
+## 34 2022-12-20 1733.36894 3.4475  31.317090 0.4125  3.7471500
+## 35 2022-12-20  869.74347 3.3900  18.560250 0.6800  3.7230000
+## 36 2022-12-20 1451.89256 3.5400  27.081000 0.4500  3.4425000
+## 37 2022-12-20  827.16219 3.7200  24.282300 0.3300  2.1540750
+## 38 2022-12-20 2207.36530 3.5800  28.219350 0.3600  2.8377000
+## 39 2022-12-20  321.36629 3.5400  17.700000 0.4600  2.3000000
+## 40 2022-12-20 1501.65358 3.4200  36.192150 0.4800  5.0796000
+## 41 2022-12-20  629.65819 3.3600  17.673600 0.4900  2.5774000
+## 42 2022-12-20 1785.62946 3.2500  34.450000 0.3600  3.8160000
+## 43 2023-01-03 1500.42971 3.2300  74.285962 0.4350 10.0044563
+## 44 2023-01-03 2209.35037 3.4100  83.587625 0.4550 11.1531875
+## 45 2023-01-03  907.54311 3.3600  68.447400 0.4750  9.6763437
+## 46 2023-01-03 2129.70542 3.1850  51.636812 0.4250  6.8903125
+## 47 2023-01-03 1919.43266 3.3950  54.020441 0.4850  7.7172059
+## 48 2023-01-03 1423.05824 3.1975  85.748423 0.4100 10.9951067
+## 49 2023-01-03 1004.48116 3.4100  56.469600 0.5200  8.6112000
+## 50 2023-01-03 1996.37825 3.0500  89.784375 0.3500 10.3031250
+## 51 2023-01-03 2959.07905 3.6600  74.316300 0.5700 11.5738500
+## 52 2023-01-03 1459.62169 3.1600  90.755200 0.3400  9.7648000
+## 53 2023-01-03 1814.84600 3.5000  55.307000 0.4700  7.4269400
+## 54 2023-01-03 2333.93975 3.2200  68.964350 0.4800 10.2804000
+## 55 2023-01-03 1925.47109 3.0100  33.132575 0.3800  4.1828500
+## 56 2023-01-03 -604.62837 3.3600  94.035200 0.4700 13.1537333
+## 57 2023-01-17 4451.40281 2.4800 104.389400 0.2900 12.2068250
+## 58 2023-01-17 5236.11316 2.8300 122.171100 0.2800 12.0876000
+## 59 2023-01-17 2528.63899 2.5700 106.407638 0.3000 12.4211250
+## 60 2023-01-17 3976.53409 2.7450 106.914319 0.4050 15.7742438
+## 61 2023-01-17 3714.52824 2.7850 113.465815 0.3475 14.1577632
+## 62 2023-01-17 4426.30216 2.5275 106.544235 0.2900 12.2246600
+## 63 2023-01-17 4494.44985 2.5800 108.050400 0.3500 14.6580000
+## 64 2023-01-17 4408.35578 2.3800 100.685900 0.2300  9.7301500
+## 65 2023-01-17 5062.21179 3.0200 138.240500 0.3200 14.6480000
+## 66 2023-01-17 5410.01454 2.6400 107.091600 0.2400  9.7356000
+## 67 2023-01-17 1951.49139 2.7100 108.259080 0.2900 11.5849200
+## 68 2023-01-17 4162.34904 2.4300 102.874050 0.3100 13.1238500
+## 69 2023-01-17 3790.71913 2.8300 100.641875 0.4300 15.2918750
+## 70 2023-01-17 3490.55166 2.6600 116.587800 0.3800 16.6554000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Pacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Pacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Pacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-26-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 8 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-26-3.pdf}
+
+\hypertarget{analisis-del-potasio}{%
+\subsection{Analisis del Potasio}\label{analisis-del-potasio}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Obtener una estadistica descriptiva del nitrogeno para cada fecha}
+
+\NormalTok{NE1}\SpecialCharTok{$}\NormalTok{Medicion}\OtherTok{\textless{}{-}}\FunctionTok{trimws}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{Medicion)}
+
+\CommentTok{\#fecha 1}
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"PRIMERA"}\NormalTok{,]}
+
+\NormalTok{descK06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{K., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descK06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"SEGUNDA"}\NormalTok{,]}
+
+\NormalTok{descK20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{K., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descK20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"TERCERA"}\NormalTok{,]}
+
+\NormalTok{descK03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{K., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descK03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+ 
+\CommentTok{\#fecha 4 }
+\NormalTok{  NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"CUARTA"}\NormalTok{,]}
+
+\NormalTok{descK17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{K., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descK17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#unir en un data frame}
+
+\NormalTok{descKe1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descK06DIC,}
+\NormalTok{               descK20DIC,}
+\NormalTok{               descK03ENE,}
+\NormalTok{               descK17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-concentraciuxf3n-de-potacio-en-el-tiempo}{%
+\subsubsection{plot concentración de Potacio en el
+tiempo}\label{plot-concentraciuxf3n-de-potacio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descKe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descKe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descKe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-28-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-28-3.pdf}
+
+\hypertarget{acumulacion-de-potacio-en-el-tiempo}{%
+\subsubsection{acumulacion de Potacio en el
+tiempo}\label{acumulacion-de-potacio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concK}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{,}
+\NormalTok{         descKe1}\SpecialCharTok{$}\NormalTok{medias)}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Kx100}\OtherTok{\textless{}{-}}\NormalTok{concK}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Kacu}\OtherTok{\textless{}{-}}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Kx100}\SpecialCharTok{*}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{medias}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA      AREAF  Nx100       Nacu  Px100       Pacu   Kx100       Kacu
+## 1  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 2  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 3  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 4  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 5  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 6  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 7  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 8  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 9  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 10 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 11 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 12 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 13 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 14 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 15 2022-12-06  114.65600 4.3400   3.472000 0.3650  0.2920000  9.9300   7.944000
+## 16 2022-12-06  231.54763 4.3500   3.828000 0.3400  0.2992000 10.3800   9.134400
+## 17 2022-12-06  209.42825 4.1700   3.925013 0.3700  0.3482625  9.9300   9.346613
+## 18 2022-12-06  200.36662 4.4550   3.263288 0.3750  0.2746875 10.0800   7.383600
+## 19 2022-12-06  167.15500 4.3225   3.428283 0.3875  0.3073359 10.3050   8.173153
+## 20 2022-12-06  210.84425 4.3350   3.831056 0.3375  0.2982656  9.8550   8.709356
+## 21 2022-12-06  147.95375 4.1200   3.296000 0.3900  0.3120000  9.7800   7.824000
+## 22 2022-12-06  270.77950 4.5600   3.898800 0.3400  0.2907000 10.0800   8.618400
+## 23 2022-12-06  138.43350 4.2600   2.800950 0.3600  0.2367000 10.6800   7.022100
+## 24 2022-12-06  111.45325 4.4400   3.818400 0.3200  0.2752000 10.0800   8.668800
+## 25 2022-12-06   81.35825 4.2200   3.376000 0.3900  0.3120000 10.0800   8.064000
+## 26 2022-12-06  192.31575 4.1200   3.728600 0.3500  0.3167500  9.7800   8.850900
+## 27 2022-12-06  280.42300 4.6900   5.745250 0.4100  0.5022500 10.6800  13.083000
+## 28 2022-12-06  289.28000 4.2200   2.553100 0.3400  0.2057000  9.4800   5.735400
+## 29 2022-12-20 1160.81802 3.4650  22.739062 0.5650  3.7078125 10.3800  68.118750
+## 30 2022-12-20 1517.26375 3.6500  26.298250 0.3450  2.4857250 11.8800  85.595400
+## 31 2022-12-20  870.46498 3.4800  24.708000 0.4700  3.3370000 10.9800  77.958000
+## 32 2022-12-20 1065.65589 3.3050  26.179731 0.4250  3.3665312 11.4300  90.539887
+## 33 2022-12-20  641.94629 3.5025  19.377066 0.4900  2.7108529 11.8050  65.309426
+## 34 2022-12-20 1733.36894 3.4475  31.317090 0.4125  3.7471500 10.5300  95.654520
+## 35 2022-12-20  869.74347 3.3900  18.560250 0.6800  3.7230000 10.9800  60.115500
+## 36 2022-12-20 1451.89256 3.5400  27.081000 0.4500  3.4425000  9.7800  74.817000
+## 37 2022-12-20  827.16219 3.7200  24.282300 0.3300  2.1540750 12.4800  81.463200
+## 38 2022-12-20 2207.36530 3.5800  28.219350 0.3600  2.8377000 11.2800  88.914600
+## 39 2022-12-20  321.36629 3.5400  17.700000 0.4600  2.3000000 11.2800  56.400000
+## 40 2022-12-20 1501.65358 3.4200  36.192150 0.4800  5.0796000 10.6800 113.021100
+## 41 2022-12-20  629.65819 3.3600  17.673600 0.4900  2.5774000 12.4800  65.644800
+## 42 2022-12-20 1785.62946 3.2500  34.450000 0.3600  3.8160000 10.3800 110.028000
+## 43 2023-01-03 1500.42971 3.2300  74.285962 0.4350 10.0044563  8.2550 189.854681
+## 44 2023-01-03 2209.35037 3.4100  83.587625 0.4550 11.1531875  9.5250 233.481562
+## 45 2023-01-03  907.54311 3.3600  68.447400 0.4750  9.6763437  8.7500 178.248437
+## 46 2023-01-03 2129.70542 3.1850  51.636812 0.4250  6.8903125  8.8800 143.967000
+## 47 2023-01-03 1919.43266 3.3950  54.020441 0.4850  7.7172059  9.4700 150.684412
+## 48 2023-01-03 1423.05824 3.1975  85.748423 0.4100 10.9951067  8.2350 220.840740
+## 49 2023-01-03 1004.48116 3.4100  56.469600 0.5200  8.6112000 10.0800 166.924800
+## 50 2023-01-03 1996.37825 3.0500  89.784375 0.3500 10.3031250  6.4300 189.283125
+## 51 2023-01-03 2959.07905 3.6600  74.316300 0.5700 11.5738500  9.7800 198.582900
+## 52 2023-01-03 1459.62169 3.1600  90.755200 0.3400  9.7648000  9.2700 266.234400
+## 53 2023-01-03 1814.84600 3.5000  55.307000 0.4700  7.4269400  9.0100 142.376020
+## 54 2023-01-03 2333.93975 3.2200  68.964350 0.4800 10.2804000  8.4900 181.834575
+## 55 2023-01-03 1925.47109 3.0100  33.132575 0.3800  4.1828500  9.0100  99.177575
+## 56 2023-01-03 -604.62837 3.3600  94.035200 0.4700 13.1537333  8.7500 244.883333
+## 57 2023-01-17 4451.40281 2.4800 104.389400 0.2900 12.2068250  6.9450 292.332413
+## 58 2023-01-17 5236.11316 2.8300 122.171100 0.2800 12.0876000  7.0750 305.427750
+## 59 2023-01-17 2528.63899 2.5700 106.407638 0.3000 12.4211250  6.1750 255.668156
+## 60 2023-01-17 3976.53409 2.7450 106.914319 0.4050 15.7742438  7.5900 295.621012
+## 61 2023-01-17 3714.52824 2.7850 113.465815 0.3475 14.1577632  7.5250 306.581779
+## 62 2023-01-17 4426.30216 2.5275 106.544235 0.2900 12.2246600  6.3675 268.415595
+## 63 2023-01-17 4494.44985 2.5800 108.050400 0.3500 14.6580000  7.2000 301.536000
+## 64 2023-01-17 4408.35578 2.3800 100.685900 0.2300  9.7301500  6.6900 283.020450
+## 65 2023-01-17 5062.21179 3.0200 138.240500 0.3200 14.6480000  7.4600 341.481500
+## 66 2023-01-17 5410.01454 2.6400 107.091600 0.2400  9.7356000  6.6900 271.379850
+## 67 2023-01-17 1951.49139 2.7100 108.259080 0.2900 11.5849200  6.9500 277.638600
+## 68 2023-01-17 4162.34904 2.4300 102.874050 0.3100 13.1238500  5.4000 228.609000
+## 69 2023-01-17 3790.71913 2.8300 100.641875 0.4300 15.2918750  8.4900 301.925625
+## 70 2023-01-17 3490.55166 2.6600 116.587800 0.3800 16.6554000  6.6900 293.222700
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Kacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Kacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Kacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-29-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 8 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-29-3.pdf}
+
+\hypertarget{analisis-del-calcio}{%
+\subsection{Analisis del Calcio}\label{analisis-del-calcio}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Obtener una estadistica descriptiva del nitrogeno para cada fecha}
+
+\NormalTok{NE1}\SpecialCharTok{$}\NormalTok{Medicion}\OtherTok{\textless{}{-}}\FunctionTok{trimws}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{Medicion)}
+
+\CommentTok{\#fecha 1}
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"PRIMERA"}\NormalTok{,]}
+
+\NormalTok{descCa06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Ca., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descCa06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"SEGUNDA"}\NormalTok{,]}
+
+\NormalTok{descCa20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Ca., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descCa20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"TERCERA"}\NormalTok{,]}
+
+\NormalTok{descCa03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Ca., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descCa03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+ 
+\CommentTok{\#fecha 4 }
+\NormalTok{  NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"CUARTA"}\NormalTok{,]}
+
+\NormalTok{descCa17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Ca., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descCa17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#unir en un data frame}
+
+\NormalTok{descCae1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descCa06DIC,}
+\NormalTok{               descCa20DIC,}
+\NormalTok{               descCa03ENE,}
+\NormalTok{               descCa17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-concentraciuxf3n-de-calcio-en-el-tiempo}{%
+\subsubsection{plot concentración de Calcio en el
+tiempo}\label{plot-concentraciuxf3n-de-calcio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descCae1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descCae1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descCae1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-31-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-31-3.pdf}
+
+\hypertarget{acumulacion-de-calcio-en-el-tiempo}{%
+\subsubsection{acumulacion de Calcio en el
+tiempo}\label{acumulacion-de-calcio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concK}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{,}
+\NormalTok{         descCae1}\SpecialCharTok{$}\NormalTok{medias)}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Cax100}\OtherTok{\textless{}{-}}\NormalTok{concK}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Caacu}\OtherTok{\textless{}{-}}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Cax100}\SpecialCharTok{*}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{medias}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA      AREAF  Nx100       Nacu  Px100       Pacu   Kx100       Kacu
+## 1  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 2  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 3  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 4  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 5  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 6  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 7  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 8  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 9  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 10 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 11 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 12 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 13 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 14 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 15 2022-12-06  114.65600 4.3400   3.472000 0.3650  0.2920000  9.9300   7.944000
+## 16 2022-12-06  231.54763 4.3500   3.828000 0.3400  0.2992000 10.3800   9.134400
+## 17 2022-12-06  209.42825 4.1700   3.925013 0.3700  0.3482625  9.9300   9.346613
+## 18 2022-12-06  200.36662 4.4550   3.263288 0.3750  0.2746875 10.0800   7.383600
+## 19 2022-12-06  167.15500 4.3225   3.428283 0.3875  0.3073359 10.3050   8.173153
+## 20 2022-12-06  210.84425 4.3350   3.831056 0.3375  0.2982656  9.8550   8.709356
+## 21 2022-12-06  147.95375 4.1200   3.296000 0.3900  0.3120000  9.7800   7.824000
+## 22 2022-12-06  270.77950 4.5600   3.898800 0.3400  0.2907000 10.0800   8.618400
+## 23 2022-12-06  138.43350 4.2600   2.800950 0.3600  0.2367000 10.6800   7.022100
+## 24 2022-12-06  111.45325 4.4400   3.818400 0.3200  0.2752000 10.0800   8.668800
+## 25 2022-12-06   81.35825 4.2200   3.376000 0.3900  0.3120000 10.0800   8.064000
+## 26 2022-12-06  192.31575 4.1200   3.728600 0.3500  0.3167500  9.7800   8.850900
+## 27 2022-12-06  280.42300 4.6900   5.745250 0.4100  0.5022500 10.6800  13.083000
+## 28 2022-12-06  289.28000 4.2200   2.553100 0.3400  0.2057000  9.4800   5.735400
+## 29 2022-12-20 1160.81802 3.4650  22.739062 0.5650  3.7078125 10.3800  68.118750
+## 30 2022-12-20 1517.26375 3.6500  26.298250 0.3450  2.4857250 11.8800  85.595400
+## 31 2022-12-20  870.46498 3.4800  24.708000 0.4700  3.3370000 10.9800  77.958000
+## 32 2022-12-20 1065.65589 3.3050  26.179731 0.4250  3.3665312 11.4300  90.539887
+## 33 2022-12-20  641.94629 3.5025  19.377066 0.4900  2.7108529 11.8050  65.309426
+## 34 2022-12-20 1733.36894 3.4475  31.317090 0.4125  3.7471500 10.5300  95.654520
+## 35 2022-12-20  869.74347 3.3900  18.560250 0.6800  3.7230000 10.9800  60.115500
+## 36 2022-12-20 1451.89256 3.5400  27.081000 0.4500  3.4425000  9.7800  74.817000
+## 37 2022-12-20  827.16219 3.7200  24.282300 0.3300  2.1540750 12.4800  81.463200
+## 38 2022-12-20 2207.36530 3.5800  28.219350 0.3600  2.8377000 11.2800  88.914600
+## 39 2022-12-20  321.36629 3.5400  17.700000 0.4600  2.3000000 11.2800  56.400000
+## 40 2022-12-20 1501.65358 3.4200  36.192150 0.4800  5.0796000 10.6800 113.021100
+## 41 2022-12-20  629.65819 3.3600  17.673600 0.4900  2.5774000 12.4800  65.644800
+## 42 2022-12-20 1785.62946 3.2500  34.450000 0.3600  3.8160000 10.3800 110.028000
+## 43 2023-01-03 1500.42971 3.2300  74.285962 0.4350 10.0044563  8.2550 189.854681
+## 44 2023-01-03 2209.35037 3.4100  83.587625 0.4550 11.1531875  9.5250 233.481562
+## 45 2023-01-03  907.54311 3.3600  68.447400 0.4750  9.6763437  8.7500 178.248437
+## 46 2023-01-03 2129.70542 3.1850  51.636812 0.4250  6.8903125  8.8800 143.967000
+## 47 2023-01-03 1919.43266 3.3950  54.020441 0.4850  7.7172059  9.4700 150.684412
+## 48 2023-01-03 1423.05824 3.1975  85.748423 0.4100 10.9951067  8.2350 220.840740
+## 49 2023-01-03 1004.48116 3.4100  56.469600 0.5200  8.6112000 10.0800 166.924800
+## 50 2023-01-03 1996.37825 3.0500  89.784375 0.3500 10.3031250  6.4300 189.283125
+## 51 2023-01-03 2959.07905 3.6600  74.316300 0.5700 11.5738500  9.7800 198.582900
+## 52 2023-01-03 1459.62169 3.1600  90.755200 0.3400  9.7648000  9.2700 266.234400
+## 53 2023-01-03 1814.84600 3.5000  55.307000 0.4700  7.4269400  9.0100 142.376020
+## 54 2023-01-03 2333.93975 3.2200  68.964350 0.4800 10.2804000  8.4900 181.834575
+## 55 2023-01-03 1925.47109 3.0100  33.132575 0.3800  4.1828500  9.0100  99.177575
+## 56 2023-01-03 -604.62837 3.3600  94.035200 0.4700 13.1537333  8.7500 244.883333
+## 57 2023-01-17 4451.40281 2.4800 104.389400 0.2900 12.2068250  6.9450 292.332413
+## 58 2023-01-17 5236.11316 2.8300 122.171100 0.2800 12.0876000  7.0750 305.427750
+## 59 2023-01-17 2528.63899 2.5700 106.407638 0.3000 12.4211250  6.1750 255.668156
+## 60 2023-01-17 3976.53409 2.7450 106.914319 0.4050 15.7742438  7.5900 295.621012
+## 61 2023-01-17 3714.52824 2.7850 113.465815 0.3475 14.1577632  7.5250 306.581779
+## 62 2023-01-17 4426.30216 2.5275 106.544235 0.2900 12.2246600  6.3675 268.415595
+## 63 2023-01-17 4494.44985 2.5800 108.050400 0.3500 14.6580000  7.2000 301.536000
+## 64 2023-01-17 4408.35578 2.3800 100.685900 0.2300  9.7301500  6.6900 283.020450
+## 65 2023-01-17 5062.21179 3.0200 138.240500 0.3200 14.6480000  7.4600 341.481500
+## 66 2023-01-17 5410.01454 2.6400 107.091600 0.2400  9.7356000  6.6900 271.379850
+## 67 2023-01-17 1951.49139 2.7100 108.259080 0.2900 11.5849200  6.9500 277.638600
+## 68 2023-01-17 4162.34904 2.4300 102.874050 0.3100 13.1238500  5.4000 228.609000
+## 69 2023-01-17 3790.71913 2.8300 100.641875 0.4300 15.2918750  8.4900 301.925625
+## 70 2023-01-17 3490.55166 2.6600 116.587800 0.3800 16.6554000  6.6900 293.222700
+##    Cax100      Caacu
+## 1      NA         NA
+## 2      NA         NA
+## 3      NA         NA
+## 4      NA         NA
+## 5      NA         NA
+## 6      NA         NA
+## 7      NA         NA
+## 8      NA         NA
+## 9      NA         NA
+## 10     NA         NA
+## 11     NA         NA
+## 12     NA         NA
+## 13     NA         NA
+## 14     NA         NA
+## 15 1.1700  0.9360000
+## 16 1.1100  0.9768000
+## 17 1.1650  1.0965563
+## 18 1.0300  0.7544750
+## 19 1.1250  0.8922656
+## 20 1.1125  0.9831719
+## 21 1.1600  0.9280000
+## 22 1.1800  1.0089000
+## 23 1.0500  0.6903750
+## 24 1.1700  1.0062000
+## 25 1.2100  0.9680000
+## 26 1.1200  1.0136000
+## 27 1.0800  1.3230000
+## 28 0.9800  0.5929000
+## 29 0.8800  5.7750000
+## 30 0.9550  6.8807750
+## 31 0.9950  7.0645000
+## 32 0.9800  7.7628250
+## 33 1.0075  5.5738456
+## 34 0.8975  8.1528900
+## 35 0.9000  4.9275000
+## 36 0.8600  6.5790000
+## 37 0.9600  6.2664000
+## 38 0.9500  7.4883750
+## 39 1.0800  5.4000000
+## 40 0.9100  9.6300750
+## 41 1.0900  5.7334000
+## 42 0.8700  9.2220000
+## 43 1.2350 28.4034562
+## 44 1.1450 28.0668125
+## 45 1.1650 23.7325063
+## 46 1.1500 18.6443750
+## 47 1.2250 19.4919118
+## 48 1.1225 30.1024567
+## 49 1.3800 22.8528000
+## 50 1.0900 32.0868750
+## 51 1.1200 22.7416000
+## 52 1.1700 33.6024000
+## 53 1.2500 19.7525000
+## 54 1.0800 23.1309000
+## 55 1.1500 12.6586250
+## 56 1.1500 32.1846667
+## 57 0.8500 35.7786250
+## 58 0.9550 41.2273500
+## 59 1.0200 42.2318250
+## 60 0.9500 37.0013125
+## 61 0.9525 38.8065309
+## 62 0.9350 39.4139900
+## 63 0.8400 35.1792000
+## 64 0.8600 36.3823000
+## 65 1.0700 48.9792500
+## 66 0.8400 34.0746000
+## 67 1.0000 39.9480000
+## 68 1.0400 44.0284000
+## 69 0.9000 32.0062500
+## 70 1.0000 43.8300000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Caacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Caacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Caacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-32-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 8 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-32-3.pdf}
+\#\# Analisis del Magnesio
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Obtener una estadistica descriptiva del nitrogeno para cada fecha}
+
+\NormalTok{NE1}\SpecialCharTok{$}\NormalTok{Medicion}\OtherTok{\textless{}{-}}\FunctionTok{trimws}\NormalTok{(NE1}\SpecialCharTok{$}\NormalTok{Medicion)}
+
+\CommentTok{\#fecha 1}
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"PRIMERA"}\NormalTok{,]}
+
+\NormalTok{descMg06DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Mg., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}6"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descMg06DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 2}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"SEGUNDA"}\NormalTok{,]}
+
+\NormalTok{descMg20DIC}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Mg., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2022{-}12{-}20"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descMg20DIC}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#fecha 3}
+
+\NormalTok{NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"TERCERA"}\NormalTok{,]}
+
+\NormalTok{descMg03ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Mg., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}3"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descMg03ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+ 
+\CommentTok{\#fecha 4 }
+\NormalTok{  NF}\OtherTok{\textless{}{-}}\NormalTok{NE1[NE1}\SpecialCharTok{$}\NormalTok{Medicion }\SpecialCharTok{==}\StringTok{"CUARTA"}\NormalTok{,]}
+
+\NormalTok{descMg17ENE}\OtherTok{\textless{}{-}}\FunctionTok{resumir2fat}\NormalTok{(NF}\SpecialCharTok{$}\NormalTok{dosis, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{NV, }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Mg., }
+\NormalTok{                        NF}\SpecialCharTok{$}\NormalTok{Tratamientos, }
+\NormalTok{                        NF)}
+
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{))\{}
+\NormalTok{  fecha}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(fecha, }\StringTok{"2023{-}1{-}17"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{fecha}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(fecha, }\AttributeTok{format=}\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{descMg17ENE}\SpecialCharTok{$}\NormalTok{FECHA}\OtherTok{\textless{}{-}}\NormalTok{fecha}
+
+\CommentTok{\#unir en un data frame}
+
+\NormalTok{descMge1}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(descMg06DIC,}
+\NormalTok{               descMg20DIC,}
+\NormalTok{               descMg03ENE,}
+\NormalTok{               descMg17ENE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-concentraciuxf3n-de-magnesio-en-el-tiempo}{%
+\subsubsection{plot concentración de Magnesio en el
+tiempo}\label{plot-concentraciuxf3n-de-magnesio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descMge1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descMge1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descKe1[descMge1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, medias, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-34-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-34-3.pdf}
+
+\hypertarget{acumulacion-de-magnesio-en-el-tiempo}{%
+\subsubsection{acumulacion de Magnesio en el
+tiempo}\label{acumulacion-de-magnesio-en-el-tiempo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concMg}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{,}
+\NormalTok{         descKe1}\SpecialCharTok{$}\NormalTok{medias)}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Mgx100}\OtherTok{\textless{}{-}}\NormalTok{concMg}
+
+\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Mgacu}\OtherTok{\textless{}{-}}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{Mgx100}\SpecialCharTok{*}\NormalTok{descPTe1}\SpecialCharTok{$}\NormalTok{medias}
+
+\NormalTok{descPTe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              ag agrupamientos numero     medias Desvio_Standar       CV
+## 1         dosis             1      8  0.0611125     0.01985961 32.49680
+## 2         dosis             2      8  0.0611125     0.01985961 32.49680
+## 3         dosis             3      8  0.0611125     0.01985961 32.49680
+## 4         dosis             4      8  0.0611125     0.01985961 32.49680
+## 5      variedad            PA     16  0.0616000     0.01935107 31.41408
+## 6      variedad            PV     16  0.0606250     0.01900658 31.35106
+## 7  tratamientos          PA_1      4  0.0616000     0.02163516 35.12201
+## 8  tratamientos          PV_1      4  0.0606250     0.02125000 35.05155
+## 9  tratamientos          PA_2      4  0.0616000     0.02163516 35.12201
+## 10 tratamientos          PV_2      4  0.0606250     0.02125000 35.05155
+## 11 tratamientos          PA_3      4  0.0616000     0.02163516 35.12201
+## 12 tratamientos          PV_3      4  0.0606250     0.02125000 35.05155
+## 13 tratamientos          PA_4      4  0.0616000     0.02163516 35.12201
+## 14 tratamientos          PV_4      4  0.0606250     0.02125000 35.05155
+## 15        dosis             1      8  0.8000000     0.55805786 69.75723
+## 16        dosis             2      8  0.8800000     0.44535700 50.60875
+## 17        dosis             3      8  0.9412500     0.46893306 49.82025
+## 18        dosis             4      8  0.7325000     0.32354068 44.16938
+## 19     variedad            PA     16  0.7931250     0.34305915 43.25411
+## 20     variedad            PV     16  0.8837500     0.52974050 59.94235
+## 21 tratamientos          PA_1      4  0.8000000     0.57659923 72.07490
+## 22 tratamientos          PA_2      4  0.8550000     0.17897858 20.93317
+## 23 tratamientos          PA_3      4  0.6575000     0.33836617 51.46254
+## 24 tratamientos          PA_4      4  0.8600000     0.27166155 31.58855
+## 25 tratamientos          PV_1      4  0.8000000     0.62785349 78.48169
+## 26 tratamientos          PV_2      4  0.9050000     0.65505725 72.38202
+## 27 tratamientos          PV_3      4  1.2250000     0.42883563 35.00699
+## 28 tratamientos          PV_4      4  0.6050000     0.35651087 58.92742
+## 29        dosis             4      8  6.5625000     2.84477340 43.34893
+## 30        dosis             3      8  7.2050000     3.77395965 52.37973
+## 31        dosis             1      8  7.1000000     4.51045769 63.52757
+## 32        dosis             2      8  7.9212500     5.83949224 73.71933
+## 33     variedad            PA     17  5.5323529     2.61629158 47.29076
+## 34     variedad            PV     15  9.0840000     4.89102356 53.84218
+## 35 tratamientos          PA_4      4  5.4750000     3.14943910 57.52400
+## 36 tratamientos          PV_4      4  7.6500000     2.41046330 31.50932
+## 37 tratamientos          PA_3      4  6.5275000     2.81780500 43.16821
+## 38 tratamientos          PV_3      4  7.8825000     4.90602606 62.23947
+## 39 tratamientos          PA_1      5  5.0000000     2.80539659 56.10793
+## 40 tratamientos          PV_2      4 10.5825000     7.37712851 69.71064
+## 41 tratamientos          PA_2      4  5.2600000     2.50157284 47.55842
+## 42 tratamientos          PV_1      3 10.6000000     5.10532075 48.16340
+## 43        dosis             4      8 22.9987500    11.93968824 51.91451
+## 44        dosis             3      8 24.5125000    13.60906499 55.51888
+## 45        dosis             1      8 20.3712500    14.64304558 71.88094
+## 46        dosis             2      8 16.2125000     6.54233849 40.35367
+## 47     variedad            PA     17 15.9117647     9.57739542 60.19066
+## 48     variedad            PV     15 26.8173333    11.94240552 44.53241
+## 49 tratamientos          PA_4      4 16.5600000    10.40539283 62.83450
+## 50 tratamientos          PV_4      4 29.4375000    10.66796568 36.23937
+## 51 tratamientos          PA_3      4 20.3050000    12.23015535 60.23224
+## 52 tratamientos          PV_3      4 28.7200000    15.34157749 53.41775
+## 53 tratamientos          PA_1      5 15.8020000    10.87445953 68.81698
+## 54 tratamientos          PV_2      4 21.4175000     3.51035017 16.39010
+## 55 tratamientos          PA_2      4 11.0075000     3.91201035 35.53950
+## 56 tratamientos          PV_1      3 27.9866667    19.35900393 69.17224
+## 57        dosis             4      8 42.0925000    12.74921594 30.28857
+## 58        dosis             3      8 43.1700000    15.95464643 36.95772
+## 59        dosis             1      8 41.4037500    19.99079427 48.28257
+## 60        dosis             2      8 38.9487500    16.61899295 42.66887
+## 61     variedad            PA     17 40.7417647    16.35943506 40.15397
+## 62     variedad            PV     15 42.1540000    15.65108339 37.12835
+## 63 tratamientos          PA_4      4 41.8800000    13.66341343 32.62515
+## 64 tratamientos          PV_4      4 42.3050000    13.87287161 32.79251
+## 65 tratamientos          PA_3      4 45.7750000    20.92570110 45.71426
+## 66 tratamientos          PV_3      4 40.5650000    11.74609297 28.95623
+## 67 tratamientos          PA_1      5 39.9480000    16.98658500 42.52174
+## 68 tratamientos          PV_2      4 42.3350000    16.37445673 38.67830
+## 69 tratamientos          PA_2      4 35.5625000    18.59421483 52.28602
+## 70 tratamientos          PV_1      3 43.8300000    28.41646178 64.83336
+##         FECHA      AREAF  Nx100       Nacu  Px100       Pacu   Kx100       Kacu
+## 1  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 2  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 3  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 4  2022-11-24   37.33125     NA         NA     NA         NA      NA         NA
+## 5  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 6  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 7  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 8  2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 9  2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 10 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 11 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 12 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 13 2022-11-24   37.37975     NA         NA     NA         NA      NA         NA
+## 14 2022-11-24   37.28275     NA         NA     NA         NA      NA         NA
+## 15 2022-12-06  114.65600 4.3400   3.472000 0.3650  0.2920000  9.9300   7.944000
+## 16 2022-12-06  231.54763 4.3500   3.828000 0.3400  0.2992000 10.3800   9.134400
+## 17 2022-12-06  209.42825 4.1700   3.925013 0.3700  0.3482625  9.9300   9.346613
+## 18 2022-12-06  200.36662 4.4550   3.263288 0.3750  0.2746875 10.0800   7.383600
+## 19 2022-12-06  167.15500 4.3225   3.428283 0.3875  0.3073359 10.3050   8.173153
+## 20 2022-12-06  210.84425 4.3350   3.831056 0.3375  0.2982656  9.8550   8.709356
+## 21 2022-12-06  147.95375 4.1200   3.296000 0.3900  0.3120000  9.7800   7.824000
+## 22 2022-12-06  270.77950 4.5600   3.898800 0.3400  0.2907000 10.0800   8.618400
+## 23 2022-12-06  138.43350 4.2600   2.800950 0.3600  0.2367000 10.6800   7.022100
+## 24 2022-12-06  111.45325 4.4400   3.818400 0.3200  0.2752000 10.0800   8.668800
+## 25 2022-12-06   81.35825 4.2200   3.376000 0.3900  0.3120000 10.0800   8.064000
+## 26 2022-12-06  192.31575 4.1200   3.728600 0.3500  0.3167500  9.7800   8.850900
+## 27 2022-12-06  280.42300 4.6900   5.745250 0.4100  0.5022500 10.6800  13.083000
+## 28 2022-12-06  289.28000 4.2200   2.553100 0.3400  0.2057000  9.4800   5.735400
+## 29 2022-12-20 1160.81802 3.4650  22.739062 0.5650  3.7078125 10.3800  68.118750
+## 30 2022-12-20 1517.26375 3.6500  26.298250 0.3450  2.4857250 11.8800  85.595400
+## 31 2022-12-20  870.46498 3.4800  24.708000 0.4700  3.3370000 10.9800  77.958000
+## 32 2022-12-20 1065.65589 3.3050  26.179731 0.4250  3.3665312 11.4300  90.539887
+## 33 2022-12-20  641.94629 3.5025  19.377066 0.4900  2.7108529 11.8050  65.309426
+## 34 2022-12-20 1733.36894 3.4475  31.317090 0.4125  3.7471500 10.5300  95.654520
+## 35 2022-12-20  869.74347 3.3900  18.560250 0.6800  3.7230000 10.9800  60.115500
+## 36 2022-12-20 1451.89256 3.5400  27.081000 0.4500  3.4425000  9.7800  74.817000
+## 37 2022-12-20  827.16219 3.7200  24.282300 0.3300  2.1540750 12.4800  81.463200
+## 38 2022-12-20 2207.36530 3.5800  28.219350 0.3600  2.8377000 11.2800  88.914600
+## 39 2022-12-20  321.36629 3.5400  17.700000 0.4600  2.3000000 11.2800  56.400000
+## 40 2022-12-20 1501.65358 3.4200  36.192150 0.4800  5.0796000 10.6800 113.021100
+## 41 2022-12-20  629.65819 3.3600  17.673600 0.4900  2.5774000 12.4800  65.644800
+## 42 2022-12-20 1785.62946 3.2500  34.450000 0.3600  3.8160000 10.3800 110.028000
+## 43 2023-01-03 1500.42971 3.2300  74.285962 0.4350 10.0044563  8.2550 189.854681
+## 44 2023-01-03 2209.35037 3.4100  83.587625 0.4550 11.1531875  9.5250 233.481562
+## 45 2023-01-03  907.54311 3.3600  68.447400 0.4750  9.6763437  8.7500 178.248437
+## 46 2023-01-03 2129.70542 3.1850  51.636812 0.4250  6.8903125  8.8800 143.967000
+## 47 2023-01-03 1919.43266 3.3950  54.020441 0.4850  7.7172059  9.4700 150.684412
+## 48 2023-01-03 1423.05824 3.1975  85.748423 0.4100 10.9951067  8.2350 220.840740
+## 49 2023-01-03 1004.48116 3.4100  56.469600 0.5200  8.6112000 10.0800 166.924800
+## 50 2023-01-03 1996.37825 3.0500  89.784375 0.3500 10.3031250  6.4300 189.283125
+## 51 2023-01-03 2959.07905 3.6600  74.316300 0.5700 11.5738500  9.7800 198.582900
+## 52 2023-01-03 1459.62169 3.1600  90.755200 0.3400  9.7648000  9.2700 266.234400
+## 53 2023-01-03 1814.84600 3.5000  55.307000 0.4700  7.4269400  9.0100 142.376020
+## 54 2023-01-03 2333.93975 3.2200  68.964350 0.4800 10.2804000  8.4900 181.834575
+## 55 2023-01-03 1925.47109 3.0100  33.132575 0.3800  4.1828500  9.0100  99.177575
+## 56 2023-01-03 -604.62837 3.3600  94.035200 0.4700 13.1537333  8.7500 244.883333
+## 57 2023-01-17 4451.40281 2.4800 104.389400 0.2900 12.2068250  6.9450 292.332413
+## 58 2023-01-17 5236.11316 2.8300 122.171100 0.2800 12.0876000  7.0750 305.427750
+## 59 2023-01-17 2528.63899 2.5700 106.407638 0.3000 12.4211250  6.1750 255.668156
+## 60 2023-01-17 3976.53409 2.7450 106.914319 0.4050 15.7742438  7.5900 295.621012
+## 61 2023-01-17 3714.52824 2.7850 113.465815 0.3475 14.1577632  7.5250 306.581779
+## 62 2023-01-17 4426.30216 2.5275 106.544235 0.2900 12.2246600  6.3675 268.415595
+## 63 2023-01-17 4494.44985 2.5800 108.050400 0.3500 14.6580000  7.2000 301.536000
+## 64 2023-01-17 4408.35578 2.3800 100.685900 0.2300  9.7301500  6.6900 283.020450
+## 65 2023-01-17 5062.21179 3.0200 138.240500 0.3200 14.6480000  7.4600 341.481500
+## 66 2023-01-17 5410.01454 2.6400 107.091600 0.2400  9.7356000  6.6900 271.379850
+## 67 2023-01-17 1951.49139 2.7100 108.259080 0.2900 11.5849200  6.9500 277.638600
+## 68 2023-01-17 4162.34904 2.4300 102.874050 0.3100 13.1238500  5.4000 228.609000
+## 69 2023-01-17 3790.71913 2.8300 100.641875 0.4300 15.2918750  8.4900 301.925625
+## 70 2023-01-17 3490.55166 2.6600 116.587800 0.3800 16.6554000  6.6900 293.222700
+##    Cax100      Caacu  Mgx100      Mgacu
+## 1      NA         NA      NA         NA
+## 2      NA         NA      NA         NA
+## 3      NA         NA      NA         NA
+## 4      NA         NA      NA         NA
+## 5      NA         NA      NA         NA
+## 6      NA         NA      NA         NA
+## 7      NA         NA      NA         NA
+## 8      NA         NA      NA         NA
+## 9      NA         NA      NA         NA
+## 10     NA         NA      NA         NA
+## 11     NA         NA      NA         NA
+## 12     NA         NA      NA         NA
+## 13     NA         NA      NA         NA
+## 14     NA         NA      NA         NA
+## 15 1.1700  0.9360000  9.9300   7.944000
+## 16 1.1100  0.9768000 10.3800   9.134400
+## 17 1.1650  1.0965563  9.9300   9.346613
+## 18 1.0300  0.7544750 10.0800   7.383600
+## 19 1.1250  0.8922656 10.3050   8.173153
+## 20 1.1125  0.9831719  9.8550   8.709356
+## 21 1.1600  0.9280000  9.7800   7.824000
+## 22 1.1800  1.0089000 10.0800   8.618400
+## 23 1.0500  0.6903750 10.6800   7.022100
+## 24 1.1700  1.0062000 10.0800   8.668800
+## 25 1.2100  0.9680000 10.0800   8.064000
+## 26 1.1200  1.0136000  9.7800   8.850900
+## 27 1.0800  1.3230000 10.6800  13.083000
+## 28 0.9800  0.5929000  9.4800   5.735400
+## 29 0.8800  5.7750000 10.3800  68.118750
+## 30 0.9550  6.8807750 11.8800  85.595400
+## 31 0.9950  7.0645000 10.9800  77.958000
+## 32 0.9800  7.7628250 11.4300  90.539887
+## 33 1.0075  5.5738456 11.8050  65.309426
+## 34 0.8975  8.1528900 10.5300  95.654520
+## 35 0.9000  4.9275000 10.9800  60.115500
+## 36 0.8600  6.5790000  9.7800  74.817000
+## 37 0.9600  6.2664000 12.4800  81.463200
+## 38 0.9500  7.4883750 11.2800  88.914600
+## 39 1.0800  5.4000000 11.2800  56.400000
+## 40 0.9100  9.6300750 10.6800 113.021100
+## 41 1.0900  5.7334000 12.4800  65.644800
+## 42 0.8700  9.2220000 10.3800 110.028000
+## 43 1.2350 28.4034562  8.2550 189.854681
+## 44 1.1450 28.0668125  9.5250 233.481562
+## 45 1.1650 23.7325063  8.7500 178.248437
+## 46 1.1500 18.6443750  8.8800 143.967000
+## 47 1.2250 19.4919118  9.4700 150.684412
+## 48 1.1225 30.1024567  8.2350 220.840740
+## 49 1.3800 22.8528000 10.0800 166.924800
+## 50 1.0900 32.0868750  6.4300 189.283125
+## 51 1.1200 22.7416000  9.7800 198.582900
+## 52 1.1700 33.6024000  9.2700 266.234400
+## 53 1.2500 19.7525000  9.0100 142.376020
+## 54 1.0800 23.1309000  8.4900 181.834575
+## 55 1.1500 12.6586250  9.0100  99.177575
+## 56 1.1500 32.1846667  8.7500 244.883333
+## 57 0.8500 35.7786250  6.9450 292.332413
+## 58 0.9550 41.2273500  7.0750 305.427750
+## 59 1.0200 42.2318250  6.1750 255.668156
+## 60 0.9500 37.0013125  7.5900 295.621012
+## 61 0.9525 38.8065309  7.5250 306.581779
+## 62 0.9350 39.4139900  6.3675 268.415595
+## 63 0.8400 35.1792000  7.2000 301.536000
+## 64 0.8600 36.3823000  6.6900 283.020450
+## 65 1.0700 48.9792500  7.4600 341.481500
+## 66 0.8400 34.0746000  6.6900 271.379850
+## 67 1.0000 39.9480000  6.9500 277.638600
+## 68 1.0400 44.0284000  5.4000 228.609000
+## 69 0.9000 32.0062500  8.4900 301.925625
+## 70 1.0000 43.8300000  6.6900 293.222700
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}dosis\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Mgacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g2}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}variedad\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Mgacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g3}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(descPTe1[descPTe1}\SpecialCharTok{$}\NormalTok{ag}\SpecialCharTok{==}\StringTok{\textquotesingle{}tratamientos\textquotesingle{}}\NormalTok{,], }\FunctionTok{aes}\NormalTok{(FECHA, Mgacu, }\AttributeTok{color=}\NormalTok{agrupamientos))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-35-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 8 rows containing missing values (`geom_line()`).
+\end{verbatim}
+
+\includegraphics{Ensayo_1_files/figure-latex/unnamed-chunk-35-3.pdf}
+
+\end{document}

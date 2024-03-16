@@ -3,9 +3,6 @@ title: "Acelga 26 de Julio"
 author: "Franco Villalba"
 date: '2024-03-01'
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
   html_document:
     toc: yes
     toc_depth: 4
@@ -16,6 +13,9 @@ output:
     highlight: kate
     df_print: paged
     code_folding: show
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
 ---
 # Analisis Variables del 27 de Junio
 ## Importacion de datos

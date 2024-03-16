@@ -2,17 +2,10 @@
 title: "Tasas de Crecimiento 2"
 author: "Franco Villalba"
 date: '2024-03-08'
-output: 
-  html_document:
-    toc: true
-    toc_depth: 4
-    toc_float: true
-    collapsed: true
-    smooth_scroll: true
-    theme: journal
-    highlight: kate
-    df_print: paged
-    code_folding: show 
+output:
+  pdf_document:
+    latex_engine: xelatex
+  
 ---
 # ENSAYO 2
 
@@ -485,5 +478,646 @@ g1
 g2
 g3
 ```
+## Acumulo de Nutrientes 
 
+### Importar los datos
+
+```{r}
+NE2<-read.csv('NutrientesE2.csv', header=T, sep=',', dec=',')
+
+nv<-c()
+
+for (i in NE2$variedad){
+  if (i==1){
+    nv<-c(nv, 'PA')
+  } else {
+    nv<-c(nv, 'PV')
+  }
+}
+
+NE2["NV"]<-nv
+
+NE2["Tratamientos"]<-paste(NE2$NV, NE2$dosis, sep="_") #esto agrega una columna con el nombre del tratamiento
+
+```
+
+
+## Analisis del Nitrogeno
+
+```{r}
+#Obtener una estadistica descriptiva del nitrogeno para cada fecha
+
+NE2$Medicion<-trimws(NE2$Medicion)
+
+#fecha 1
+NF<-NE2[NE2$Medicion =="PRIMERA",]
+
+descN30May<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$N., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-5-30")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descN30May$FECHA<-fecha
+
+#fecha 2
+
+NF<-NE2[NE2$Medicion =="SEGUNDA",]
+
+descN27Jun<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$N., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-6-27")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descN27Jun$FECHA<-fecha
+
+#fecha 3
+
+NF<-NE2[NE2$Medicion =="TERCERA",]
+
+descN06Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$N., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descN06Jul$FECHA<-fecha
+ 
+#fecha 4 
+  NF<-NE2[NE2$Medicion =="CUARTA",]
+
+descN26Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$N., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-26")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descN26Jul$FECHA<-fecha
+
+#unir en un data frame
+
+descNE2<-rbind(descN30May,
+               descN27Jun,
+               descN06Jul,
+               descN26Jul)
+
+
+```
+
+### plot concentración de N en el tiempo
+```{r}
+library(ggplot2)
+g1<-ggplot(descNE2[descNE2$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descNE2[descNE2$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descNE2[descNE2$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+### acumulacion de N en el tiempo
+```{r}
+concN<-c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+         descNE2$medias)
+
+descPTe2$Nx100<-concN
+
+descPTe2$Nacu<-descPTe2$Nx100*descPTe2$medias
+
+descPTe2
+
+g1<-ggplot(descPTe2[descPTe2$ag=='dosis',], aes(FECHA, Nacu, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPTe2[descPTe2$ag=='variedad',], aes(FECHA, Nacu, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, Nacu, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+## Analisis del Fósforo
+
+```{r}
+#Obtener una estadistica descriptiva del Fósforo para cada fecha
+
+NE2$Medicion<-trimws(NE2$Medicion)
+
+#fecha 1
+NF<-NE2[NE2$Medicion =="PRIMERA",]
+
+descP30May<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$P., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-5-30")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descP30May$FECHA<-fecha
+
+#fecha 2
+
+NF<-NE2[NE2$Medicion =="SEGUNDA",]
+
+descP27Jun<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$P., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-6-27")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descP27Jun$FECHA<-fecha
+
+#fecha 3
+
+NF<-NE2[NE2$Medicion =="TERCERA",]
+
+descP06Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$P., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descP06Jul$FECHA<-fecha
+ 
+#fecha 4 
+  NF<-NE2[NE2$Medicion =="CUARTA",]
+
+descP26Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$P., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-26")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descP26Jul$FECHA<-fecha
+
+#unir en un data frame
+
+descPe1<-rbind(descP30May,
+               descP27Jun,
+               descP06Jul,
+               descP26Jul)
+
+
+```
+
+### plot concentración de N en el tiempo
+```{r}
+library(ggplot2)
+g1<-ggplot(descPe1[descPe1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPe1[descPe1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPe1[descPe1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+### acumulacion de Fósofor en el tiempo
+```{r}
+concP<-c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+         descPe1$medias)
+
+descPTe2$Px100<-concP
+
+descPTe2$Pacu<-descPTe2$Px100*descPTe2$medias
+
+descPTe2
+
+g1<-ggplot(descPTe2[descPTe2$ag=='dosis',], aes(FECHA, Pacu, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPTe2[descPTe2$ag=='variedad',], aes(FECHA, Pacu, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, Pacu, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+## Analisis del Potasio
+
+```{r}
+#Obtener una estadistica descriptiva del nitrogeno para cada fecha
+
+NE2$Medicion<-trimws(NE2$Medicion)
+
+#fecha 1
+NF<-NE2[NE2$Medicion =="PRIMERA",]
+
+descK30May<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$K., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-5-30")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descK30May$FECHA<-fecha
+
+#fecha 2
+
+NF<-NE2[NE2$Medicion =="SEGUNDA",]
+
+descK27Jun<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$K., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-6-27")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descK27Jun$FECHA<-fecha
+
+#fecha 3
+
+NF<-NE2[NE2$Medicion =="TERCERA",]
+
+descK06Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$K., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descK06Jul$FECHA<-fecha
+ 
+#fecha 4 
+  NF<-NE2[NE2$Medicion =="CUARTA",]
+
+descK26Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$K., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-26")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descK26Jul$FECHA<-fecha
+
+#unir en un data frame
+
+descKe1<-rbind(descK30May,
+               descK27Jun,
+               descK06Jul,
+               descK26Jul)
+
+
+```
+
+### plot concentración de Potacio en el tiempo
+```{r}
+library(ggplot2)
+g1<-ggplot(descKe1[descKe1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descKe1[descKe1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descKe1[descKe1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+### acumulacion de Potacio en el tiempo
+```{r}
+concK<-c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+         descKe1$medias)
+
+descPTe2$Kx100<-concK
+
+descPTe2$Kacu<-descPTe2$Kx100*descPTe2$medias
+
+descPTe2
+
+g1<-ggplot(descPTe2[descPTe2$ag=='dosis',], aes(FECHA, Kacu, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPTe2[descPTe2$ag=='variedad',], aes(FECHA, Kacu, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, Kacu, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+## Analisis del Calcio
+
+```{r}
+#Obtener una estadistica descriptiva del nitrogeno para cada fecha
+
+NE2$Medicion<-trimws(NE2$Medicion)
+
+#fecha 1
+NF<-NE2[NE2$Medicion =="PRIMERA",]
+
+descCa30May<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Ca., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-5-30")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descCa30May$FECHA<-fecha
+
+#fecha 2
+
+NF<-NE2[NE2$Medicion =="SEGUNDA",]
+
+descCa27Jun<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Ca., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-6-27")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descCa27Jun$FECHA<-fecha
+
+#fecha 3
+
+NF<-NE2[NE2$Medicion =="TERCERA",]
+
+descCa06Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Ca., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descCa06Jul$FECHA<-fecha
+ 
+#fecha 4 
+  NF<-NE2[NE2$Medicion =="CUARTA",]
+
+descCa26Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Ca., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-26")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descCa26Jul$FECHA<-fecha
+
+#unir en un data frame
+
+descCae1<-rbind(descCa30May,
+               descCa27Jun,
+               descCa06Jul,
+               descCa26Jul)
+
+
+```
+
+### plot concentración de Calcio en el tiempo
+```{r}
+library(ggplot2)
+g1<-ggplot(descKe1[descCae1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descKe1[descCae1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descKe1[descCae1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+### acumulacion de Calcio en el tiempo
+```{r}
+concK<-c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+         descCae1$medias)
+
+descPTe2$Cax100<-concK
+
+descPTe2$Caacu<-descPTe2$Cax100*descPTe2$medias
+
+descPTe2
+
+g1<-ggplot(descPTe2[descPTe2$ag=='dosis',], aes(FECHA, Caacu, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPTe2[descPTe2$ag=='variedad',], aes(FECHA, Caacu, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, Caacu, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+## Analisis del Magnesio
+
+```{r}
+#Obtener una estadistica descriptiva del nitrogeno para cada fecha
+
+NE2$Medicion<-trimws(NE2$Medicion)
+
+#fecha 1
+NF<-NE2[NE2$Medicion =="PRIMERA",]
+
+descMg30May<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Mg., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-5-30")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descMg30May$FECHA<-fecha
+
+#fecha 2
+
+NF<-NE2[NE2$Medicion =="SEGUNDA",]
+
+descMg27Jun<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Mg., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-6-27")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descMg27Jun$FECHA<-fecha
+
+#fecha 3
+
+NF<-NE2[NE2$Medicion =="TERCERA",]
+
+descMg06Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Mg., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-6")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descMg06Jul$FECHA<-fecha
+ 
+#fecha 4 
+  NF<-NE2[NE2$Medicion =="CUARTA",]
+
+descMg26Jul<-resumir2fat(NF$dosis, 
+                        NF$NV, 
+                        NF$Mg., 
+                        NF$Tratamientos, 
+                        NF)
+
+fecha<-c()
+for (i in c(1:14)){
+  fecha<-c(fecha, "2023-7-26")
+}
+fecha<-as.Date(fecha, format="%Y-%m-%d")
+
+descMg26Jul$FECHA<-fecha
+
+#unir en un data frame
+
+descMge1<-rbind(descMg30May,
+               descMg27Jun,
+               descMg06Jul,
+               descMg26Jul)
+
+
+```
+
+### plot concentración de Magnesio en el tiempo
+```{r}
+library(ggplot2)
+g1<-ggplot(descKe1[descMge1$ag=='dosis',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descKe1[descMge1$ag=='variedad',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descKe1[descMge1$ag=='tratamientos',], aes(FECHA, medias, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
+
+### acumulacion de Magnesio en el tiempo
+```{r}
+concMg<-c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+         descKe1$medias)
+
+descPTe2$Mgx100<-concMg
+
+descPTe2$Mgacu<-descPTe2$Mgx100*descPTe2$medias
+
+descPTe2
+
+g1<-ggplot(descPTe2[descPTe2$ag=='dosis',], aes(FECHA, Mgacu, color=agrupamientos))+geom_line()
+
+g2<-ggplot(descPTe2[descPTe2$ag=='variedad',], aes(FECHA, Mgacu, color=agrupamientos))+geom_line()
+
+g3<-ggplot(descPTe2[descPTe2$ag=='tratamientos',], aes(FECHA, Mgacu, color=agrupamientos))+geom_line()
+
+g1
+g2
+g3
+```
 
