@@ -13,9 +13,7 @@ output:
     highlight: kate
     df_print: paged
     code_folding: show
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
+ 
 ---
 # ENSAYO 1
 
