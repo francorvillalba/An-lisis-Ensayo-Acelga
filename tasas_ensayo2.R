@@ -19,10 +19,10 @@ CrecimientoE2<-data.frame(
   "Var"=f1$Var,
   "GrM2"=f1$GrM2,
   "NombreV"=f1$NombreV,
-  "MS1"=f1$PesoT/f1$NP,
-  "MS2"=f2$PesoT/f2$NP,
-  "MS3"=f3$PesoT/f3$NP,
-  "MS4"=f4$PesoT/f4$NP
+  "MS1"=f1$PesoT/3,
+  "MS2"=f2$PesoT/3,
+  "MS3"=f3$PesoT/3,
+  "MS4"=f4$PesoT/3
 )
 ### Le agrego a cada UE la media del peso de los plantines de la variedad
 MSp<-c()
@@ -36,6 +36,8 @@ fecha0<-as.Date("18/05/2023", format="%d/%m/%Y")
 fecha1<-as.Date("30/05/2023", format="%d/%m/%Y")
 fecha2<-as.Date("27/06/2023", format="%d/%m/%Y")
 fecha3<-as.Date("06/07/2023", format="%d/%m/%Y")
+
+
 fecha4<-as.Date("26/07/2023", format="%d/%m/%Y")
 
 ###Calculo Tasas
@@ -44,6 +46,7 @@ CrecimientoE2$TCA1<-(CrecimientoE2$MS1-CrecimientoE2$MS0)/as.integer(difftime(fe
 CrecimientoE2$TCA2<-(CrecimientoE2$MS2-CrecimientoE2$MS1)/as.integer(difftime(fecha2, fecha1, units='days'))
 
 CrecimientoE2$TCA3<-(CrecimientoE2$MS3-CrecimientoE2$MS2)/as.integer(difftime(fecha3, fecha2, units='days'))
+
 
 CrecimientoE2$TCA4<-(CrecimientoE2$MS4-CrecimientoE2$MS3)/as.integer(difftime(fecha4, fecha3, units='days'))
 
@@ -79,9 +82,13 @@ CrecimientoE2$TCR2<-(log(CrecimientoE2$MS2)-log(CrecimientoE2$MS1))/as.integer(d
 
 CrecimientoE2$TCR3<-(log(CrecimientoE2$MS3)-log(CrecimientoE2$MS2))/as.integer(difftime(fecha3, fecha2, units='days'))
 
-CrecimientoE2$TCR4<-(log(CrecimientoE2$MS4)-log(CrecimientoE2$MS3))/as.integer(difftime(fecha4, fecha3, units='days'))
-#-----
 
+CrecimientoE2$TCR4<-(log(CrecimientoE2$MS4)-log(CrecimientoE2$MS3))/as.integer(difftime(fecha4, fecha3, units='days'))
+#-----Exportar CrecimientoE2
+
+saveRDS(CrecimientoE2, file="Resultados/CrecimientoE2_v2.rds")
+
+#-----
 library(ExpDes.pt)                                                                     
 ?fat2.dbc
 fat2.dbc(
@@ -141,7 +148,7 @@ fat2.dbc(
   CrecimientoE2$GrM2,
   CrecimientoE2$NombreV,
   CrecimientoE2$bloque,
-  CrecimientoE2$TCR2,
+  CrecimientoE2$MS4,
   quali = c(FALSE, TRUE),
   mcomp = "tukey",
   fac.names = c("Gramos de abono/m2", "Variedad"),
@@ -213,8 +220,8 @@ desc0A$fecha<-fecha0
 
 ###Unir en un data frame:
 
-msensayo1A<-rbind(desc0A, desc1A, desc2A, desc3A, desc4A)
-
+msensayo2A<-rbind(desc0A, desc1A, desc2A, desc3A, desc4A)
+msensayo2A$group<-"Abono"
 library(ggplot2)
 
 ggplot(msensayo1A, mapping=aes(x=fecha, y= media, color=factorA))+
@@ -247,6 +254,7 @@ desc2<-CrecimientoE2 %>% group_by(NombreV) %>% summarise(obs = n(),
                                                          EE= sd(MS2)/sqrt(n()),
                                                          ymin= mean(MS2)-(sd(MS2)/sqrt(n())),
                                                          ymax= mean(MS2)+(sd(MS2)/sqrt(n())))
+
 
 desc2$fecha<-fecha2
 
@@ -285,7 +293,8 @@ desc0$fecha<-fecha0
 
 ###Unir en un data frame:
 
-msensayo1<-rbind(desc0, desc1, desc2, desc3, desc4)
+msensayo2V<-rbind(desc0, desc1, desc2, desc3, desc4)
+msensayo2V$group<-"variedad"
 
 ggplot(msensayo1, mapping=aes(x=fecha, y= media/3, color=NombreV))+
   geom_line()+
@@ -296,6 +305,14 @@ ggplot(msensayo1, mapping=aes(x=fecha, y= media/3, color=NombreV))+
        y="Gramos MS/planta",
        color="Variedad"
   )
+###Exportar MSENSA2
+
+colnames(msensayo2A)[1]<-"nivel"
+colnames(msensayo2V)[1]<-"nivel"
+msensayo2<-rbind(msensayo2A, msensayo2V)
+saveRDS(msensayo2, file="Resultados/msensayo2_v2.rds")
+
+
 
 #Est desc TCA 
 ####### Por Variedad
@@ -346,7 +363,7 @@ descVarTCA4$fecha<-fecha4
 
 ###Unir en un data frame:
 
-TCA_Var_E1<-rbind(descVarTCA1, descVarTCA2, descVarTCA3, descVarTCA4)
+TCA_Var_E2<-rbind(descVarTCA1, descVarTCA2, descVarTCA3, descVarTCA4)
 
 ggplot(TCA_Var_E1, mapping=aes(x=fecha, y= media, color=NombreV))+
   geom_line()+
@@ -407,7 +424,7 @@ descAbTCA4$fecha<-fecha4
 
 ###Unir en un data frame:
 
-TCA_Ab_E1<-rbind(descAbTCA1, descAbTCA2, descAbTCA3, descAbTCA4)
+TCA_Ab_E2<-rbind(descAbTCA1, descAbTCA2, descAbTCA3, descAbTCA4)
 
 ggplot(TCA_Ab_E1, mapping=aes(x=fecha, y= media, color=factorA))+
   geom_line()+
@@ -418,6 +435,14 @@ ggplot(TCA_Ab_E1, mapping=aes(x=fecha, y= media, color=factorA))+
        y="Gramos MS/día",
        color="Gramos de Abono/m2"
   )
+
+TCA_Ab_E2$factor<-"Abono"
+TCA_Var_E2$factor<-"Variedad"
+colnames(TCA_Ab_E2)[1]<-"nivel"
+colnames(TCA_Var_E2)[1]<-"nivel"
+TCAensayo2<-rbind( TCA_Ab_E2, TCA_Var_E2)
+saveRDS(TCAensayo2, file="Resultados/TCAensayo2.rds")
+
 
 #Est desc TCR 
 ####### Por Variedad
@@ -529,7 +554,7 @@ descAbTCR4$fecha<-fecha4
 
 ###Unir en un data frame:
 
-TCR_Ab_E1<-rbind(descAbTCR1, descAbTCR2, descAbTCR3, descAbTCR4)
+TCR_Ab_E2<-rbind(descAbTCR1, descAbTCR2, descAbTCR3, descAbTCR4)
 
 ggplot(TCR_Ab_E1, mapping=aes(x=fecha, y= media, color=factorA))+
   geom_line()+
@@ -540,3 +565,10 @@ ggplot(TCR_Ab_E1, mapping=aes(x=fecha, y= media, color=factorA))+
        y="Gramos MS/Gr*día",
        color="Gramos de Abono/m2"
   )
+
+TCR_Ab_E2$factor<-"Abono"
+TCR_Var_E1$factor<-"Variedad"
+colnames(TCR_Ab_E2)[1]<-"nivel"
+colnames(TCR_Var_E1)[1]<-"nivel"
+TCRensayo2<-rbind( TCR_Ab_E2, TCR_Var_E1)
+saveRDS(TCRensayo2, file="Resultados/TCRensayo2.rds")

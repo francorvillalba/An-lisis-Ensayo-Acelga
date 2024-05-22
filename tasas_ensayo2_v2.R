@@ -152,7 +152,122 @@ fat2.dbc(
 
 ### Estadistica descripitiva por dosis de abono
 library(dplyr)
+####Estadistica descriptiva INTERACCIÓN
+ ##CREAR UNA COLUMNA CON LA COMBINACIÓN DE TRATAMIENTOS
+CrecimientoE2$trat<-paste(CrecimientoE2$NombreV, CrecimientoE2$GrM2, sep="_")
 
+ ###REALIZAR ESTADISTICA DESCRPITIVA PARA CADA FECHA DE ESTUDIO: 
+
+###Fecha 1 por variedad
+desc1trat<-CrecimientoE2 %>% group_by(trat) %>% summarise(obs = n(),
+                                                          max= max(MS1),
+                                                          min= min(MS1), 
+                                                          media= mean(MS1),
+                                                          DS= sd(MS1),
+                                                          EE= sd(MS1)/sqrt(n()),
+                                                          ymin= mean(MS1)-(sd(MS1)/sqrt(n())),
+                                                          ymax= mean(MS1)+(sd(MS1)/sqrt(n())))
+
+desc1trat$fecha<-fecha1
+###Fecha 2 por variedad
+desc2trat<-CrecimientoE2 %>% group_by(trat) %>% summarise(obs = n(),
+                                                          max= max(MS2),
+                                                          min= min(MS2), 
+                                                          media= mean(MS2),
+                                                          DS= sd(MS2),
+                                                          EE= sd(MS2)/sqrt(n()),
+                                                          ymin= mean(MS2)-(sd(MS2)/sqrt(n())),
+                                                          ymax= mean(MS2)+(sd(MS2)/sqrt(n())))
+
+desc2trat$fecha<-fecha2
+
+### Fecha 3 por variedad
+desc3trat<-CrecimientoE2 %>% group_by(trat) %>% summarise(obs = n(),
+                                                          max= max(MS3),
+                                                          min= min(MS3), 
+                                                          media= mean(MS3),
+                                                          DS= sd(MS3),
+                                                          EE= sd(MS3)/sqrt(n()),
+                                                          ymin= mean(MS3)-(sd(MS3)/sqrt(n())),
+                                                          ymax= mean(MS3)+(sd(MS3)/sqrt(n())))
+
+desc3trat$fecha<-fecha3
+#por variedad
+desc4trat<-CrecimientoE2 %>% group_by(trat) %>% summarise(obs = n(),
+                                                          max= max(MS4),
+                                                          min= min(MS4), 
+                                                          media= mean(MS4),
+                                                          DS= sd(MS4),
+                                                          EE= sd(MS4)/sqrt(n()),
+                                                          ymin= mean(MS4)-(sd(MS4)/sqrt(n())),
+                                                          ymax= mean(MS4)+(sd(MS4)/sqrt(n())))
+desc4trat$fecha<-fecha4
+###plantines por variedad
+desc0trat<-CrecimientoE2 %>% group_by(trat) %>% summarise(obs = n(),
+                                                          max= max(MS0),
+                                                          min= min(MS0), 
+                                                          media= mean(MS0),
+                                                          DS= sd(MS0),
+                                                          EE= sd(MS0)/sqrt(n()),
+                                                          ymin= mean(MS0)-(sd(MS0)/sqrt(n())),
+                                                          ymax= mean(MS0)-(sd(MS0)/sqrt(n())))
+
+desc0trat$fecha<-fecha0
+
+###Unir en un data frame:
+
+msensayo1trat<-rbind(desc0trat, desc1trat, desc2trat, desc3trat, desc4trat)
+
+### REALIZAR LOS GRAFICOS
+
+library(ggplot2)
+####todas los tratamientos
+ggplot(msensayo1trat, mapping=aes(x=fecha, y= media, color=trat))+
+  geom_line()+
+  geom_errorbar(aes(ymin=ymin, ymax=ymax), width=0.5, size= 2, alpha=0.5)+
+  labs(title= "Acumulación de Materia Seca total",
+       subtitle= "Otoño-Invierno",
+       x= "Fecha",
+       y="Gramos MS/planta",
+       color="Gramos de Abono por M2"
+  )
+### tratamientos de abono dentro de los tratamientos de variedad. 
+
+install.packages("stringr")
+library(stringr)
+
+ggplot(msensayo1trat[str_detect(msensayo1trat$trat, "Penca Ancha"),], mapping=aes(x=fecha, y= media, color=trat))+
+  geom_line()+
+  geom_errorbar(aes(ymin=ymin, ymax=ymax), width=0.5, size= 2, alpha=0.5)+
+  labs(title= "Acumulación de Materia Seca total",
+       subtitle= "Otoño-Invierno",
+       x= "Fecha",
+       y="Gramos MS/planta",
+       color="Gramos de Abono por M2"
+  )
+
+ggplot(msensayo1trat[str_detect(msensayo1trat$trat, "Penca Verde"),], mapping=aes(x=fecha, y= media, color=trat))+
+  geom_line()+
+  geom_errorbar(aes(ymin=ymin, ymax=ymax), width=0.5, size= 2, alpha=0.5)+
+  labs(title= "Acumulación de Materia Seca total",
+       subtitle= "Otoño-Invierno",
+       x= "Fecha",
+       y="Gramos MS/planta",
+       color="Gramos de Abono por M2"
+  )
+
+ggplot(CrecimientoE2, mapping=aes(GrM2, MS4, color=NombreV))+
+  geom_smooth(method="lm")+
+  labs(
+    title="Efecto de la dosis de abono sobre la producción de MS",
+    x= quote(g*m^-1),
+    y= "Gramos de MS por planta",
+    color= "Nombre de la Variedad")+
+   annotate("text", )
+
+lm(GrM2)
+
+help("annotate")
 ###Por dosis de abono
 CrecimientoE2$factorA<-as.factor(CrecimientoE2$GrM2)
 ###Fecha 1 por variedad
