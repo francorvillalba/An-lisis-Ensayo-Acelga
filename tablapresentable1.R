@@ -1,4 +1,4 @@
-### Tabla para presentación
+### Tabla para presentación Materia Seca
 
 CrecimientoE1<-readRDS(file = "Resultados/CrecimientoE1_v2.rds")
 CrecimientoE2<-readRDS(file = "Resultados/CrecimientoE2_v2.rds")

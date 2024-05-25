@@ -95,7 +95,7 @@ fat2.dbc(
   CrecimientoE2$GrM2,
   CrecimientoE2$NombreV,
   CrecimientoE2$bloque,
-  CrecimientoE2$MS4,
+  CrecimientoE2$TCA4,
   quali = c(FALSE, TRUE),
   mcomp = "tukey",
   fac.names = c("Gramos de abono/m2", "Variedad"),
@@ -104,12 +104,15 @@ fat2.dbc(
   unfold = NULL
 )
 
+CrecimientoE2$TCA5<-(CrecimientoE2$TCA4-CrecimientoE2$TCA2)/as.integer(difftime(fecha4, fecha2, units='days'))
+
+
 ###Analisis TCA1
 fat2.dbc(
   CrecimientoE2$GrM2,
   CrecimientoE2$NombreV,
   CrecimientoE2$bloque,
-  CrecimientoE2$TCA1,
+  CrecimientoE2$TCR4,
   quali = c(FALSE, TRUE),
   mcomp = "tukey",
   fac.names = c("Gramos de abono/m2", "Variedad"),

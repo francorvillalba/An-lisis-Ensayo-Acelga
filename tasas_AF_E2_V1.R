@@ -1,16 +1,7 @@
 ### Area foliar ensayo 1
+###FUNCIONES CREADAS:
 
-###Importar los datos de las 4 fechas
-f1<-read.csv(file="MS30May.csv", header=TRUE, sep="," , dec=",")
-f2<-read.csv(file="MS27Jun.csv", header=TRUE, sep="," , dec=",")
-f3<-read.csv(file="MS06Jul.csv", header=TRUE, sep="," , dec=",")
-f4<-read.csv(file="MS26Jul.csv", header=TRUE, sep="," , dec=",")
-
-f0<-read.csv(file="Plantines2.csv", header=TRUE, sep="," , dec=",")
-
-
-#### f1 ya tiene el area foliar en la columna A, PLANTINES NO TIENE A
-
+#### Para crear un modelo de regresion para cada tratamiento:
 regModelAF<- function(trat, AS, HM){
   #creamos vectores vacios para guardar cada parametro del modelo: ordenada al origen, pendiente de la recta, coefi. pearson de la ordenada y de la pendiente, r^2 y r^2 ajustado del modelo
   ord <-c() 
@@ -38,12 +29,46 @@ regModelAF<- function(trat, AS, HM){
   }
   
   # creamos un data frame con los vectores
-  
   MAF<-data.frame(tratamientos, ord, prord, pend, prpend, rsq, radj)
-  
   return(MAF)
+  }
+## Función para calcular el área foliar en base a un modelo por tratamiento
+
+calcAf2<-function(H, trat, MAF, tratalt, MAFalt){
+  #Se recorre fila por fila calculando PH*PENDIENA + ORDENADA para obtener un vector con el area foliar
+  areasF<-c()
   
+  for (i in c(1:32)){
+    if(MAF$prpend[MAF$tratamientos== trat[i]]<0.05){
+      ordenada<-MAF$ord[MAF$tratamientos== trat[i]]
+      pendiente<-MAF$pend[MAF$tratamientos== trat[i]]
+      pesohojas<-H[i]
+      af<-ordenada + pendiente*pesohojas
+      areasF<-c(areasF, af)} else {
+        ordenada<-MAFalt$ord[MAFalt$tratamientos== tratalt[i]]
+        pendiente<-MAFalt$pend[MAFalt$tratamientos== tratalt[i]]
+        pesohojas<-H[i]
+        af<-ordenada + pendiente*pesohojas
+        areasF<-c(areasF, af)
+      }
+  }
+  return(areasF)  
 }
+
+
+###Importar los datos de las 4 fechas
+f1<-read.csv(file="MS30May.csv", header=TRUE, sep="," , dec=",")
+f2<-read.csv(file="MS27Jun.csv", header=TRUE, sep="," , dec=",")
+f3<-read.csv(file="MS06Jul.csv", header=TRUE, sep="," , dec=",")
+f4<-read.csv(file="MS26Jul.csv", header=TRUE, sep="," , dec=",")
+
+
+f0<-read.csv(file="Plantines2.csv", header=TRUE, sep="," , dec=",")
+
+
+#### f1 ya tiene el area foliar en la columna A, PLANTINES NO TIENE A
+
+####CRAER UN MODELO PARA CADA FECHA POR TODOS LOS TRAMIENTOS
 
 tratamientos<-paste(f1$NombreV, f1$Dosis, sep="_")
 f1$trat<-tratamientos
@@ -56,51 +81,64 @@ modeloF2<- regModelAF(f2$trat, f2$AS, f2$HM)
 modeloF3<-regModelAF(f3$trat, f3$AS, f3$HM)
 modeloF4<-regModelAF(f4$trat, f4$AS, f4$HM)
 
+###Crear un modelo alternativo usando solo el factor variedad
+
+modeloF2alt<-regModelAF(f2$NombreV, f2$AS, f2$HM)
+modeloF3alt<-regModelAF(f2$NombreV, f2$AS, f2$HM)
+modeloF4alt<-regModelAF(f2$NombreV, f2$AS, f2$HM)
+
 #### Calcular el AF del las fechas
 
-calcAf<-function(H, trat, MAF){
-  #Se recorre fila por fila calculando PH*PENDIENA + ORDENADA para obtener un vector con el area foliar
-  
-  areasF<-c()
-  
-  for (i in c(1:32)){
-    ordenada<-MAF$ord[MAF$tratamientos== trat[i]]
-    pendiente<-MAF$pend[MAF$tratamientos== trat[i]]
-    pesohojas<-H[i]
-    af<-ordenada + pendiente*pesohojas
-    areasF<-c(areasF, af) 
-  }
-  return(areasF)  
-}
+f2$A<-calcAf2(f2$HSM+f2$HM, f2$trat, modeloF2, f2$NombreV, modeloF2alt)
+f3$A<-calcAf2(f3$HSM+f3$HM, f3$trat, modeloF3, f3$NombreV, modeloF3alt)
+f4$A<-calcAf2(f4$HSM+f4$HM, f4$trat, modeloF4, f4$NombreV, modeloF4alt)
 
-f2$A<-calcAf(f2$HSM+f2$HM, f2$trat, modeloF2)
-f3$A<-calcAf(f3$HSM+f4$HM, f3$trat, modeloF3)
-f4$A<-calcAf(f4$HSM+f4$HM, f4$trat, modeloF4)
+library(ExpDes.pt)
 
 fecha1<-as.Date("30/05/2023", format="%d/%m/%Y")
 fecha2<-as.Date("27/06/2023", format="%d/%m/%Y")
 fecha3<-as.Date("06/07/2023", format="%d/%m/%Y")
 fecha4<-as.Date("26/07/2023", format="%d/%m/%Y")
+fecha0<-as.Date("18/03/2023", format="%d/%m/%Y")
 
 AreasFoliares<-data.frame(
   "Bloque"= f1$Bloque,
   "UE"= f1$UE,
   "Variedad"=f1$NombreV,
+   "nVar"=f1$Var,
   "Dosis"=f1$GrM2,
-  "MS1"=f1$PesoT, "MS2"=f2$PesoT, "MS3"=f3$PesoT, "MS4"=f4$PesoT,
-  "AF1"=f1$A, "AF2"=f2$A, "AF3"=f3$A, "AF4"=f4$A)
+  "MS1"=f1$PesoT/3, "MS2"=f2$PesoT/3, "MS3"=f3$PesoT/3, "MS4"=f4$PesoT/3,
+  "AF1"=f1$A/3, "AF2"=f2$A/3, "AF3"=f3$A/3, "AF4"=f4$A/3)
+###Agregar datos de los plantines
+MSp<-c()
+for (i in c(1:32)){
+  MSp<-c(MSp, mean(f0$PT[f0$Variedad==AreasFoliares$nVar[i]])/3)
+}
+AreasFoliares$MS0<-MSp
 
-AreasFoliares$TAL1<-((AreasFoliares$MS2-AreasFoliares$MS1)/
+AFp<-c()
+for (i in c(1:32)){
+  AFp<-c(AFp, mean(f0$A[f0$Variedad==AreasFoliares$nVar[i]]))
+}
+AreasFoliares$AF0<-AFp
+
+AreasFoliares$TAL1<-((AreasFoliares$MS1-AreasFoliares$MS0)/
+                       as.integer(difftime(fecha1, fecha0)))*
+  ((log(AreasFoliares$AF1)-log(AreasFoliares$AF0))/
+     (AreasFoliares$AF1-AreasFoliares$AF0))
+
+
+AreasFoliares$TAL2<-((AreasFoliares$MS2-AreasFoliares$MS1)/
                        as.integer(difftime(fecha2, fecha1)))*
   ((log(AreasFoliares$AF2)-log(AreasFoliares$AF1))/
      (AreasFoliares$AF2-AreasFoliares$AF1))
 
-AreasFoliares$TAL2<-((AreasFoliares$MS3-AreasFoliares$MS2)/
+AreasFoliares$TAL3<-((AreasFoliares$MS3-AreasFoliares$MS2)/
                        as.integer(difftime(fecha3, fecha2)))*
   ((log(AreasFoliares$AF3)-log(AreasFoliares$AF2))/
      (AreasFoliares$AF3-AreasFoliares$AF2))
 
-AreasFoliares$TAL3<-((AreasFoliares$MS4-AreasFoliares$MS3)/
+AreasFoliares$TAL4<-((AreasFoliares$MS4-AreasFoliares$MS3)/
                        as.integer(difftime(fecha4, fecha3)))*
   ((log(AreasFoliares$AF4)-log(AreasFoliares$AF3))/
      (AreasFoliares$AF4-AreasFoliares$AF3))
@@ -157,6 +195,7 @@ desc4A<-AreasFoliares %>% group_by(factorA) %>% summarise(obs = n(),
                                                           EE= sd(AF4)/sqrt(n()),
                                                           ymin= mean(AF4)-(sd(AF4)/sqrt(n())),
                                                           ymax= mean(AF4)+(sd(AF4)/sqrt(n())))
+
 
 desc4A$fecha<-fecha4
 
@@ -234,6 +273,19 @@ ggplot(descAFgbV, mapping=aes(x=fecha, y= media, linetype=Variedad))+
        y="Gramos MS/planta",
   )
 
+##Exportar
+
+descAFgbA$factor<-"Abono"
+descAFgbV$factor<-"Variedad"
+
+colnames(descAFgbA)[1]<-"Nivel"
+colnames(descAFgbV)[1]<-"Nivel"
+
+AFensayo1<-rbind(descAFgbA, descAFgbV)
+AFensayo1$temporada<-"Otoño/Invierno"
+
+saveRDS(AFensayo1, file="Resultados/AFensayo2.rds")
+
 ####TASAS DE ASIMILACIÓN LÍQUIDA
 
 #Variable Area FOLIAR
@@ -278,8 +330,18 @@ desc3TALA<-AreasFoliares %>% group_by(factorA) %>% summarise(obs = n(),
 
 desc3TALA$fecha<-fecha3
 
+desc4TALA<-AreasFoliares %>% group_by(factorA) %>% summarise(obs = n(),
+                                                             max= max(TAL4),
+                                                             min= min(TAL4), 
+                                                             media= mean(TAL4),
+                                                             DS= sd(TAL4),
+                                                             EE= sd(TAL4)/sqrt(n()),
+                                                             ymin= mean(TAL4)-(sd(TAL4)/sqrt(n())),
+                                                             ymax= mean(TAL4)+(sd(TAL4)/sqrt(n())))
 
-descTALgbA<- rbind(desc1TALA, desc2TALA, desc3TALA)
+desc4TALA$fecha<-fecha4
+
+descTALgbA<- rbind(desc1TALA, desc2TALA, desc3TALA, desc4TALA)
 
 
 ggplot(descTALgbA, mapping=aes(x=fecha, y= media, linetype=factorA))+
@@ -328,10 +390,23 @@ desc3TALV<-AreasFoliares %>% group_by(Variedad) %>% summarise(obs = n(),
                                                               ymin= mean(TAL3)-(sd(TAL3)/sqrt(n())),
                                                               ymax= mean(TAL3)+(sd(TAL3)/sqrt(n())))
 
+
 desc3TALV$fecha<-fecha3
 
+desc4TALV<-AreasFoliares %>% group_by(Variedad) %>% summarise(obs = n(),
+                                                              max= max(TAL4),
+                                                              min= min(TAL4), 
+                                                              media= mean(TAL4),
+                                                              DS= sd(TAL4),
+                                                              EE= sd(TAL4)/sqrt(n()),
+                                                              ymin= mean(TAL4)-(sd(TAL4)/sqrt(n())),
+                                                              ymax= mean(TAL4)+(sd(TAL4)/sqrt(n())))
 
-descTALgbV<- rbind(desc1TALV, desc2TALV, desc3TALV)
+
+desc4TALV$fecha<-fecha4
+
+
+descTALgbV<- rbind(desc1TALV, desc2TALV, desc3TALV, desc4TALV)
 
 ggplot(descTALgbV, mapping=aes(x=fecha, y= media, linetype=Variedad))+
   geom_line()+
@@ -341,3 +416,15 @@ ggplot(descTALgbV, mapping=aes(x=fecha, y= media, linetype=Variedad))+
        x= "Fecha",
        y="Gramos MS/planta",
   )
+descTALgbA$factor<-"Abono"
+descTALgbV$factor<-"Variedad"
+
+colnames(descTALgbA)[1]<-"Nivel"
+
+colnames(descTALgbV)[1]<-"Nivel"
+
+TALensayo2<-rbind(descTALgbA, descTALgbV)
+TALensayo2$temporada<-"Otoño/Invierno"
+
+saveRDS(TALensayo2, file="Resultados/TALensayo2.rds")
+saveRDS(AreasFoliares, file="Resultados/AFoliar2.rds")
