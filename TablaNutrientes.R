@@ -1,8 +1,10 @@
-msensayo1<- readRDS("Resultados/msensayo1_v2.rds")
+msensayo1<- readRDS("Resultados/msensayo1_v2.rds") # Importar tablas de materia seca ensayo 1 y 2
 msensayo2<-readRDS("Resultados/msensayo2_v2.rds")
-f01<-as.Date("24/11/2022", format="%d/%m/%Y")
-f02<-as.Date("18/05/2023", format="%d/%m/%Y")
-Nutriente1<-read.csv("NutrientesE1.csv", sep=",", dec=",", header = TRUE)
+
+f01<-as.Date("24/11/2022", format="%d/%m/%Y") #colocar aqui la fecha de trasplante del ensayo 1
+f02<-as.Date("18/05/2023", format="%d/%m/%Y") #colocar aqui la fecha del trasplante del ensayo 2
+
+Nutriente1<-read.csv("NutrientesE1.csv", sep=",", dec=",", header = TRUE) #Importar tablas con los nutrientes
 Nutriente2<-read.csv("NutrientesE2.csv", sep=",", dec=",", header = TRUE)
 
 AcuNutrientesE1<-data.frame("Fecha"= msensayo1$fecha[msensayo1$fecha>f01],
@@ -12,7 +14,7 @@ AcuNutrientesE1<-data.frame("Fecha"= msensayo1$fecha[msensayo1$fecha>f01],
 
 Nutriente1$Medicion<-trimws(Nutriente1$Medicion)
 
-mediciones<-c("PRIMERA", "SEGUNDA", "TERCERA", "CUARTA")
+mediciones<-c("PRIMERA", "SEGUNDA", "TERCERA", "CUARTA") # Borrar CUARTA si necesario
 dosis<-c(1:4)
 variedad<-c(1:2)
 
@@ -129,6 +131,8 @@ AcuNutrientesE1$Caacu<-AcuNutrientesE1$MS*AcuNutrientesE1$Cax100/100
 AcuNutrientesE1$Mgacu<-AcuNutrientesE1$MS*AcuNutrientesE1$Mgx100/100
 
 ##Guardar esta tabla:
+
+AcuNutrientesE1$DDT<- as.integer(difftime(AcuNutrientesE1$Fecha, f01, units="days")) 
 saveRDS(AcuNutrientesE1, file="Resultados/Nensayo1.rds")
 
 #####ACA REPETIMOS LO MISMO PARA EL ENSAYO 2:
@@ -257,4 +261,5 @@ AcuNutrientesE2$Caacu<-AcuNutrientesE2$MS*AcuNutrientesE2$Cax100/100
 AcuNutrientesE2$Mgacu<-AcuNutrientesE2$MS*AcuNutrientesE2$Mgx100/100
 
 ##Guardar esta tabla:
+AcuNutrientesE2$DDT<- as.integer(difftime(AcuNutrientesE2$Fecha, f02, units="days")) 
 saveRDS(AcuNutrientesE2, file="Resultados/Nensayo2.rds")
